@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japan Tour Booking Form — Ubah's Travel Space Agency</title>
+<!--
+=================================================================
+SETUP INSTRUCTIONS — DO THIS BEFORE SHARING THE FORM
+=================================================================
+STEP 1: Go to https://formspree.io
+        Sign up FREE using: ubahstravelspaceagency@gmail.com
+
+STEP 2: Click "New Form" — name it "Japan Tour Bookings"
+        Copy your Form ID (e.g. xpznkqvb)
+
+STEP 3: In this file find: action="https://formspree.io/f/mnjwebdo"
+        Replace YOUR_FORM_ID with your actual Formspree ID
+
+STEP 4: Upload this file to https://tiiny.host (free, no account needed)
+        Drag and drop the file → get a live shareable link in 30 seconds
+
+STEP 5: In Formspree dashboard → Integrations → Google Sheets
+        Connect your Google account → responses save automatically
+
+RESULT: Every submission will:
+  ✅ Send email notification to ubahstravelspaceagency@gmail.com
+  ✅ Save all responses to your Google Spreadsheet
+  ✅ Be accessible in your Formspree dashboard anytime
+=================================================================
+-->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest:  #1C2B1A;
+    --gold:    #8B6914;
+    --crimson: #8B1A1A;
+    --mint:    #F0F7F4;
+    --cream:   #FAF6EE;
+    --sage:    #5A6B58;
+    --black:   #111111;
+    --border:  #D4C9A8;
+    --white:   #FFFFFF;
+  }
+
+  body {
+    background: var(--mint);
+    font-family: 'Inter', sans-serif;
+    color: var(--black);
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  /* ── HERO HEADER ── */
+  .hero {
+    background: var(--forest);
+    padding: 48px 24px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '日本';
+    position: absolute;
+    right: -10px; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 140px;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .hero-top-line {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin-bottom: 28px;
+  }
+  .hero-tag {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: rgba(232,213,163,0.7);
+    margin-bottom: 14px;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 700;
+    color: #E8D5A3;
+    letter-spacing: 2px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .hero-sub {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(13px, 2.5vw, 17px);
+    color: rgba(232,213,163,0.6);
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+  }
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 18px auto;
+    max-width: 300px;
+  }
+  .hero-divider .line { flex: 1; height: 1px; background: rgba(232,213,163,0.3); }
+  .hero-divider .dot  { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); }
+  .hero-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(14px, 2.5vw, 17px);
+    color: rgba(232,213,163,0.8);
+    line-height: 1.75;
+    max-width: 640px;
+    margin: 0 auto 24px;
+    font-style: italic;
+  }
+
+  /* Packages strip */
+  .packages-strip {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  .pkg-badge {
+    background: rgba(232,213,163,0.1);
+    border: 1px solid rgba(232,213,163,0.3);
+    color: #E8D5A3;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    padding: 6px 14px;
+  }
+
+  .hero-bottom-line {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin-top: 28px;
+  }
+
+  /* ── FORM CONTAINER ── */
+  .form-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* ── SECTION CARD ── */
+  .section-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--forest);
+    margin-top: 28px;
+    padding: 28px 28px 24px;
+    position: relative;
+  }
+  .section-card.gold-top { border-top-color: var(--gold); }
+  .section-card.red-top  { border-top-color: var(--crimson); }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--forest);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-num {
+    background: var(--forest);
+    color: #E8D5A3;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── FIELD ── */
+  .field { margin-bottom: 20px; }
+  .field:last-child { margin-bottom: 0; }
+
+  .field-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--forest);
+    letter-spacing: 0.5px;
+    margin-bottom: 7px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .required { color: var(--crimson); font-size: 13px; }
+
+  .field-hint {
+    font-size: 11px;
+    color: var(--sage);
+    margin-bottom: 7px;
+    font-style: italic;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: 10px 13px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    color: var(--black);
+    background: var(--cream);
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--forest);
+    background: var(--white);
+  }
+  textarea { resize: vertical; min-height: 90px; }
+  select { cursor: pointer; }
+
+  /* Radio / Checkbox groups */
+  .options-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .option-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    padding: 10px 13px;
+    border: 1px solid var(--border);
+    background: var(--cream);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .option-item:hover { border-color: var(--forest); background: var(--white); }
+  .option-item input[type="radio"],
+  .option-item input[type="checkbox"] {
+    width: 16px; height: 16px;
+    margin-top: 1px;
+    accent-color: var(--forest);
+    flex-shrink: 0;
+    cursor: pointer;
+    padding: 0;
+  }
+  .option-label {
+    font-size: 13px;
+    color: var(--black);
+    line-height: 1.4;
+  }
+  .option-price {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--gold);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* Two columns */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media(max-width: 500px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* Important notice box */
+  .notice-box {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--forest);
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  /* Submit button */
+  .submit-wrap {
+    text-align: center;
+    margin-top: 32px;
+  }
+  .submit-btn {
+    background: var(--forest);
+    color: #E8D5A3;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    padding: 16px 48px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    text-transform: uppercase;
+    width: 100%;
+    max-width: 340px;
+  }
+  .submit-btn:hover { background: #2A3D28; }
+  .submit-btn:active { transform: scale(0.98); }
+
+  .form-footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 11.5px;
+    color: var(--sage);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  /* Agency footer bar */
+  .agency-bar {
+    background: var(--forest);
+    padding: 18px 24px;
+    text-align: center;
+    margin-top: 48px;
+  }
+  .agency-bar p {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: #E8D5A3;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .agency-bar span {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: rgba(232,213,163,0.6);
+  }
+
+  /* Success message */
+  .success-msg {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1C2B1A;
+    color: #E8D5A3;
+    text-align: center;
+    padding: 50px 24px;
+    overflow-y: auto;
+    z-index: 9999;
+  }
+  .success-msg .tick {
+    font-size: 56px;
+    display: block;
+    margin-bottom: 16px;
+  }
+  .success-msg h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(18px, 4vw, 24px);
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    color: #E8D5A3;
+  }
+  .success-msg p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: rgba(232,213,163,0.85);
+    line-height: 1.75;
+    font-style: italic;
+  }
+
+  /* Validation */
+  input:invalid:not(:placeholder-shown),
+  select:invalid:not(:placeholder-shown) {
+    border-color: var(--crimson);
+  }
+  .error-msg {
+    color: var(--crimson);
+    font-size: 11px;
+    margin-top: 4px;
+    display: none;
+  }
+  .submitting { opacity: 0.7; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-top-line"></div>
+  <span class="hero-tag">大阪 · 東京 · 日本</span>
+  <div class="hero-title">JAPAN GROUP TOUR</div>
+  <div class="hero-sub">BOOKING REGISTRATION FORM</div>
+  <div class="hero-divider"><div class="line"></div><div class="dot"></div><div class="line"></div></div>
+  <p class="hero-intro">
+    We are excited to welcome you on an extraordinary journey to Japan — one of the world's most breathtaking destinations. Whether you choose Osaka, Tokyo, or our Premium Tokyo + Osaka experience, this trip has been curated to give you an authentic, seamless, and unforgettable adventure. Please complete all sections of this form carefully to secure your place.
+  </p>
+  <div class="packages-strip">
+    <span class="pkg-badge">🟢 Osaka</span>
+    <span class="pkg-badge">🔵 Tokyo</span>
+    <span class="pkg-badge">🔴 Tokyo + Osaka Premium</span>
+  </div>
+  <div class="hero-bottom-line"></div>
+</div>
+
+<!-- FORM -->
+<div class="form-wrap">
+<form id="bookingForm"
+      method="POST"
+      novalidate>
+
+  <!-- Hidden fields for Formspree -->
+  <input type="hidden" name="_subject" value="🇯🇵 New Japan Tour Booking Registration">
+  <input type="hidden" name="_captcha" value="false">
+
+  <!-- SECTION 1: Personal Information -->
+  <div class="section-card">
+    <div class="section-title"><span class="section-num">1</span> Personal Information</div>
+
+    <div class="two-col">
+      <div class="field">
+        <label class="field-label">First Name <span class="required">*</span></label>
+        <input type="text" name="first_name" placeholder="e.g. Amaka" required>
+      </div>
+      <div class="field">
+        <label class="field-label">Last Name <span class="required">*</span></label>
+        <input type="text" name="last_name" placeholder="e.g. Okafor" required>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Email Address <span class="required">*</span></label>
+      <div class="field-hint">We will send your booking confirmation and all trip updates to this email.</div>
+      <input type="email" name="email" placeholder="e.g. amaka@gmail.com" required>
+    </div>
+
+    <div class="two-col">
+      <div class="field">
+        <label class="field-label">WhatsApp Number <span class="required">*</span></label>
+        <div class="field-hint">Include country code e.g. +234</div>
+        <input type="tel" name="whatsapp" placeholder="+234 800 000 0000" required>
+      </div>
+      <div class="field">
+        <label class="field-label">Alternate Phone Number</label>
+        <div class="field-hint">Optional backup contact</div>
+        <input type="tel" name="alt_phone" placeholder="+234 800 000 0000">
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field">
+        <label class="field-label">State of Residence <span class="required">*</span></label>
+        <select name="state" required>
+          <option value="">-- Select State --</option>
+          <option>Abia</option><option>Adamawa</option><option>Akwa Ibom</option>
+          <option>Anambra</option><option>Bauchi</option><option>Bayelsa</option>
+          <option>Benue</option><option>Borno</option><option>Cross River</option>
+          <option>Delta</option><option>Ebonyi</option><option>Edo</option>
+          <option>Ekiti</option><option>Enugu</option><option>FCT Abuja</option>
+          <option>Gombe</option><option>Imo</option><option>Jigawa</option>
+          <option>Kaduna</option><option>Kano</option><option>Katsina</option>
+          <option>Kebbi</option><option>Kogi</option><option>Kwara</option>
+          <option>Lagos</option><option>Nasarawa</option><option>Niger</option>
+          <option>Ogun</option><option>Ondo</option><option>Osun</option>
+          <option>Oyo</option><option>Plateau</option><option>Rivers</option>
+          <option>Sokoto</option><option>Taraba</option><option>Yobe</option>
+          <option>Zamfara</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label">Date of Birth <span class="required">*</span></label>
+        <div class="field-hint">Required for visa and travel documentation</div>
+        <input type="date" name="dob" required>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Gender <span class="required">*</span></label>
+      <div class="options-group" style="flex-direction:row; gap:12px;">
+        <label class="option-item" style="flex:1;">
+          <input type="radio" name="gender" value="Male" required>
+          <span class="option-label">Male</span>
+        </label>
+        <label class="option-item" style="flex:1;">
+          <input type="radio" name="gender" value="Female">
+          <span class="option-label">Female</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Passport Information -->
+  <div class="section-card gold-top">
+    <div class="section-title"><span class="section-num" style="background:var(--gold);">2</span> Passport & Travel Document</div>
+
+    <div class="notice-box">
+      ⚠️ A valid international passport is required for this trip. Your passport must be valid for at least <b>6 months from your visa application date</b>. Since we are applying around July 2026, your passport must be valid until at least <b>January 2027</b>.
+    </div>
+
+    <!-- FIRST QUESTION: Do you have a passport? -->
+    <div class="field">
+      <label class="field-label">Do you currently have a valid Nigerian International Passport? <span class="required">*</span></label>
+      <div class="options-group">
+        <label class="option-item">
+          <input type="radio" name="has_passport" value="Yes, I have a valid passport" required onclick="showPassportFields('yes')">
+          <span class="option-label">Yes — I have a valid passport</span>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="has_passport" value="Mine needs renewal" onclick="showPassportFields('renewal')">
+          <span class="option-label">Mine needs renewal</span>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="has_passport" value="No — I do not have a passport" onclick="showPassportFields('no')">
+          <span class="option-label">No — I do not have a passport yet</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Shown if YES or RENEWAL -->
+    <div id="passportDetails" style="display:none;">
+
+      <!-- Renewal notice -->
+      <div id="renewalNotice" style="display:none; margin-bottom:16px; padding:12px 14px;
+           background:#FFF8E1; border:1px solid #FFD54F; border-left:3px solid #FFA000;
+           font-size:12px; color:#5D4037; line-height:1.6;">
+        📋 <b>Passport Renewal Notice:</b> Please enter the details of your current passport below.
+        Kindly note that you <b>must apply for and receive your new passport before August 2026</b>
+        — our registration deadline. Failure to do so may affect your ability to travel with us.
+        Please begin your renewal process as soon as possible.
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label class="field-label">Passport Number <span class="required">*</span></label>
+          <input type="text" name="passport_number" id="passportNumber" placeholder="e.g. A12345678">
+        </div>
+        <div class="field">
+          <label class="field-label">Passport Expiry Date <span class="required">*</span></label>
+          <input type="date" name="passport_expiry" id="passportExpiry">
+          <div id="passportWarning" style="display:none; margin-top:8px; padding:10px 12px;
+               background:#FFF8E1; border:1px solid #FFD54F; border-left:3px solid #FFA000;
+               font-size:12px; color:#5D4037; line-height:1.6;">
+            📋 <b>Please Note:</b> Your passport may need renewal before this trip. Kindly begin
+            your renewal process as soon as possible so you can travel with us.
+            You can still complete your registration — our team will guide you.
+          </div>
+          <div id="passportOk" style="display:none; margin-top:8px; padding:10px 12px;
+               background:#D4EDDA; border:1px solid #28A745; border-left:3px solid #28A745;
+               font-size:12px; color:#155724; line-height:1.5;">
+            ✅ Your passport validity looks good for this trip.
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Full Name as on Passport <span class="required">*</span></label>
+        <div class="field-hint">Must match your passport exactly — including middle name if present.</div>
+        <input type="text" name="passport_fullname" id="passportFullname" placeholder="e.g. AMAKA GRACE OKAFOR">
+      </div>
+
+    </div>
+
+    <!-- Shown if NO -->
+    <div id="noPassportNotice" style="display:none; margin-top:4px; padding:14px 16px;
+         background:#FFF8E1; border:1px solid #FFD54F; border-left:3px solid #FFA000;
+         font-size:13px; color:#5D4037; line-height:1.7; font-family:'Cormorant Garamond',serif;
+         font-style:italic;">
+      📋 <b>Important:</b> You will need a valid Nigerian International Passport to travel with us.
+      Please begin your passport application process as soon as possible.
+      Our registration deadline is <b>August 2026</b>. You must have your passport ready before then.
+      You can still complete this registration — our team will follow up with you on your passport status.
+    </div>
+
+    <div class="field" style="margin-top:16px;">
+      <label class="field-label">Have you travelled internationally before? <span class="required">*</span></label>
+      <div class="options-group" style="flex-direction:row; gap:12px;">
+        <label class="option-item" style="flex:1;">
+          <input type="radio" name="travelled_before" value="Yes" required>
+          <span class="option-label">Yes</span>
+        </label>
+        <label class="option-item" style="flex:1;">
+          <input type="radio" name="travelled_before" value="No — this is my first time">
+          <span class="option-label">No — first time</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Have you ever been denied a visa to any country? <span class="required">*</span></label>
+      <div class="options-group" style="flex-direction:row; gap:12px;">
+        <label class="option-item" style="flex:1;">
+          <input type="radio" name="visa_denied" value="Yes" required>
+          <span class="option-label">Yes</span>
+        </label>
+        <label class="option-item" style="flex:1;">
+          <input type="radio" name="visa_denied" value="No">
+          <span class="option-label">No</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Package Selection -->
+  <div class="section-card red-top">
+    <div class="section-title"><span class="section-num" style="background:var(--crimson);">3</span> Tour Preferences</div>
+
+    <div class="field">
+      <label class="field-label">Room Preference <span class="required">*</span></label>
+      <div class="options-group" style="flex-direction:row; gap:12px;">
+        <label class="option-item" style="flex:1;">
+          <input type="radio" name="room_type" value="Sharing / Twin Room" required>
+          <span class="option-label">Sharing / Twin Room<span class="option-price">Standard price</span></span>
+        </label>
+        <label class="option-item" style="flex:1;">
+          <input type="radio" name="room_type" value="Single Room (+₦500,000)">
+          <span class="option-label">Single Room<span class="option-price">+₦500,000</span></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">If sharing, do you have a preferred roommate?</label>
+      <div class="field-hint">Leave blank if you have no preference — we will pair you accordingly.</div>
+      <input type="text" name="preferred_roommate" placeholder="Full name of preferred roommate">
+    </div>
+
+    <div class="field">
+      <label class="field-label">Number of people booking together (including yourself) <span class="required">*</span></label>
+      <div class="options-group">
+        <label class="option-item"><input type="radio" name="group_size" value="1 — Just me" required onclick="showGroupFields(1)"><span class="option-label">Just me — 1 person</span></label>
+        <label class="option-item"><input type="radio" name="group_size" value="2 people" onclick="showGroupFields(2)"><span class="option-label">2 people</span></label>
+        <label class="option-item"><input type="radio" name="group_size" value="3 people" onclick="showGroupFields(3)"><span class="option-label">3 people</span></label>
+        <label class="option-item"><input type="radio" name="group_size" value="4 or more people" onclick="showGroupFields(4)"><span class="option-label">4 or more people</span></label>
+      </div>
+    </div>
+
+    <!-- Dynamic group member name fields -->
+    <div id="groupFields" style="display:none;">
+      <div style="background:rgba(28,43,26,0.05); border:1px solid var(--border);
+                  border-left:3px solid var(--forest); padding:18px; margin-top:4px;">
+        <div style="font-family:'Cinzel',serif; font-size:10px; letter-spacing:2px;
+                    color:var(--forest); margin-bottom:14px;">
+          TRAVELLING COMPANIONS — FULL NAMES
+        </div>
+        <div id="groupMemberFields" style="display:flex; flex-direction:column; gap:12px;"></div>
+        <div style="font-size:11px; color:var(--sage); margin-top:10px; font-style:italic;">
+          Please enter full names as they appear on each person's passport.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: Payment Readiness -->
+  <div class="section-card">
+    <div class="section-title"><span class="section-num">4</span> Payment Readiness</div>
+
+    <div class="notice-box">
+      An initial deposit of <b>₦1,200,000</b> is required to confirm your reservation. Please note that <b>₦300,000</b> of this deposit is strictly non-refundable and covers processing, visa coordination, and reservation fees. Full payment must be completed no later than 60 days before departure. Our departure is scheduled for <b>October 2026.</b>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Are you ready to pay the ₦1,200,000 deposit? <span class="required">*</span></label>
+      <div class="options-group">
+        <label class="option-item"><input type="radio" name="deposit_readiness" value="Yes — ready to pay immediately" required><span class="option-label">Yes — I am ready to pay immediately</span></label>
+        <label class="option-item"><input type="radio" name="deposit_readiness" value="Yes — within 1 week"><span class="option-label">Yes — I can pay within 1 week</span></label>
+        <label class="option-item"><input type="radio" name="deposit_readiness" value="Yes — within 2 weeks"><span class="option-label">Yes — I can pay within 2 weeks</span></label>
+        <label class="option-item"><input type="radio" name="deposit_readiness" value="Not yet — still planning finances"><span class="option-label">Not yet — I am still planning my finances</span></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">How do you plan to pay the full package amount? <span class="required">*</span></label>
+      <div class="options-group">
+        <label class="option-item"><input type="radio" name="payment_plan" value="Full payment at once" required><span class="option-label">Full payment at once</span></label>
+        <label class="option-item"><input type="radio" name="payment_plan" value="Deposit now + installments over time"><span class="option-label">Deposit now + installments over time</span></label>
+        <label class="option-item"><input type="radio" name="payment_plan" value="Deposit now + balance before deadline"><span class="option-label">Deposit now + balance before deadline</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: Health & Special Requirements -->
+  <div class="section-card gold-top">
+    <div class="section-title"><span class="section-num" style="background:var(--gold);">5</span> Health & Special Requirements</div>
+
+    <div class="field">
+      <label class="field-label">Do you have any medical conditions we should be aware of? <span class="required">*</span></label>
+      <div class="field-hint">Strictly confidential — used only for your safety during the trip.</div>
+      <div class="options-group" style="flex-direction:row; gap:12px;">
+        <label class="option-item" style="flex:1;">
+          <input type="radio" name="medical" value="No medical conditions" required onclick="showMedicalField('no')">
+          <span class="option-label">No medical conditions</span>
+        </label>
+        <label class="option-item" style="flex:1;">
+          <input type="radio" name="medical" value="Yes — details provided below" onclick="showMedicalField('yes')">
+          <span class="option-label">Yes — I have a condition</span>
+        </label>
+      </div>
+    </div>
+
+    <div id="medicalDetails" style="display:none; margin-top:4px;">
+      <div class="field-hint" style="color:#8B1A1A;">Please specify your medical condition(s) below — this is required. <span class="required">*</span></div>
+      <textarea name="medical_details" id="medicalDetailsInput"
+                placeholder="e.g. I am diabetic and will carry my own insulin. I am also allergic to penicillin..."></textarea>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Do you have any dietary requirements or food restrictions? <span class="required">*</span></label>
+      <div class="options-group">
+        <label class="option-item">
+          <input type="radio" name="dietary" value="No restrictions — I eat everything" required onclick="showDietaryField('no')">
+          <span class="option-label">No restrictions — I eat everything</span>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="dietary" value="Halal only" onclick="showDietaryField('no')">
+          <span class="option-label">Halal only</span>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="dietary" value="Vegetarian" onclick="showDietaryField('no')">
+          <span class="option-label">Vegetarian</span>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="dietary" value="Vegan" onclick="showDietaryField('no')">
+          <span class="option-label">Vegan</span>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="dietary" value="Food allergy" onclick="showDietaryField('yes')">
+          <span class="option-label">Food allergy — I need to specify</span>
+        </label>
+      </div>
+    </div>
+
+    <div id="dietaryDetails" style="display:none; margin-top:4px;">
+      <div class="field-hint" style="color:#8B1A1A;">Please specify your food allergy — this is required. <span class="required">*</span></div>
+      <textarea name="dietary_details" id="dietaryDetailsInput"
+                placeholder="e.g. I am allergic to shellfish and peanuts..."></textarea>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Any special assistance or additional requirements?</label>
+      <textarea name="special_requirements" placeholder="e.g. wheelchair access, special seating..."></textarea>
+    </div>
+  </div>
+
+  <!-- SECTION 6: Emergency Contact -->
+  <div class="section-card red-top">
+    <div class="section-title"><span class="section-num" style="background:var(--crimson);">6</span> Emergency Contact</div>
+
+    <div class="two-col">
+      <div class="field">
+        <label class="field-label">Emergency Contact Full Name <span class="required">*</span></label>
+        <input type="text" name="emergency_name" placeholder="Full name" required>
+      </div>
+      <div class="field">
+        <label class="field-label">Relationship to You <span class="required">*</span></label>
+        <select name="emergency_relationship" id="emergencyRelationship" required onchange="showOtherField(this, 'emergencyRelationshipOther')">
+          <option value="">-- Select --</option>
+          <option>Spouse / Partner</option>
+          <option>Parent</option>
+          <option>Sibling</option>
+          <option>Child</option>
+          <option>Friend</option>
+          <option>Colleague</option>
+          <option value="Other">Other</option>
+        </select>
+        <div id="emergencyRelationshipOther" style="display:none; margin-top:8px;">
+          <div class="field-hint">Please specify your relationship — this field is required.</div>
+          <input type="text" name="emergency_relationship_other"
+                 placeholder="e.g. Uncle, Aunt, Neighbour, Pastor..."
+                 id="emergencyRelationshipOtherInput">
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Emergency Contact Phone Number <span class="required">*</span></label>
+      <input type="tel" name="emergency_phone" placeholder="+234 800 000 0000" required>
+    </div>
+  </div>
+
+  <!-- SECTION 7: How Did You Find Us -->
+  <div class="section-card">
+    <div class="section-title"><span class="section-num">7</span> How Did You Find Us?</div>
+
+    <div class="field">
+      <label class="field-label">How did you hear about this Japan tour? <span class="required">*</span></label>
+      <div class="options-group">
+        <label class="option-item"><input type="radio" name="referral_source" value="Instagram" required><span class="option-label">Instagram</span></label>
+        <label class="option-item"><input type="radio" name="referral_source" value="WhatsApp"><span class="option-label">WhatsApp (someone shared it with me)</span></label>
+        <label class="option-item"><input type="radio" name="referral_source" value="Friend or family member"><span class="option-label">A friend or family member told me</span></label>
+        <label class="option-item"><input type="radio" name="referral_source" value="Facebook"><span class="option-label">Facebook</span></label>
+        <label class="option-item"><input type="radio" name="referral_source" value="TikTok"><span class="option-label">TikTok</span></label>
+        <label class="option-item"><input type="radio" name="referral_source" value="Other" onclick="showOtherRadioField('referralOther')"><span class="option-label">Other</span></label>
+      </div>
+      <div id="referralOther" style="display:none; margin-top:8px;">
+        <input type="text" name="referral_source_other" id="referralOtherInput"
+               placeholder="Please specify how you heard about us...">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">What excites you most about this Japan trip?</label>
+      <textarea name="excitement" placeholder="e.g. I've always wanted to see Mount Fuji and experience Japanese food culture..."></textarea>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Any questions or additional information for us?</label>
+      <textarea name="questions" placeholder="Ask us anything about the trip, visa process, payment plans, or anything else..."></textarea>
+    </div>
+  </div>
+
+  <!-- SECTION 8: Agreement -->
+  <div class="section-card gold-top">
+    <div class="section-title"><span class="section-num" style="background:var(--gold);">8</span> Agreement & Declaration</div>
+
+    <div class="notice-box">
+      Please read carefully before submitting. By submitting this form you confirm that all information provided is accurate and that you agree to our Terms and Conditions and Refund & Cancellation Policy. The initial deposit of ₦1,200,000 includes a non-refundable fee of ₦300,000 which cannot be returned under any circumstances.
+      <br><br>
+      <span style="font-style:normal;">
+        👉 <a href="#" onclick="openTandC(); return false;"
+              style="color:var(--forest); font-weight:700; text-decoration:underline; font-family:'Inter',sans-serif; font-size:13px;">
+          Tap here to read our full Terms &amp; Conditions
+        </a>
+      </span>
+    </div>
+
+    <div class="options-group">
+      <label class="option-item">
+        <input type="checkbox" name="agree_accuracy" value="Confirmed" required>
+        <span class="option-label">I confirm that all information I have provided is accurate and truthful. <span class="required">*</span></span>
+      </label>
+      <label class="option-item">
+        <input type="checkbox" name="agree_deposit" value="Confirmed" required>
+        <span class="option-label">I understand that the initial deposit is <b>₦1,200,000</b>, and that <b>₦300,000</b> of this is strictly <b>non-refundable</b> under any circumstances. <span class="required">*</span></span>
+      </label>
+      <label class="option-item">
+        <input type="checkbox" name="agree_visa" value="Confirmed" required>
+        <span class="option-label">I understand that Japan visa approval is not guaranteed and is at the sole discretion of the Japanese Embassy. <span class="required">*</span></span>
+      </label>
+      <label class="option-item">
+        <input type="checkbox" name="agree_terms" value="Confirmed" required>
+        <span class="option-label">I have read and agree to the full <a href="#" onclick="openTandC(); return false;" style="color:var(--forest); font-weight:700;">Terms and Conditions</a> and Refund &amp; Cancellation Policy of Ubah's Travel Space Agency. <span class="required">*</span></span>
+      </label>
+      <label class="option-item">
+        <input type="checkbox" name="agree_contact" value="Confirmed">
+        <span class="option-label">I consent to Ubah's Travel Space Agency contacting me via WhatsApp and email regarding this booking and future travel opportunities.</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- TERMS & CONDITIONS MODAL -->
+  <div id="tandcModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+       background:rgba(0,0,0,0.85); z-index:99999; overflow-y:auto; padding:20px 16px;">
+    <div style="max-width:680px; margin:0 auto; background:#FAFCF8; padding:32px 28px;
+                border-top:4px solid #1C2B1A; position:relative;">
+
+      <!-- Close button -->
+      <button onclick="closeTandC()"
+              style="position:absolute; top:16px; right:16px; background:#1C2B1A;
+                     color:#E8D5A3; border:none; padding:8px 18px; cursor:pointer;
+                     font-family:'Cinzel',serif; font-size:11px; letter-spacing:2px;">
+        ✕ CLOSE
+      </button>
+
+      <div style="font-family:'Cinzel',serif; font-size:16px; color:#1C2B1A;
+                  font-weight:700; margin-bottom:4px; padding-right:60px;">
+        REFUND AND CANCELLATION POLICY
+      </div>
+      <div style="font-family:'Cinzel',serif; font-size:11px; color:#8B1A1A;
+                  margin-bottom:6px; letter-spacing:2px;">
+        JAPAN GROUP TOUR PACKAGES
+      </div>
+      <div style="font-size:8.5px; color:#333; margin-bottom:20px; font-family:'Inter',sans-serif;">
+        Effective Date: May 2026 | Version 1.0 | Jurisdiction: Federal Republic of Nigeria
+      </div>
+      <div style="width:100%; height:1px; background:#D4C9A8; margin-bottom:20px;"></div>
+
+      <!-- PREAMBLE -->
+      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px;
+                  color:#1C2B1A; letter-spacing:3px; margin-bottom:8px;">PREAMBLE</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:16px; font-family:'Inter',sans-serif; text-align:justify;">
+        This Refund and Cancellation Policy constitutes a legally binding agreement between <b>Ubah's Travel Space Agency</b> ("the Agency") and any individual ("the Client") who purchases or engages any travel package offered by the Agency. By remitting any payment, the Client acknowledges having read, understood, and agreed to be bound by all terms herein.
+      </p>
+
+      <!-- CLAUSES -->
+      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 1. DEFINITIONS</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+        "Package" means any Japan Group Tour package including Osaka, Tokyo, and Tokyo + Osaka Premium. "Initial Deposit" means the booking deposit of <b>NGN 1,200,000</b> required to secure a reservation. "Non-Refundable Fee" means the <b>NGN 300,000</b> portion of the deposit that is non-refundable under all circumstances, covering processing, visa coordination, and reservation costs. "Land Package Price" means the total cost excluding international flights. "Departure Date" means the scheduled departure confirmed in booking documentation. "Force Majeure" means any event beyond reasonable control including acts of God, war, pandemics, or government advisories.
+      </p>
+
+      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 2. BOOKING CONFIRMATION AND DEPOSIT</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+        2.1 An initial deposit of <b>NGN 1,200,000 per person</b> is required to secure a reservation. Payment constitutes formal acceptance of this Policy. 2.2 Of this deposit, <b>NGN 300,000 is strictly non-refundable</b> under all circumstances — this covers processing, visa coordination, hotel reservation, and itinerary preparation costs. The remaining balance of the deposit may be refunded subject to the cancellation schedule in Clause 3. 2.3 Full payment must be completed <b>no later than 60 calendar days</b> prior to departure. Failure to pay may result in cancellation without refund. 2.4 The Agency may adjust pricing due to foreign exchange fluctuations with 45 days notice.
+      </p>
+
+      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 3. CANCELLATION BY THE CLIENT</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:4px; font-family:'Inter',sans-serif; text-align:justify;">
+        3.1 Cancellations must be submitted in writing to ubahstravelspaceagency@gmail.com. 3.2 The cancellation date is when the Agency receives written notice.
+      </p>
+      <div style="background:#F5F0E0; border:1px solid #D4C9A8; margin:10px 0; overflow:hidden;">
+        <table style="width:100%; border-collapse:collapse; font-size:9px; font-family:'Inter',sans-serif;">
+          <tr style="background:#1C2B1A; color:#E8D5A3;">
+            <td style="padding:8px 10px; font-weight:700;">NOTICE PERIOD</td>
+            <td style="padding:8px 10px; font-weight:700;">REFUND</td>
+          </tr>
+          <tr style="background:#F5F0E0;"><td style="padding:7px 10px; color:#111;">90 days or more</td><td style="padding:7px 10px; color:#111;">75% refund (excl. deposit)</td></tr>
+          <tr style="background:#fff;"><td style="padding:7px 10px; color:#111;">61 to 89 days</td><td style="padding:7px 10px; color:#111;">50% refund (excl. deposit)</td></tr>
+          <tr style="background:#F5F0E0;"><td style="padding:7px 10px; color:#111;">31 to 60 days</td><td style="padding:7px 10px; color:#111;">25% refund (excl. deposit)</td></tr>
+          <tr style="background:#fff;"><td style="padding:7px 10px; color:#111;">30 days or less</td><td style="padding:7px 10px; color:#111;">No refund</td></tr>
+          <tr style="background:#F5F0E0;"><td style="padding:7px 10px; color:#111;">No-show</td><td style="padding:7px 10px; color:#111;">No refund</td></tr>
+        </table>
+      </div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; font-family:'Inter',sans-serif;">3.3 Refunds processed within 14–21 working days of confirmation.</p>
+
+      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 4. JAPAN VISA DENIAL</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+        4.1 Japan visa approval is at the absolute discretion of the Japanese Embassy. The Agency makes no guarantee of visa approval. 4.2 On denial: visa processing fees are non-refundable; the <b>NGN 300,000 non-refundable processing fee</b> is also non-refundable under all circumstances including visa denial, as it covers processing, coordination, and reservation costs already incurred; the Agency will refund all other amounts paid above the NGN 300,000 non-refundable fee and visa processing fees; the Client may also choose to transfer their slot to a future tour date within 7 days of denial notification. 4.3 The Agency provides documentation support but bears no responsibility for denial due to the Client's personal circumstances.
+      </p>
+
+      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 5. INTERNATIONAL FLIGHTS</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+        5.1 International return flights are <b>not included</b> in land package prices. Clients are solely responsible for flight arrangements. 5.2 Any airline fees for flight changes arranged through the Agency are borne by the Client. 5.3 The Agency bears no liability for flight delays, cancellations, or disruptions.
+      </p>
+
+      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 6. CANCELLATION BY THE AGENCY</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+        6.1 The Agency may cancel if: group size falls below 8 persons; Force Majeure occurs; key suppliers fail to deliver; or a government travel advisory is issued. 6.2 On Agency cancellation: 30 days written notice will be provided; full land package refund issued excluding visa fees; or transfer to rescheduled date offered. 6.3 Agency liability is limited to monies paid to the Agency only.
+      </p>
+
+      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 7. AMENDMENTS</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+        Name amendment: NGN 25,000. Room upgrade: subject to availability and price difference. Room downgrade: treated as partial cancellation per Clause 3. Date change: treated as cancellation and re-booking at current pricing.
+      </p>
+
+      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 8. TRAVEL INSURANCE</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+        Travel insurance is strongly recommended and is not included in any package. Recommended coverage: trip cancellation, medical emergencies, baggage loss, flight delays, and visa denial where available.
+      </p>
+
+      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 9. STRICTLY NON-REFUNDABLE ITEMS</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+        The following are non-refundable under all circumstances: the NGN 300,000 non-refundable processing fee (part of the NGN 1,200,000 initial deposit); visa processing fees; airline tickets purchased on Client's behalf; pre-confirmed attraction tickets and experiences; ancillary fees already incurred.
+      </p>
+
+      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 10. LIMITATION OF LIABILITY</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+        The Agency acts as intermediary between the Client and third-party providers. Total Agency liability shall not exceed the land package price paid. The Agency is not liable for losses arising from Force Majeure events.
+      </p>
+
+      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 11. DISPUTE RESOLUTION</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+        Disputes shall first be resolved through good-faith negotiation. Unresolved disputes within 30 days are subject to Nigerian law and court jurisdiction. Contact: ubahstravelspaceagency@gmail.com | +234 802 316 8428.
+      </p>
+
+      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 12. POLICY UPDATES</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:20px; font-family:'Inter',sans-serif; text-align:justify;">
+        The Agency reserves the right to amend this Policy. Clients will be notified of material changes. The Policy in effect at time of booking governs that booking.
+      </p>
+
+      <div style="width:100%; height:1px; background:#D4C9A8; margin-bottom:16px;"></div>
+      <div style="text-align:center; font-size:8.5px; color:#5A6B58; font-family:'Inter',sans-serif; margin-bottom:20px;">
+        Ubah's Travel Space Agency | +234 802 316 8428 | ubahstravelspaceagency@gmail.com | @ubahs_travel_space
+      </div>
+
+      <button type="button" onclick="closeTandC()"
+              style="display:block; width:100%; background:#1C2B1A; color:#E8D5A3;
+                     border:none; padding:14px; cursor:pointer; font-family:'Cinzel',serif;
+                     font-size:12px; letter-spacing:3px;">
+        ✕ &nbsp; CLOSE TERMS &amp; CONDITIONS
+      </button>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-wrap">
+    <button type="submit" class="submit-btn" id="submitBtn">✦ &nbsp; Submit Registration &nbsp; ✦</button>
+    <div class="form-footer">
+      After submitting, our team will reach out to you within <b>24–48 hours</b> to confirm your registration and guide you on your next steps.<br><br>
+      Once you submit, a payment link will appear for your <b>₦1,200,000 initial deposit</b> or full package payment — whichever you prefer.<br><br>
+      📞 +234 802 316 8428 &nbsp;|&nbsp; ✉️ ubahstravelspaceagency@gmail.com &nbsp;|&nbsp; 📸 @ubahs_travel_space
+    </div>
+  </div>
+
+</form>
+</div>
+
+<!-- SUCCESS MESSAGE — outside form so it shows correctly -->
+<div class="success-msg" id="successMsg">
+    <span class="tick">🎌</span>
+    <h2>YOU ARE SUCCESSFULLY REGISTERED!</h2>
+    <p style="font-size:18px; margin-bottom:10px;">
+      Congratulations! Your registration for the<br>
+      <b style="color:#E8D5A3;">Japan Group Tour — October 2026</b><br>
+      has been received successfully.
+    </p>
+    <p style="font-size:15px; margin-bottom:24px; color:rgba(232,213,163,0.75);">
+      To secure your slot, please proceed with your payment below.<br>
+      Our team will contact you within <b>24–48 hours</b> to confirm your booking.
+    </p>
+
+    <!-- Payment Buttons - shown dynamically based on payment plan choice -->
+    <div style="display:flex; flex-direction:column; gap:12px; align-items:center; margin-bottom:28px;">
+
+      <p style="font-family:'Cinzel',serif; font-size:10px; letter-spacing:3px; color:rgba(232,213,163,0.6); margin-bottom:4px;">PROCEED TO PAYMENT</p>
+
+      <!-- Deposit button — hidden if full payment selected -->
+      <a href="https://paystack.shop/pay/japan-tour-deposit?callback_url=YOUR_PAGE_URL%3Fpayment%3Dsuccess%26amount%3D300000"
+         target="_blank" id="depositBtn"
+         style="display:flex; align-items:center; justify-content:center; gap:10px;
+                background: linear-gradient(135deg, #8B6914, #C9A84C);
+                padding:16px 28px; color:#0D1F0C; text-decoration:none;
+                font-family:'Cinzel',serif; font-size:13px; font-weight:700;
+                letter-spacing:2px; width:100%; max-width:340px;">
+        💳 &nbsp; Pay Deposit — ₦1,200,000
+      </a>
+
+      <!-- Full payment button — always shown -->
+      <a href="https://paystack.shop/pay/japan-tour-fullpayment?callback_url=YOUR_PAGE_URL%3Fpayment%3Dsuccess"
+         target="_blank" id="fullPayBtn"
+         style="display:flex; align-items:center; justify-content:center; gap:10px;
+                background: rgba(232,213,163,0.1);
+                border: 1px solid rgba(232,213,163,0.4);
+                padding:16px 28px; color:#E8D5A3; text-decoration:none;
+                font-family:'Cinzel',serif; font-size:13px; letter-spacing:2px;
+                width:100%; max-width:340px;">
+        💰 &nbsp; Make Full Payment
+      </a>
+
+      <p style="font-size:11px; color:rgba(232,213,163,0.45); font-style:italic; max-width:340px; text-align:center; margin-top:4px;">
+        ⚠️ For full payment, please ensure your exact amount has been confirmed with our agent before proceeding.
+      </p>
+
+    </div>
+
+    <!-- Divider -->
+    <div style="width:100%; max-width:340px; height:1px; background:rgba(232,213,163,0.2); margin:0 auto 24px;"></div>
+
+    <p style="font-size:13px; color:rgba(232,213,163,0.6); margin-bottom:16px;">
+      Have questions? Contact us directly:
+    </p>
+
+    <!-- Tappable contact details -->
+    <div style="display:flex; flex-direction:column; gap:12px; align-items:center; margin-bottom:24px;">
+
+      <a href="tel:+2348023168428"
+         style="display:flex; align-items:center; gap:10px; background:rgba(232,213,163,0.12);
+                border:1px solid rgba(232,213,163,0.3); padding:14px 28px;
+                color:#E8D5A3; text-decoration:none; font-family:'Cinzel',serif;
+                font-size:13px; letter-spacing:1px; width:100%; max-width:340px;
+                justify-content:center;">
+        📞 &nbsp; +234 802 316 8428
+      </a>
+
+      <a href="https://wa.me/2348023168428"
+         target="_blank"
+         style="display:flex; align-items:center; gap:10px; background:rgba(37,211,102,0.15);
+                border:1px solid rgba(37,211,102,0.3); padding:14px 28px;
+                color:#E8D5A3; text-decoration:none; font-family:'Cinzel',serif;
+                font-size:13px; letter-spacing:1px; width:100%; max-width:340px;
+                justify-content:center;">
+        💬 &nbsp; WhatsApp Us
+      </a>
+
+      <a href="mailto:ubahstravelspaceagency@gmail.com"
+         style="display:flex; align-items:center; gap:10px; background:rgba(232,213,163,0.12);
+                border:1px solid rgba(232,213,163,0.3); padding:14px 28px;
+                color:#E8D5A3; text-decoration:none; font-family:'Cinzel',serif;
+                font-size:13px; letter-spacing:1px; width:100%; max-width:340px;
+                justify-content:center;">
+        ✉️ &nbsp; ubahstravelspaceagency@gmail.com
+      </a>
+
+    </div>
+
+    <p style="font-size:13px; color:rgba(232,213,163,0.5); font-style:italic;">
+      Effortless Travel, Unforgettable Experiences 🇯🇵
+    </p>
+</div>
+
+<script>
+
+// ── MEDICAL CONDITION FIELD ──
+function showMedicalField(choice) {
+  const container = document.getElementById('medicalDetails');
+  const input = document.getElementById('medicalDetailsInput');
+  if (choice === 'yes') {
+    container.style.display = 'block';
+    input.required = true;
+  } else {
+    container.style.display = 'none';
+    input.required = false;
+    input.value = '';
+  }
+}
+
+// ── DIETARY / FOOD ALLERGY FIELD ──
+function showDietaryField(choice) {
+  const container = document.getElementById('dietaryDetails');
+  const input = document.getElementById('dietaryDetailsInput');
+  if (choice === 'yes') {
+    container.style.display = 'block';
+    input.required = true;
+  } else {
+    container.style.display = 'none';
+    input.required = false;
+    input.value = '';
+  }
+}
+
+// ── TERMS & CONDITIONS MODAL ──
+function openTandC() {
+  document.getElementById('tandcModal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+function closeTandC() {
+  document.getElementById('tandcModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// ── STICKY SUCCESS PAGE ──
+let formSubmitted = false;
+
+function lockToSuccess() {
+  formSubmitted = true;
+  sessionStorage.setItem('japanTourSubmitted', 'true');
+  successMsg.style.display = 'block';
+  document.body.style.overflow = 'auto';
+  history.pushState(null, '', window.location.href);
+}
+
+if (sessionStorage.getItem('japanTourSubmitted') === 'true') {
+  formSubmitted = true;
+  successMsg.style.display = 'block';
+}
+
+history.pushState(null, '', window.location.href);
+window.addEventListener('popstate', function() {
+  if (formSubmitted) {
+    history.pushState(null, '', window.location.href);
+    successMsg.style.display = 'block';
+  }
+});
+
+// ── PAYSTACK RETURN URL DETECTION ──
+(function checkPaystackReturn() {
+  const params    = new URLSearchParams(window.location.search);
+  const reference = params.get('reference') || params.get('trxref');
+  if (reference) {
+    showPaymentLoadingScreen(reference);
+  }
+})();
+
+// ── LOADING SCREEN WHILE VERIFYING ──
+function showPaymentLoadingScreen(reference) {
+  document.getElementById('successMsg').style.display  = 'none';
+  document.querySelector('.form-wrap').style.display   = 'none';
+  document.querySelector('.hero').style.display        = 'none';
+
+  const screen = document.createElement('div');
+  screen.id = 'paymentSuccessScreen';
+  screen.style.cssText = [
+    'position:fixed','top:0','left:0','width:100%','height:100%',
+    'background:#1C2B1A','color:#E8D5A3',
+    'display:flex','flex-direction:column','align-items:center',
+    'justify-content:center','overflow-y:auto',
+    'padding:48px 24px 60px','z-index:99999','text-align:center'
+  ].join(';');
+  screen.innerHTML =
+    '<span style="font-size:48px;display:block;margin-bottom:20px;">⏳</span>' +
+    '<div style="font-family:Cinzel,serif;font-size:18px;letter-spacing:2px;color:#E8D5A3;margin-bottom:12px;">VERIFYING YOUR PAYMENT...</div>' +
+    '<p style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;color:rgba(232,213,163,0.7);">Please wait while we confirm with Paystack.</p>';
+  document.body.appendChild(screen);
+
+  // Block going back
+  history.pushState(null, '', window.location.href);
+  window.addEventListener('popstate', function () {
+    history.pushState(null, '', window.location.href);
+  });
+
+  fetch('/.netlify/functions/verify-payment?reference=' + encodeURIComponent(reference))
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.status === 'success') {
+        const payDate = new Date(data.paidAt).toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
+        renderReceiptScreen(data.amountPaid, data.amountReceived, data.paystackFee, data.payerName, data.reference, payDate);
+      } else {
+        renderErrorScreen(reference, data.error || 'Payment could not be verified.');
+      }
+    })
+    .catch(function () {
+      renderErrorScreen(reference, 'Network error. Please contact us with your reference number.');
+    });
+}
+
+// ── RECEIPT SCREEN ──
+function renderReceiptScreen(amountPaid, amountReceived, paystackFee, name, reference, date) {
+  const screen      = document.getElementById('paymentSuccessScreen');
+  const fmtPaid     = '\u20A6' + Number(amountPaid).toLocaleString('en-NG');
+  const fmtReceived = '\u20A6' + Number(amountReceived).toLocaleString('en-NG');
+  const fmtFee      = '\u20A6' + Number(paystackFee).toLocaleString('en-NG');
+  const waMsg       = 'Hi! I just paid ' + fmtPaid + ' for the Japan Group Tour (Oct 2026). Reference: ' + reference;
+
+  screen.style.justifyContent = 'flex-start';
+  screen.innerHTML =
+    '<span style="font-size:56px;display:block;margin-bottom:16px;">\u2705</span>' +
+    '<div style="font-family:Cinzel,serif;font-size:clamp(18px,4vw,24px);letter-spacing:2px;margin-bottom:12px;color:#E8D5A3;">PAYMENT RECEIVED!</div>' +
+    '<div style="font-family:Cormorant Garamond,serif;font-size:17px;font-style:italic;color:rgba(232,213,163,0.85);line-height:1.75;max-width:480px;margin-bottom:28px;">' +
+      'Congratulations' + (name ? ', <b>' + name + '</b>' : '') + '! We have received your payment of ' +
+      '<b style="color:#E8D5A3;">' + fmtPaid + '</b> for the Japan Group Tour \u2014 October 2026.<br><br>' +
+      'Our team will be in touch within <b>24\u201348 hours</b> to confirm your booking.' +
+    '</div>' +
+
+    '<div id="receiptCard" style="background:#FAFCF8;color:#111;border-top:4px solid #1C2B1A;max-width:480px;width:100%;padding:28px 24px;text-align:left;margin-bottom:24px;">' +
+      '<div style="font-family:Cinzel,serif;font-size:13px;font-weight:700;color:#1C2B1A;letter-spacing:2px;margin-bottom:4px;">PAYMENT RECEIPT</div>' +
+      '<div style="font-family:Cinzel,serif;font-size:10px;color:#8B1A1A;letter-spacing:2px;margin-bottom:16px;">UBAH\'S TRAVEL SPACE AGENCY \u2014 JAPAN TOUR 2026</div>' +
+      '<div style="height:1px;background:#D4C9A8;margin-bottom:16px;"></div>' +
+      '<table style="width:100%;border-collapse:collapse;font-family:Inter,sans-serif;font-size:13px;">' +
+        '<tr><td style="padding:7px 0;color:#5A6B58;width:55%;">Traveller</td><td style="padding:7px 0;font-weight:600;color:#111;">' + (name || '\u2014') + '</td></tr>' +
+        '<tr><td style="padding:7px 0;color:#5A6B58;">Amount Paid by Customer</td><td style="padding:7px 0;font-weight:700;color:#1C2B1A;font-size:16px;">' + fmtPaid + '</td></tr>' +
+        '<tr><td style="padding:7px 0;color:#5A6B58;">Paystack Processing Fee</td><td style="padding:7px 0;color:#8B1A1A;">\u2212 ' + fmtFee + '</td></tr>' +
+        '<tr><td style="padding:7px 0;color:#5A6B58;">Amount Received by Agency</td><td style="padding:7px 0;font-weight:700;color:#1C2B1A;font-size:14px;">' + fmtReceived + '</td></tr>' +
+        '<tr><td colspan="2"><div style="height:1px;background:#D4C9A8;margin:6px 0;"></div></td></tr>' +
+        '<tr><td style="padding:7px 0;color:#5A6B58;">Date</td><td style="padding:7px 0;color:#111;">' + date + '</td></tr>' +
+        '<tr><td style="padding:7px 0;color:#5A6B58;">Reference</td><td style="padding:7px 0;color:#111;font-size:11px;word-break:break-all;">' + reference + '</td></tr>' +
+        '<tr><td style="padding:7px 0;color:#5A6B58;">Tour</td><td style="padding:7px 0;color:#111;">Japan Group Tour \u2014 October 2026</td></tr>' +
+        '<tr><td style="padding:7px 0;color:#5A6B58;">Status</td><td style="padding:7px 0;font-weight:700;color:#1C2B1A;">\u2705 CONFIRMED</td></tr>' +
+      '</table>' +
+      '<div style="height:1px;background:#D4C9A8;margin:16px 0;"></div>' +
+      '<div style="font-size:9.5px;color:#5A6B58;font-family:Inter,sans-serif;text-align:center;line-height:1.6;">' +
+        "Ubah's Travel Space Agency &nbsp;|&nbsp; +234 802 316 8428 &nbsp;|&nbsp; ubahstravelspaceagency@gmail.com" +
+      '</div>' +
+    '</div>' +
+
+    '<div style="display:flex;flex-direction:column;gap:12px;align-items:center;width:100%;max-width:340px;margin-bottom:32px;">' +
+      '<button type="button" onclick="downloadReceiptPDF()" style="width:100%;background:linear-gradient(135deg,#8B6914,#C9A84C);color:#0D1F0C;border:none;padding:15px 28px;cursor:pointer;font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:2px;">' +
+        '\u2B07\uFE0F &nbsp; Download Receipt (PDF)' +
+      '</button>' +
+      '<a href="https://wa.me/?text=' + encodeURIComponent(waMsg) + '" target="_blank" style="width:100%;display:flex;align-items:center;justify-content:center;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);padding:15px 28px;color:#E8D5A3;text-decoration:none;font-family:Cinzel,serif;font-size:13px;letter-spacing:2px;">' +
+        '\uD83D\uDCAC &nbsp; Share via WhatsApp' +
+      '</a>' +
+    '</div>' +
+    '<p style="font-size:13px;color:rgba(232,213,163,0.45);font-style:italic;">Effortless Travel, Unforgettable Experiences \uD83C\uDDEF\uD83C\uDDF5</p>';
+}
+
+// ── ERROR SCREEN ──
+function renderErrorScreen(reference, message) {
+  const screen = document.getElementById('paymentSuccessScreen');
+  screen.innerHTML =
+    '<span style="font-size:48px;display:block;margin-bottom:16px;">\u26A0\uFE0F</span>' +
+    '<div style="font-family:Cinzel,serif;font-size:20px;letter-spacing:2px;margin-bottom:12px;color:#E8D5A3;">VERIFICATION ISSUE</div>' +
+    '<p style="font-family:Cormorant Garamond,serif;font-size:16px;font-style:italic;color:rgba(232,213,163,0.8);line-height:1.75;max-width:480px;margin-bottom:24px;">' +
+      message + '<br><br>Your reference: <b style="font-size:13px;word-break:break-all;">' + reference + '</b><br><br>' +
+      'Please send this to us on WhatsApp and we will confirm your payment manually.' +
+    '</p>' +
+    '<a href="https://wa.me/2348023168428?text=' + encodeURIComponent('Hi! I paid for the Japan Tour. My Paystack reference is: ' + reference + '. Please confirm.') + '" target="_blank" style="display:flex;align-items:center;justify-content:center;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);padding:15px 28px;color:#E8D5A3;text-decoration:none;font-family:Cinzel,serif;font-size:13px;letter-spacing:2px;width:100%;max-width:340px;">' +
+      '\uD83D\uDCAC &nbsp; Send Reference via WhatsApp' +
+    '</a>';
+}
+
+// ── DOWNLOAD RECEIPT AS PDF ──
+function downloadReceiptPDF() {
+  const card = document.getElementById('receiptCard');
+  if (!card) return;
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Payment Receipt — Japan Tour 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #fff;
+    color: #111;
+    min-height: 100vh;
+    padding: 0;
+  }
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 20mm 18mm;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+  .header {
+    background: #1C2B1A;
+    color: #E8D5A3;
+    padding: 32px 28px;
+    text-align: center;
+    margin-bottom: 0;
+  }
+  .header-flag { font-size: 32px; display: block; margin-bottom: 10px; }
+  .header-agency {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(232,213,163,0.7);
+    margin-bottom: 8px;
+  }
+  .header-title {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #E8D5A3;
+    margin-bottom: 4px;
+  }
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: rgba(232,213,163,0.6);
+    letter-spacing: 2px;
+  }
+  .gold-bar {
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+    margin-bottom: 36px;
+  }
+  .receipt-box {
+    border: 1px solid #D4C9A8;
+    border-top: 5px solid #1C2B1A;
+    padding: 32px 28px;
+    margin-bottom: 28px;
+  }
+  .receipt-label {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1C2B1A;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .receipt-sublabel {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    color: #8B1A1A;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+  }
+  .divider { height: 1px; background: #D4C9A8; margin: 14px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  td { padding: 9px 0; vertical-align: top; }
+  td:first-child { color: #5A6B58; width: 52%; }
+  td:last-child { font-weight: 600; color: #111; }
+  .amount-paid { font-size: 18px !important; font-weight: 700 !important; color: #1C2B1A !important; }
+  .fee-cell { color: #8B1A1A !important; font-weight: 400 !important; }
+  .received { font-size: 15px !important; font-weight: 700 !important; color: #1C2B1A !important; }
+  .status { font-weight: 700 !important; color: #1C2B1A !important; }
+  .ref { font-size: 11px !important; font-weight: 400 !important; word-break: break-all; }
+  .notice {
+    background: #F0F7F4;
+    border-left: 4px solid #1C2B1A;
+    padding: 14px 16px;
+    font-size: 12px;
+    color: #1C2B1A;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .footer {
+    margin-top: auto;
+    border-top: 1px solid #D4C9A8;
+    padding-top: 18px;
+    text-align: center;
+    font-size: 10px;
+    color: #5A6B58;
+    line-height: 1.8;
+  }
+  .footer-agency {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #1C2B1A;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .stamp {
+    display: inline-block;
+    border: 2px solid #1C2B1A;
+    color: #1C2B1A;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 8px 20px;
+    margin: 20px auto;
+    transform: rotate(-2deg);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <span class="header-flag">🇯🇵</span>
+    <div class="header-agency">UBAH'S TRAVEL SPACE AGENCY</div>
+    <div class="header-title">PAYMENT RECEIPT</div>
+    <div class="header-sub">JAPAN GROUP TOUR — OCTOBER 2026</div>
+  </div>
+  <div class="gold-bar"></div>
+
+  <div class="receipt-box">
+    <div class="receipt-label">PAYMENT RECEIPT</div>
+    <div class="receipt-sublabel">UBAH'S TRAVEL SPACE AGENCY — JAPAN TOUR 2026</div>
+    <div class="divider"></div>
+    ${card.querySelector('table').outerHTML.replace(
+      /font-size:16px/g, ''
+    )}
+    <div class="divider"></div>
+    <div style="text-align:center;">
+      <div class="stamp">✅ PAYMENT CONFIRMED</div>
+    </div>
+  </div>
+
+  <div class="notice">
+    <b>Important:</b> Please keep this receipt safe. Our team will contact you within 24–48 hours
+    to confirm your full booking. If you have questions, reach us on WhatsApp: <b>+234 802 316 8428</b>
+    or email <b>ubahstravelspaceagency@gmail.com</b>
+  </div>
+
+  <div class="footer">
+    <div class="footer-agency">UBAH'S TRAVEL SPACE AGENCY</div>
+    +234 802 316 8428 &nbsp;|&nbsp; ubahstravelspaceagency@gmail.com &nbsp;|&nbsp; @ubahs_travel_space<br>
+    Effortless Travel, Unforgettable Experiences
+  </div>
+
+</div>
+<script>window.onload = function() { window.print(); }<\/script>
+</body>
+</html>`;
+
+  const blob = new Blob([html], { type: 'text/html' });
+  const url  = URL.createObjectURL(blob);
+  const win  = window.open(url, '_blank');
+  if (!win) {
+    // Fallback if popup blocked
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = 'Japan-Tour-Receipt.html';
+    a.click();
+  }
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
+}
+
+// ── PASSPORT SECTION CONDITIONAL DISPLAY ──
+function showPassportFields(choice) {
+  const details = document.getElementById('passportDetails');
+  const noNotice = document.getElementById('noPassportNotice');
+  const renewalNotice = document.getElementById('renewalNotice');
+  const pNum = document.getElementById('passportNumber');
+  const pExp = document.getElementById('passportExpiry');
+  const pName = document.getElementById('passportFullname');
+
+  if (choice === 'yes') {
+    details.style.display = 'block';
+    noNotice.style.display = 'none';
+    renewalNotice.style.display = 'none';
+    pNum.required = true;
+    pExp.required = true;
+    pName.required = true;
+  } else if (choice === 'renewal') {
+    details.style.display = 'block';
+    noNotice.style.display = 'none';
+    renewalNotice.style.display = 'block';
+    pNum.required = true;
+    pExp.required = true;
+    pName.required = true;
+  } else {
+    details.style.display = 'none';
+    noNotice.style.display = 'block';
+    renewalNotice.style.display = 'none';
+    pNum.required = false;
+    pExp.required = false;
+    pName.required = false;
+  }
+}
+
+// ── PASSPORT EXPIRY WARNING ──
+document.getElementById('passportExpiry').addEventListener('change', function() {
+  const expiry = new Date(this.value);
+  const minRequired = new Date('2027-01-01');
+  const warning = document.getElementById('passportWarning');
+  const ok = document.getElementById('passportOk');
+  if (!this.value) { warning.style.display='none'; ok.style.display='none'; return; }
+  if (expiry < minRequired) { warning.style.display='block'; ok.style.display='none'; }
+  else { ok.style.display='block'; warning.style.display='none'; }
+});
+
+// ── OTHER FIELD — SELECT DROPDOWN ──
+function showOtherField(selectEl, containerId) {
+  const container = document.getElementById(containerId);
+  const input = container.querySelector('input');
+  if (selectEl.value === 'Other') {
+    container.style.display = 'block';
+    input.required = true;
+  } else {
+    container.style.display = 'none';
+    input.required = false;
+    input.value = '';
+  }
+}
+
+// ── OTHER FIELD — RADIO BUTTON ──
+function showOtherRadioField(containerId) {
+  const container = document.getElementById(containerId);
+  const input = document.getElementById(containerId + 'Input');
+  container.style.display = 'block';
+  input.required = true;
+}
+
+// Hide Other radio field when different option selected
+document.querySelectorAll('input[name="referral_source"]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    const container = document.getElementById('referralOther');
+    const input = document.getElementById('referralOtherInput');
+    if (this.value !== 'Other') {
+      container.style.display = 'none';
+      input.required = false;
+      input.value = '';
+    } else {
+      container.style.display = 'block';
+      input.required = true;
+    }
+  });
+});
+
+// ── DYNAMIC GROUP MEMBER FIELDS ──
+function showGroupFields(count) {
+  const groupFields = document.getElementById('groupFields');
+  const memberFields = document.getElementById('groupMemberFields');
+  memberFields.innerHTML = '';
+  if (count <= 1) { groupFields.style.display='none'; return; }
+  groupFields.style.display = 'block';
+  const companions = count === 4 ? 3 : count - 1;
+
+  // Add important note at top
+  memberFields.innerHTML = `
+    <div style="background:#FFF8E1; border:1px solid #FFD54F; border-left:3px solid #FFA000;
+                padding:12px 14px; font-size:12px; color:#5D4037; line-height:1.6; margin-bottom:10px;">
+      📋 <b>Please Note:</b> Adding your companions' names here does not register them automatically.
+      Each person travelling with you <b>must complete and submit their own registration form</b>
+      separately. This information simply lets us know you are travelling together as a group.
+    </div>`;
+
+  for (let i = 1; i <= companions; i++) {
+    const label = count === 4 && i === 3 ? `Companion ${i} (+ any others)` : `Companion ${i}`;
+    memberFields.innerHTML += `
+      <div>
+        <label style="font-size:12px; font-weight:500; color:var(--forest);
+                      display:block; margin-bottom:6px; font-family:'Inter',sans-serif;">
+          ${label} — Full Name as on Passport <span style="color:#8B1A1A;">*</span>
+        </label>
+        <input type="text" name="companion_${i}"
+               placeholder="e.g. CHIDI EMEKA OKAFOR"
+               required
+               style="width:100%; border:1px solid var(--border); padding:10px 13px;
+                      font-family:'Inter',sans-serif; font-size:13.5px;
+                      color:var(--black); background:var(--cream); outline:none;">
+      </div>`;
+  }
+
+  if (count === 4) {
+    memberFields.innerHTML += `
+      <div style="font-size:11.5px; color:var(--sage); font-style:italic; margin-top:4px;">
+        For groups larger than 4, our team will collect additional names when we contact you.
+      </div>`;
+  }
+}
+
+const form = document.getElementById('bookingForm');
+const btn  = document.getElementById('submitBtn');
+const successMsg = document.getElementById('successMsg');
+
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  let errors = [];
+
+  // Helper: check text/email/tel/date input
+  function checkInput(name, label) {
+    const el = form.querySelector(`[name="${name}"]`);
+    if (!el || !el.value.trim()) { errors.push(label); if(el) el.style.borderColor='#8B1A1A'; }
+    else if(el) el.style.borderColor='';
+  }
+
+  // Helper: check radio group
+  function checkRadio(name, label) {
+    const checked = form.querySelector(`input[name="${name}"]:checked`);
+    if (!checked) errors.push(label);
+  }
+
+  // Helper: check checkbox
+  function checkCheckbox(name, label) {
+    const el = form.querySelector(`input[name="${name}"]`);
+    if (!el || !el.checked) errors.push(label);
+  }
+
+  // ── SECTION 1: Personal Information ──
+  checkInput('first_name', 'First Name');
+  checkInput('last_name', 'Last Name');
+  checkInput('email', 'Email Address');
+  checkInput('whatsapp', 'WhatsApp Number');
+  checkInput('state', 'State of Residence');
+  checkInput('dob', 'Date of Birth');
+  checkRadio('gender', 'Gender');
+
+  // ── SECTION 2: Passport ──
+  checkRadio('has_passport', 'Passport Status (do you have a passport?)');
+  const passportChoice = form.querySelector('input[name="has_passport"]:checked');
+  if (passportChoice && passportChoice.value !== 'No — I do not have a passport') {
+    checkInput('passport_number', 'Passport Number');
+    checkInput('passport_expiry', 'Passport Expiry Date');
+    checkInput('passport_fullname', 'Full Name as on Passport');
+  }
+  checkRadio('travelled_before', 'International Travel History');
+  checkRadio('visa_denied', 'Visa Denial History');
+
+  // ── SECTION 3: Tour Preferences ──
+  checkRadio('room_type', 'Room Preference');
+  checkRadio('group_size', 'Number of People Travelling');
+
+  // Check companion names if group size > 1
+  const companionInputs = document.querySelectorAll('#groupMemberFields input[type="text"]');
+  companionInputs.forEach((input, i) => {
+    if (!input.value.trim()) {
+      errors.push(`Companion ${i+1} Full Name`);
+      input.style.borderColor = '#8B1A1A';
+    } else {
+      input.style.borderColor = '';
+    }
+  });
+
+  // ── SECTION 4: Payment ──
+  checkRadio('deposit_readiness', 'Deposit Readiness');
+  checkRadio('payment_plan', 'Payment Plan');
+
+  // ── SECTION 5: Health ──
+  checkRadio('medical', 'Medical Conditions');
+  const medChoice = form.querySelector('input[name="medical"]:checked');
+  if (medChoice && medChoice.value === 'Yes — details provided below') {
+    const medInput = document.getElementById('medicalDetailsInput');
+    if (!medInput || !medInput.value.trim()) {
+      errors.push('Medical Condition Details (please specify your condition)');
+      if(medInput) medInput.style.borderColor = '#8B1A1A';
+    } else { medInput.style.borderColor = ''; }
+  }
+  checkRadio('dietary', 'Dietary Requirements');
+  const dietChoice = form.querySelector('input[name="dietary"]:checked');
+  if (dietChoice && dietChoice.value === 'Food allergy') {
+    const dietInput = document.getElementById('dietaryDetailsInput');
+    if (!dietInput || !dietInput.value.trim()) {
+      errors.push('Food Allergy Details (please specify your allergy)');
+      if(dietInput) dietInput.style.borderColor = '#8B1A1A';
+    } else { dietInput.style.borderColor = ''; }
+  }
+
+  // ── SECTION 6: Emergency Contact ──
+  checkInput('emergency_name', 'Emergency Contact Name');
+  checkInput('emergency_relationship', 'Emergency Contact Relationship');
+  const erChoice = document.getElementById('emergencyRelationship');
+  if (erChoice && erChoice.value === 'Other') {
+    const erOther = document.getElementById('emergencyRelationshipOtherInput');
+    if (!erOther || !erOther.value.trim()) {
+      errors.push('Emergency Contact Relationship — please specify "Other"');
+      if(erOther) erOther.style.borderColor = '#8B1A1A';
+    } else { erOther.style.borderColor = ''; }
+  }
+  checkInput('emergency_phone', 'Emergency Contact Phone Number');
+
+  // ── SECTION 7: Referral ──
+  checkRadio('referral_source', 'How You Heard About Us');
+  const refChoice = form.querySelector('input[name="referral_source"]:checked');
+  if (refChoice && refChoice.value === 'Other') {
+    const refOther = document.getElementById('referralOtherInput');
+    if (!refOther || !refOther.value.trim()) {
+      errors.push('How you heard about us — please specify "Other"');
+      if(refOther) refOther.style.borderColor = '#8B1A1A';
+    } else { refOther.style.borderColor = ''; }
+  }
+
+  // ── SECTION 8: Agreement checkboxes ──
+  checkCheckbox('agree_accuracy', 'Confirmation that your information is accurate');
+  checkCheckbox('agree_deposit', 'Acknowledgement that deposit is non-refundable');
+  checkCheckbox('agree_visa', 'Acknowledgement of visa uncertainty');
+  checkCheckbox('agree_terms', 'Agreement to Terms and Conditions');
+
+  // ── SHOW ERRORS IF ANY ──
+  if (errors.length > 0) {
+    alert('Please complete the following required fields before submitting:\n\n• ' + errors.join('\n• '));
+    // Scroll to first error
+    const firstError = form.querySelector('[style*="border-color: rgb(139, 26, 26)"], [style*="borderColor: #8B1A1A"]');
+    if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  // ── ALL VALID — SUBMIT ──
+  btn.textContent = 'Submitting... Please wait';
+  btn.disabled = true;
+
+  // Collect all form data as JSON
+  const formData    = new FormData(form);
+  const formObject  = {};
+  formData.forEach((value, key) => { formObject[key] = value; });
+
+  try {
+    // Save to Google Sheet via our Netlify function
+    const response = await fetch('/.netlify/functions/save-submission', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formObject),
+    });
+
+    if (response.ok) {
+      const paymentPlan   = form.querySelector('input[name="payment_plan"]:checked');
+      const isFullPayment = paymentPlan && paymentPlan.value === 'Full payment at once';
+      if (isFullPayment) {
+        const depBtn = document.getElementById('depositBtn');
+        if (depBtn) depBtn.style.display = 'none';
+      }
+      lockToSuccess();
+      window.scrollTo(0, 0);
+    } else {
+      btn.textContent = '✦  Submit Registration  ✦';
+      btn.disabled    = false;
+      alert('Something went wrong. Please try again or contact us on WhatsApp: +234 802 316 8428');
+    }
+  } catch (err) {
+    btn.textContent = '✦  Submit Registration  ✦';
+    btn.disabled    = false;
+    alert('Network error. Please check your connection and try again.');
+  }
+
+  return false;
+});
+</script>
+
+<!-- AGENCY FOOTER -->
+<div class="agency-bar">
+  <p>UBAH'S TRAVEL SPACE AGENCY</p>
+  <span>Effortless Travel, Unforgettable Experiences &nbsp;|&nbsp; Japan Group Tour · October 2026</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — Ubah's Travel Space</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest:  #1C2B1A;
+    --gold:    #C9A84C;
+    --crimson: #8B1A1A;
+    --sage:    #5A6B58;
+    --mint:    #F0F7F4;
+    --cream:   #FAFCF8;
+    --border:  #D4C9A8;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #F0F7F4;
+    color: #111;
+    min-height: 100vh;
+  }
+
+  /* ── LOGIN SCREEN ── */
+  #loginScreen {
+    min-height: 100vh;
+    background: var(--forest);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .login-flag   { font-size: 40px; margin-bottom: 16px; }
+  .login-title  {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    letter-spacing: 3px;
+    color: #E8D5A3;
+    margin-bottom: 6px;
+  }
+  .login-sub {
+    font-size: 12px;
+    color: rgba(232,213,163,0.5);
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+  }
+  .login-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(232,213,163,0.2);
+    padding: 36px 28px;
+    width: 100%;
+    max-width: 360px;
+  }
+  .login-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(232,213,163,0.6);
+    margin-bottom: 10px;
+    display: block;
+    text-align: left;
+  }
+  .login-input {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(232,213,163,0.3);
+    color: #E8D5A3;
+    padding: 13px 14px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+  }
+  .login-input::placeholder { color: rgba(232,213,163,0.3); letter-spacing: 1px; }
+  .login-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #8B6914, #C9A84C);
+    color: #0D1F0C;
+    border: none;
+    padding: 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+  }
+  .login-err {
+    color: #FF6B6B;
+    font-size: 12px;
+    margin-top: 12px;
+    display: none;
+  }
+
+  /* ── DASHBOARD ── */
+  #dashboard { display: none; }
+
+  .top-bar {
+    background: var(--forest);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .top-bar-title {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #E8D5A3;
+  }
+  .top-bar-sub {
+    font-size: 11px;
+    color: rgba(232,213,163,0.5);
+    letter-spacing: 1px;
+  }
+  .logout-btn {
+    background: rgba(232,213,163,0.1);
+    border: 1px solid rgba(232,213,163,0.3);
+    color: #E8D5A3;
+    padding: 8px 16px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+
+  .dashboard-body { padding: 24px 16px 60px; max-width: 900px; margin: 0 auto; }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: white;
+    border-top: 3px solid var(--forest);
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--forest);
+  }
+  .stat-label { font-size: 11px; color: var(--sage); letter-spacing: 1px; margin-top: 4px; }
+
+  /* Search bar */
+  .search-wrap { position: relative; margin-bottom: 20px; }
+  .search-input {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: white;
+    padding: 13px 16px 13px 44px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    color: #111;
+  }
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    pointer-events: none;
+  }
+
+  /* List */
+  .registrant-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .registrant-card {
+    background: white;
+    border-left: 4px solid var(--border);
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .registrant-card:hover { border-left-color: var(--forest); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .registrant-card.paid  { border-left-color: #2DB55D; }
+
+  .card-left { flex: 1; min-width: 0; }
+  .card-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #111;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-meta { font-size: 12px; color: var(--sage); margin-top: 3px; }
+
+  .card-right { text-align: right; flex-shrink: 0; }
+  .payment-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+  }
+  .badge-paid    { background: #E6F9EE; color: #1A7A3F; }
+  .badge-nopay   { background: #FFF3F3; color: #8B1A1A; }
+  .amount-shown  { font-size: 13px; font-weight: 700; color: #1C2B1A; margin-top: 4px; }
+
+  .chevron { font-size: 18px; color: #ccc; flex-shrink: 0; }
+
+  .empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--sage);
+    font-style: italic;
+  }
+
+  /* ── DETAIL MODAL ── */
+  #detailModal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 9999;
+    overflow-y: auto;
+    padding: 20px 16px;
+  }
+  .modal-card {
+    background: white;
+    max-width: 640px;
+    margin: 0 auto;
+    border-top: 5px solid var(--forest);
+  }
+  .modal-header {
+    background: var(--forest);
+    color: #E8D5A3;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-name { font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 1px; }
+  .modal-close {
+    background: none;
+    border: 1px solid rgba(232,213,163,0.3);
+    color: #E8D5A3;
+    padding: 6px 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+  .modal-body { padding: 24px; }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--crimson);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+    margin: 20px 0 14px;
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+  }
+  @media (max-width: 480px) { .detail-grid { grid-template-columns: 1fr; } }
+
+  .detail-item {}
+  .detail-key   { font-size: 11px; color: var(--sage); margin-bottom: 2px; }
+  .detail-val   { font-size: 13px; font-weight: 600; color: #111; word-break: break-word; }
+  .detail-val.payment-ref { font-size: 11px; font-weight: 400; }
+
+  .payment-summary {
+    background: var(--mint);
+    border: 1px solid var(--border);
+    border-left: 4px solid #2DB55D;
+    padding: 16px;
+    margin-top: 8px;
+  }
+  .payment-summary.no-pay {
+    border-left-color: var(--crimson);
+    background: #FFF8F8;
+  }
+  .pay-row { display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; }
+  .pay-row strong { color: #1C2B1A; }
+
+  .modal-footer {
+    border-top: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .modal-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 11px 16px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .btn-wa { background: rgba(37,211,102,0.15); border: 1px solid rgba(37,211,102,0.4); color: #1A7A3F; }
+  .btn-dark { background: var(--forest); color: #E8D5A3; }
+
+  .loading-msg {
+    text-align: center;
+    padding: 40px;
+    color: var(--sage);
+    font-style: italic;
+  }
+
+  .refresh-btn {
+    background: rgba(232,213,163,0.15);
+    border: 1px solid rgba(232,213,163,0.3);
+    color: #E8D5A3;
+    padding: 8px 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN SCREEN ── -->
+<div id="loginScreen">
+  <div class="login-flag">🇯🇵</div>
+  <div class="login-title">ADMIN DASHBOARD</div>
+  <div class="login-sub">UBAH'S TRAVEL SPACE AGENCY</div>
+
+  <div class="login-box">
+    <label class="login-label">ENTER PASSWORD</label>
+    <div style="position:relative;margin-bottom:20px;">
+      <input type="password" class="login-input" id="passwordInput" placeholder="••••••••"
+             onkeydown="if(event.key==='Enter') doLogin()"
+             style="margin-bottom:0;padding-right:50px;width:100%;">
+      <button type="button" onclick="togglePw()"
+        style="position:absolute;right:0;top:0;height:100%;width:46px;background:none;border:none;border-left:1px solid rgba(232,213,163,0.2);color:rgba(232,213,163,0.6);cursor:pointer;font-size:17px;">
+        👁
+      </button>
+    </div>
+    <button class="login-btn" onclick="doLogin()">🔐 &nbsp; ACCESS DASHBOARD</button>
+    <div class="login-err" id="loginErr">❌ Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ── -->
+<div id="dashboard">
+
+  <div class="top-bar">
+    <div>
+      <div class="top-bar-title">🇯🇵 &nbsp; ADMIN DASHBOARD</div>
+      <div class="top-bar-sub">Japan Group Tour — October 2026</div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="refresh-btn" onclick="loadData()">🔄 Refresh</button>
+      <button class="logout-btn" onclick="doLogout()">✕ Logout</button>
+    </div>
+  </div>
+
+  <div class="dashboard-body">
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num" id="statTotal">—</div>
+        <div class="stat-label">TOTAL REGISTERED</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statPaid" style="color:#1A7A3F;">—</div>
+        <div class="stat-label">PAID</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statNoPay" style="color:#8B1A1A;">—</div>
+        <div class="stat-label">NOT PAID YET</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statTotal2">—</div>
+        <div class="stat-label">TOTAL COLLECTED</div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="searchInput"
+             placeholder="Search by name or payment reference..."
+             oninput="filterList()">
+    </div>
+
+    <!-- List -->
+    <div id="listWrap">
+      <div class="loading-msg">Loading registrations...</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── DETAIL MODAL ── -->
+<div id="detailModal" onclick="closeModal(event)">
+  <div class="modal-card" id="modalCard" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-name" id="modalName">—</div>
+      <button class="modal-close" onclick="closeDetailModal()">✕ CLOSE</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG — SET YOUR PASSWORD HERE ──
+const ADMIN_PASSWORD = 'Shylock0802#';   // ← CHANGE THIS TO YOUR OWN PASSWORD
+
+// ── SheetDB URL — filled from meta tag (set this in your env or hardcode for testing) ──
+// Replace the value below with your actual SheetDB URL after you set it up
+const SHEETDB_URL = 'https://sheetdb.io/api/v1/yjiv7fpkysz8j';
+
+let allData = [];
+
+// ── SHOW/HIDE PASSWORD ──
+function togglePw() {
+  const input  = document.getElementById('passwordInput');
+  const btn    = event.currentTarget;
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁';
+  }
+}
+
+// ── LOGIN ──
+function doLogin() {
+  const val = document.getElementById('passwordInput').value;
+  if (val === ADMIN_PASSWORD) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dashboard').style.display   = 'block';
+    sessionStorage.setItem('adminAuth', '1');
+    loadData();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+    document.getElementById('passwordInput').value    = '';
+  }
+}
+
+function doLogout() {
+  sessionStorage.removeItem('adminAuth');
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('dashboard').style.display   = 'none';
+  document.getElementById('passwordInput').value       = '';
+}
+
+// Auto-login if session exists
+if (sessionStorage.getItem('adminAuth') === '1') {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('dashboard').style.display   = 'block';
+  loadData();
+}
+
+// ── LOAD DATA FROM SHEETDB ──
+async function loadData() {
+  document.getElementById('listWrap').innerHTML = '<div class="loading-msg">Loading registrations...</div>';
+
+  if (!SHEETDB_URL || SHEETDB_URL === 'YOUR_SHEETDB_URL_HERE') {
+    document.getElementById('listWrap').innerHTML =
+      '<div class="loading-msg">⚠️ SheetDB URL not configured yet.<br>Add your SheetDB URL to the admin.html file.</div>';
+    return;
+  }
+
+  try {
+    const res  = await fetch(SHEETDB_URL);
+    const data = await res.json();
+
+    // Newest first
+    allData = (Array.isArray(data) ? data : []).reverse();
+    renderStats();
+    renderList(allData);
+  } catch (err) {
+    document.getElementById('listWrap').innerHTML =
+      '<div class="loading-msg">❌ Could not load data. Check your SheetDB URL.<br><small>' + err.message + '</small></div>';
+  }
+}
+
+// ── STATS ──
+function renderStats() {
+  const total   = allData.length;
+  const paid    = allData.filter(r => r.payment_status === 'PAID').length;
+  const noPay   = total - paid;
+
+  // Sum amounts received
+  let totalCollected = 0;
+  allData.forEach(r => {
+    if (r.amount_received) {
+      const num = parseFloat(r.amount_received.replace(/[₦,]/g, ''));
+      if (!isNaN(num)) totalCollected += num;
+    }
+  });
+
+  document.getElementById('statTotal').textContent  = total;
+  document.getElementById('statPaid').textContent   = paid;
+  document.getElementById('statNoPay').textContent  = noPay;
+  document.getElementById('statTotal2').textContent =
+    totalCollected > 0 ? '₦' + totalCollected.toLocaleString('en-NG') : '₦0';
+}
+
+// ── RENDER LIST ──
+function renderList(data) {
+  const wrap = document.getElementById('listWrap');
+  if (!data.length) {
+    wrap.innerHTML = '<div class="empty-state">No registrations found.</div>';
+    return;
+  }
+
+  wrap.innerHTML = '<div class="registrant-list">' +
+    data.map((r, i) => {
+      const name    = ((r.first_name || '') + ' ' + (r.last_name || '')).trim() || 'Unknown';
+      const paid    = r.payment_status === 'PAID';
+      const amount  = r.amount_paid || '';
+      const date    = r.submitted_at ? r.submitted_at.split(',')[0] : '';
+      const email   = r.email || '';
+
+      return `<div class="registrant-card ${paid ? 'paid' : ''}" onclick="openDetail(${i})">
+        <div class="card-left">
+          <div class="card-name">${name}</div>
+          <div class="card-meta">${email}${date ? ' &nbsp;·&nbsp; Registered: ' + date : ''}</div>
+        </div>
+        <div class="card-right">
+          <div class="payment-badge ${paid ? 'badge-paid' : 'badge-nopay'}">
+            ${paid ? '✅ PAID' : '⏳ NOT PAID'}
+          </div>
+          ${paid && amount ? '<div class="amount-shown">' + amount + '</div>' : ''}
+        </div>
+        <div class="chevron">›</div>
+      </div>`;
+    }).join('') +
+  '</div>';
+}
+
+// ── SEARCH / FILTER ──
+function filterList() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  if (!q) { renderList(allData); return; }
+  const filtered = allData.filter(r => {
+    const name = ((r.first_name || '') + ' ' + (r.last_name || '')).toLowerCase();
+    const ref  = (r.payment_reference || '').toLowerCase();
+    const email = (r.email || '').toLowerCase();
+    return name.includes(q) || ref.includes(q) || email.includes(q);
+  });
+  renderList(filtered);
+}
+
+// ── OPEN DETAIL MODAL ──
+function openDetail(index) {
+  const r    = allData[index];
+  const name = ((r.first_name || '') + ' ' + (r.last_name || '')).trim() || 'Unknown';
+  const paid = r.payment_status === 'PAID';
+
+  document.getElementById('modalName').textContent = name;
+
+  function row(key, val) {
+    if (!val) return '';
+    return `<div class="detail-item">
+      <div class="detail-key">${key}</div>
+      <div class="detail-val">${val}</div>
+    </div>`;
+  }
+
+  let body = '';
+
+  // ── PERSONAL INFO ──
+  body += '<div class="section-label">PERSONAL INFORMATION</div>';
+  body += '<div class="detail-grid">';
+  body += row('First Name',           r.first_name);
+  body += row('Last Name',            r.last_name);
+  body += row('Email',                r.email);
+  body += row('WhatsApp',             r.whatsapp);
+  body += row('State of Residence',   r.state);
+  body += row('Date of Birth',        r.dob);
+  body += row('Gender',               r.gender);
+  body += row('Registered At',        r.submitted_at);
+  body += '</div>';
+
+  // ── PASSPORT ──
+  body += '<div class="section-label">PASSPORT & TRAVEL HISTORY</div>';
+  body += '<div class="detail-grid">';
+  body += row('Has Passport',          r.has_passport);
+  body += row('Passport Number',       r.passport_number);
+  body += row('Passport Expiry',       r.passport_expiry);
+  body += row('Name on Passport',      r.passport_fullname);
+  body += row('Travelled Before',      r.travelled_before);
+  body += row('Visa Denied Before',    r.visa_denied);
+  body += '</div>';
+
+  // ── TOUR PREFERENCES ──
+  body += '<div class="section-label">TOUR PREFERENCES</div>';
+  body += '<div class="detail-grid">';
+  body += row('Room Type',             r.room_type);
+  body += row('Group Size',            r.group_size);
+  body += row('Companion 1',           r.companion_1);
+  body += row('Companion 2',           r.companion_2);
+  body += row('Companion 3',           r.companion_3);
+  body += row('Deposit Readiness',     r.deposit_readiness);
+  body += row('Payment Plan',          r.payment_plan);
+  body += '</div>';
+
+  // ── HEALTH ──
+  body += '<div class="section-label">HEALTH & DIETARY</div>';
+  body += '<div class="detail-grid">';
+  body += row('Medical Conditions',    r.medical);
+  body += row('Medical Details',       r.medical_details);
+  body += row('Dietary',               r.dietary);
+  body += row('Dietary Details',       r.dietary_details);
+  body += row('Special Requirements',  r.special_requirements);
+  body += '</div>';
+
+  // ── EMERGENCY CONTACT ──
+  body += '<div class="section-label">EMERGENCY CONTACT</div>';
+  body += '<div class="detail-grid">';
+  body += row('Name',                  r.emergency_name);
+  body += row('Relationship',          r.emergency_relationship);
+  body += row('Phone',                 r.emergency_phone);
+  body += row('How They Found Us',     r.referral_source + (r.referral_source_other ? ' — ' + r.referral_source_other : ''));
+  body += '</div>';
+
+  // ── PAYMENT ──
+  body += '<div class="section-label">PAYMENT</div>';
+  if (paid) {
+    body += `<div class="payment-summary">
+      <div class="pay-row"><span>Amount Paid by Customer</span><strong>${r.amount_paid || '—'}</strong></div>
+      <div class="pay-row"><span>Paystack Fee</span><span style="color:#8B1A1A;">${r.paystack_fee ? '− ' + r.paystack_fee : '—'}</span></div>
+      <div class="pay-row"><span>Amount Received by Agency</span><strong>${r.amount_received || '—'}</strong></div>
+      <div class="pay-row" style="border-top:1px solid #D4C9A8;padding-top:8px;margin-top:4px;">
+        <span>Date</span><span>${r.payment_date || '—'}</span>
+      </div>
+      <div class="pay-row"><span>Reference</span><span style="font-size:11px;word-break:break-all;">${r.payment_reference || '—'}</span></div>
+      <div class="pay-row"><span>Status</span><strong style="color:#1A7A3F;">✅ CONFIRMED</strong></div>
+    </div>`;
+  } else {
+    body += `<div class="payment-summary no-pay">
+      <div style="text-align:center;padding:8px 0;font-size:14px;color:#8B1A1A;font-weight:600;">
+        ⏳ No Payment Made Yet
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('modalBody').innerHTML  = body;
+
+  // Footer buttons
+  const waText = 'Hi ' + (r.first_name || '') + '! This is Ubah\'s Travel Space Agency. We received your Japan Tour registration. Please proceed with your payment to secure your slot.';
+  document.getElementById('modalFooter').innerHTML =
+    (r.whatsapp ? `<a class="modal-btn btn-wa" href="https://wa.me/${r.whatsapp.replace(/\D/g,'')}?text=${encodeURIComponent(waText)}" target="_blank">💬 WhatsApp</a>` : '') +
+    (r.email ? `<a class="modal-btn btn-wa" href="mailto:${r.email}" style="background:rgba(232,213,163,0.1);border:1px solid #D4C9A8;color:#1C2B1A;">✉️ Email</a>` : '') +
+    `<button class="modal-btn btn-dark" onclick="closeDetailModal()">✕ Close</button>`;
+
+  document.getElementById('detailModal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDetailModal() {
+  document.getElementById('detailModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('detailModal')) closeDetailModal();
+}
+</script>
+</body>
+</html>
