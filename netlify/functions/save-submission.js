@@ -16,7 +16,7 @@ exports.handler = async function (event) {
     const body = JSON.parse(event.body || '{}');
 
     const row = {
-      submitted_at:              new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' }),
+      submitted_at:              new Date().toLocaleString('en-GB', { day:'2-digit', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' }),
       first_name:                body.first_name || '',
       last_name:                 body.last_name  || '',
       full_name:                 `${body.first_name || ''} ${body.last_name || ''}`.trim(),
@@ -57,6 +57,8 @@ exports.handler = async function (event) {
       payment_date:              '',
     };
 
+    console.log('Saving to SheetDB:', sheetdbUrl);
+    console.log('Row data:', JSON.stringify(row));
     const sheetRes = await fetch(sheetdbUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
