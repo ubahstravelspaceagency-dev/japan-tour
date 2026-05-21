@@ -993,7 +993,7 @@ RESULT: Every submission will:
 
   <!-- SUBMIT -->
   <div class="submit-wrap">
-    <button type="submit" class="submit-btn" id="submitBtn">✦ &nbsp; Submit Registration &nbsp; ✦</button>
+    <button type="button" class="submit-btn" id="submitBtn" onclick="showPreview()">✦ &nbsp; Review My Details &nbsp; ✦</button>
     <div class="form-footer">
       After submitting, our team will reach out to you within <b>24–48 hours</b> to confirm your registration and guide you on your next steps.<br><br>
       Once you submit, a payment link will appear for your <b>₦1,200,000 initial deposit</b> or full package payment — whichever you prefer.<br><br>
@@ -1161,20 +1161,265 @@ window.addEventListener('popstate', function() {
   }
 });
 
-// ── PAYSTACK RETURN URL DETECTION ──
-(function checkPaystackReturn() {
+
+// ── RECEIPT MEMORY — store receipt data so refresh works ──
+let receiptMemory = null;
+
+// On page load — check if we have a reference in URL OR saved receipt in session
+(function initPage() {
   const params    = new URLSearchParams(window.location.search);
   const reference = params.get('reference') || params.get('trxref');
+
+  // Check if we have saved receipt data in session
+  const saved = sessionStorage.getItem('japanTourReceipt');
+  if (saved) {
+    try {
+      receiptMemory = JSON.parse(saved);
+      showPaymentLoadingScreen(receiptMemory.reference, true);
+      return;
+    } catch(e) {}
+  }
+
   if (reference) {
-    showPaymentLoadingScreen(reference);
+    showPaymentLoadingScreen(reference, false);
   }
 })();
 
+// ── DUPLICATE CHECK via SheetDB ──
+async function checkDuplicate(email, fullName, passportNumber) {
+  try {
+    const sheetUrl = '/.netlify/functions/check-duplicate';
+    const res = await fetch(sheetUrl + '?email=' + encodeURIComponent(email) +
+      '&name=' + encodeURIComponent(fullName) +
+      '&passport=' + encodeURIComponent(passportNumber || ''));
+    const data = await res.json();
+    return data; // { duplicate: true/false, field: 'email'|'name'|'passport' }
+  } catch(e) {
+    return { duplicate: false }; // if check fails, allow submission
+  }
+}
+
+// ── PREVIEW PAGE ──
+async function showPreview() {
+  const form = document.getElementById('bookingForm');
+
+  // Run validation first
+  const btn = document.getElementById('submitBtn');
+  const allRequired = form.querySelectorAll('[required]');
+  let firstInvalid = null;
+  allRequired.forEach(function(field) {
+    if (!field.value.trim()) {
+      if (!firstInvalid) firstInvalid = field;
+    }
+  });
+
+  // Check radio groups
+  const radioGroups = ['gender','has_passport','travelled_before','visa_denied','room_type','deposit_readiness','payment_plan','medical','dietary','referral_source'];
+  let missingRadio = null;
+  radioGroups.forEach(function(name) {
+    const checked = form.querySelector('input[name="' + name + '"]:checked');
+    if (!checked && !missingRadio) missingRadio = name;
+  });
+
+  // Check checkboxes
+  const agreeDeposit = form.querySelector('input[name="agree_deposit"]:checked');
+  const agreeAccuracy = form.querySelector('input[name="agree_accuracy"]:checked');
+  const agreeTC = form.querySelector('input[name="agree_tc"]:checked');
+
+  if (firstInvalid || missingRadio || !agreeDeposit || !agreeAccuracy || !agreeTC) {
+    alert('Please fill in all required fields before reviewing your details.');
+    if (firstInvalid) firstInvalid.focus();
+    return;
+  }
+
+  // Collect form data
+  const formData = new FormData(form);
+  const fd = {};
+  formData.forEach(function(v, k) { fd[k] = v; });
+
+  // Show checking indicator
+  btn.textContent = 'Checking... Please wait';
+  btn.disabled = true;
+
+  // Check for duplicates
+  const fullName = ((fd.first_name || '') + ' ' + (fd.last_name || '')).trim();
+  const dupCheck = await checkDuplicate(fd.email || '', fullName, fd.passport_number || '');
+
+  btn.textContent = '✦  Review My Details  ✦';
+  btn.disabled = false;
+
+  if (dupCheck.duplicate) {
+    let msg = '';
+    if (dupCheck.field === 'email') msg = 'This email address (' + fd.email + ') has already been registered for this tour.';
+    else if (dupCheck.field === 'name') msg = 'This name (' + fullName + ') has already been registered for this tour.';
+    else if (dupCheck.field === 'passport') msg = 'This passport number has already been registered for this tour.';
+    msg += '\n\nIf you believe this is an error, please contact us on WhatsApp: +234 802 316 8428';
+    alert(msg);
+    return;
+  }
+
+  // Build preview
+  function previewRow(label, val) {
+    if (!val) return '';
+    return '<tr><td style="padding:8px 12px;color:#5A6B58;font-size:13px;width:45%;vertical-align:top;">' + label + '</td>' +
+           '<td style="padding:8px 12px;font-size:13px;font-weight:600;color:#111;">' + val + '</td></tr>';
+  }
+
+  const previewHTML =
+    '<section-label>PERSONAL INFORMATION</section-label>' +
+    previewRow('First Name', fd.first_name) +
+    previewRow('Last Name', fd.last_name) +
+    previewRow('Email', fd.email) +
+    previewRow('WhatsApp', fd.whatsapp) +
+    previewRow('State', fd.state) +
+    previewRow('Date of Birth', fd.dob) +
+    previewRow('Gender', fd.gender) +
+    '<tr><td colspan="2" style="padding:4px 12px;"><div style="height:1px;background:#D4C9A8;margin:4px 0;"></div></td></tr>' +
+    '<tr><td colspan="2" style="padding:8px 12px;font-family:Cinzel,serif;font-size:10px;letter-spacing:2px;color:#8B1A1A;">PASSPORT & TRAVEL</td></tr>' +
+    previewRow('Has Passport', fd.has_passport) +
+    previewRow('Passport Number', fd.passport_number) +
+    previewRow('Passport Expiry', fd.passport_expiry) +
+    previewRow('Name on Passport', fd.passport_fullname) +
+    previewRow('Travelled Before', fd.travelled_before) +
+    previewRow('Visa Denied Before', fd.visa_denied) +
+    '<tr><td colspan="2" style="padding:4px 12px;"><div style="height:1px;background:#D4C9A8;margin:4px 0;"></div></td></tr>' +
+    '<tr><td colspan="2" style="padding:8px 12px;font-family:Cinzel,serif;font-size:10px;letter-spacing:2px;color:#8B1A1A;">TOUR PREFERENCES</td></tr>' +
+    previewRow('Room Type', fd.room_type) +
+    previewRow('Group Size', fd.group_size) +
+    previewRow('Companion 1', fd.companion_1) +
+    previewRow('Companion 2', fd.companion_2) +
+    previewRow('Companion 3', fd.companion_3) +
+    previewRow('Deposit Readiness', fd.deposit_readiness) +
+    previewRow('Payment Plan', fd.payment_plan) +
+    '<tr><td colspan="2" style="padding:4px 12px;"><div style="height:1px;background:#D4C9A8;margin:4px 0;"></div></td></tr>' +
+    '<tr><td colspan="2" style="padding:8px 12px;font-family:Cinzel,serif;font-size:10px;letter-spacing:2px;color:#8B1A1A;">HEALTH & DIETARY</td></tr>' +
+    previewRow('Medical Conditions', fd.medical) +
+    previewRow('Medical Details', fd.medical_details) +
+    previewRow('Dietary', fd.dietary) +
+    previewRow('Dietary Details', fd.dietary_details) +
+    previewRow('Special Requirements', fd.special_requirements) +
+    '<tr><td colspan="2" style="padding:4px 12px;"><div style="height:1px;background:#D4C9A8;margin:4px 0;"></div></td></tr>' +
+    '<tr><td colspan="2" style="padding:8px 12px;font-family:Cinzel,serif;font-size:10px;letter-spacing:2px;color:#8B1A1A;">EMERGENCY CONTACT</td></tr>' +
+    previewRow('Emergency Name', fd.emergency_name) +
+    previewRow('Relationship', fd.emergency_relationship) +
+    previewRow('Emergency Phone', fd.emergency_phone) +
+    previewRow('How Found Us', fd.referral_source + (fd.referral_source_other ? ' — ' + fd.referral_source_other : ''));
+
+  // Store form data for submission after preview
+  sessionStorage.setItem('japanTourPreviewData', JSON.stringify(fd));
+
+  // Show preview overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'previewOverlay';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#1C2B1A;color:#E8D5A3;z-index:99999;overflow-y:auto;padding:0 0 60px;';
+
+  overlay.innerHTML =
+    '<div style="background:#1C2B1A;padding:20px 20px 16px;position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(232,213,163,0.2);">' +
+      '<div style="font-family:Cinzel,serif;font-size:16px;letter-spacing:2px;color:#E8D5A3;margin-bottom:4px;">📋 REVIEW YOUR DETAILS</div>' +
+      '<div style="font-size:12px;color:rgba(232,213,163,0.6);">Please check everything carefully. Once you submit, you cannot make changes.</div>' +
+    '</div>' +
+    '<div style="max-width:600px;margin:24px auto;padding:0 16px;">' +
+      '<div style="background:#FAFCF8;color:#111;border-top:4px solid #C9A84C;">' +
+        '<div style="padding:16px 12px;background:#1C2B1A;">' +
+          '<div style="font-family:Cinzel,serif;font-size:11px;letter-spacing:3px;color:#E8D5A3;">REGISTRATION DETAILS</div>' +
+          '<div style="font-family:Cinzel,serif;font-size:9px;color:rgba(232,213,163,0.6);letter-spacing:2px;margin-top:2px;">UBAH'S TRAVEL SPACE AGENCY — JAPAN TOUR 2026</div>' +
+        '</div>' +
+        '<table style="width:100%;border-collapse:collapse;">' + previewHTML + '</table>' +
+      '</div>' +
+      '<div style="background:rgba(232,213,163,0.08);border:1px solid rgba(232,213,163,0.2);padding:14px 16px;margin-top:16px;font-size:13px;color:rgba(232,213,163,0.8);line-height:1.7;">' +
+        '⚠️ <b style="color:#E8D5A3;">Important:</b> Please review all details carefully. Once submitted, you cannot edit your information. If anything is incorrect, press <b>Go Back</b> to make corrections.' +
+      '</div>' +
+      '<div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">' +
+        '<button onclick="goBackToForm()" style="flex:1;min-width:140px;background:rgba(232,213,163,0.1);border:1px solid rgba(232,213,163,0.3);color:#E8D5A3;padding:15px;font-family:Cinzel,serif;font-size:12px;letter-spacing:2px;cursor:pointer;">← GO BACK & EDIT</button>' +
+        '<button onclick="confirmSubmit()" style="flex:2;min-width:180px;background:linear-gradient(135deg,#8B6914,#C9A84C);border:none;color:#0D1F0C;padding:15px;font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;" id="confirmBtn">✦ CONFIRM & SUBMIT ✦</button>' +
+      '</div>' +
+    '</div>';
+
+  document.body.appendChild(overlay);
+  window.scrollTo(0, 0);
+}
+
+// ── GO BACK TO FORM WITH DATA PRESERVED ──
+function goBackToForm() {
+  const overlay = document.getElementById('previewOverlay');
+  if (overlay) overlay.remove();
+  // Data is still in the form — nothing was cleared
+  window.scrollTo(0, 0);
+}
+
+// ── CONFIRM AND SUBMIT ──
+async function confirmSubmit() {
+  const confirmBtn = document.getElementById('confirmBtn');
+  confirmBtn.textContent = 'Submitting...';
+  confirmBtn.disabled = true;
+
+  const savedData = sessionStorage.getItem('japanTourPreviewData');
+  if (!savedData) {
+    alert('Something went wrong. Please go back and try again.');
+    confirmBtn.textContent = '✦ CONFIRM & SUBMIT ✦';
+    confirmBtn.disabled = false;
+    return;
+  }
+
+  const formObject = JSON.parse(savedData);
+
+  try {
+    const response = await fetch('/.netlify/functions/save-submission', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formObject),
+    });
+
+    if (response.ok) {
+      sessionStorage.removeItem('japanTourPreviewData');
+      const overlay = document.getElementById('previewOverlay');
+      if (overlay) overlay.remove();
+      const paymentPlan = formObject.payment_plan;
+      const isFullPayment = paymentPlan === 'Full payment at once';
+      if (isFullPayment) {
+        const depBtn = document.getElementById('depositBtn');
+        if (depBtn) depBtn.style.display = 'none';
+      }
+      lockToSuccess();
+      window.scrollTo(0, 0);
+    } else {
+      const errData = await response.json().catch(() => ({}));
+      console.error('Save error:', errData);
+      confirmBtn.textContent = '✦ CONFIRM & SUBMIT ✦';
+      confirmBtn.disabled = false;
+      alert('Something went wrong saving your details. Please try again or contact us on WhatsApp: +234 802 316 8428');
+    }
+  } catch (err) {
+    console.error('Network error:', err);
+    confirmBtn.textContent = '✦ CONFIRM & SUBMIT ✦';
+    confirmBtn.disabled = false;
+    alert('Network error. Please check your connection and try again.');
+  }
+}
+
+
+
 // ── LOADING SCREEN WHILE VERIFYING ──
-function showPaymentLoadingScreen(reference) {
+function showPaymentLoadingScreen(reference, fromMemory) {
   document.getElementById('successMsg').style.display  = 'none';
   document.querySelector('.form-wrap').style.display   = 'none';
   document.querySelector('.hero').style.display        = 'none';
+
+  // If we already have receipt data in memory — show it immediately, no API call
+  if (fromMemory && receiptMemory) {
+    const screen = document.createElement('div');
+    screen.id = 'paymentSuccessScreen';
+    screen.style.cssText = [
+      'position:fixed','top:0','left:0','width:100%','height:100%',
+      'background:#1C2B1A','color:#E8D5A3',
+      'display:flex','flex-direction:column','align-items:center',
+      'justify-content:flex-start','overflow-y:auto',
+      'padding:48px 24px 60px','z-index:99999','text-align:center'
+    ].join(';');
+    document.body.appendChild(screen);
+    renderReceiptScreen(receiptMemory.amountPaid, receiptMemory.amountReceived, receiptMemory.paystackFee, receiptMemory.payerName, receiptMemory.reference, receiptMemory.payDate);
+    return;
+  }
 
   const screen = document.createElement('div');
   screen.id = 'paymentSuccessScreen';
@@ -1187,8 +1432,8 @@ function showPaymentLoadingScreen(reference) {
   ].join(';');
   screen.innerHTML =
     '<span style="font-size:48px;display:block;margin-bottom:20px;">⏳</span>' +
-    '<div style="font-family:Cinzel,serif;font-size:18px;letter-spacing:2px;color:#E8D5A3;margin-bottom:12px;">VERIFYING YOUR PAYMENT...</div>' +
-    '<p style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;color:rgba(232,213,163,0.7);">Please wait while we confirm with Paystack.</p>';
+    '<div style="font-family:Cinzel,serif;font-size:18px;letter-spacing:2px;color:#E8D5A3;margin-bottom:12px;">PROCESSING YOUR PAYMENT...</div>' +
+    '<p style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;color:rgba(232,213,163,0.7);">Please wait a moment while we process your payment.</p>';
   document.body.appendChild(screen);
 
   // Block going back
@@ -1202,6 +1447,9 @@ function showPaymentLoadingScreen(reference) {
     .then(function (data) {
       if (data.status === 'success') {
         const payDate = new Date(data.paidAt).toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
+        // Save to session so refresh works
+        receiptMemory = { amountPaid: data.amountPaid, amountReceived: data.amountReceived, paystackFee: data.paystackFee, payerName: data.payerName, reference: data.reference, payDate: payDate };
+        sessionStorage.setItem('japanTourReceipt', JSON.stringify(receiptMemory));
         renderReceiptScreen(data.amountPaid, data.amountReceived, data.paystackFee, data.payerName, data.reference, payDate);
       } else {
         renderErrorScreen(reference, data.error || 'Payment could not be verified.');
@@ -1255,9 +1503,9 @@ function renderReceiptScreen(amountPaid, amountReceived, paystackFee, name, refe
       '<button type="button" onclick="downloadReceiptPDF()" style="width:100%;background:linear-gradient(135deg,#8B6914,#C9A84C);color:#0D1F0C;border:none;padding:15px 28px;cursor:pointer;font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:2px;">' +
         '\u2B07\uFE0F &nbsp; Download Receipt (PDF)' +
       '</button>' +
-      '<a href="https://wa.me/?text=' + encodeURIComponent(waMsg) + '" target="_blank" style="width:100%;display:flex;align-items:center;justify-content:center;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);padding:15px 28px;color:#E8D5A3;text-decoration:none;font-family:Cinzel,serif;font-size:13px;letter-spacing:2px;">' +
+      '<button type="button" onclick="shareToWhatsApp()" style="width:100%;display:flex;align-items:center;justify-content:center;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);padding:15px 28px;color:#E8D5A3;cursor:pointer;font-family:Cinzel,serif;font-size:13px;letter-spacing:2px;">' +
         '\uD83D\uDCAC &nbsp; Share via WhatsApp' +
-      '</a>' +
+      '</button>' +
     '</div>' +
     '<p style="font-size:13px;color:rgba(232,213,163,0.45);font-style:italic;">Effortless Travel, Unforgettable Experiences \uD83C\uDDEF\uD83C\uDDF5</p>';
 }
@@ -1455,15 +1703,55 @@ function downloadReceiptPDF() {
 
   const blob = new Blob([html], { type: 'text/html' });
   const url  = URL.createObjectURL(blob);
+  const pName = receiptMemory ? receiptMemory.payerName.replace(/[^a-zA-Z0-9 ]/g,'').trim() : 'Customer';
+  const pFileName = 'Payment for Japan Tour by ' + pName;
   const win  = window.open(url, '_blank');
   if (!win) {
-    // Fallback if popup blocked
     const a    = document.createElement('a');
     a.href     = url;
-    a.download = 'Japan-Tour-Receipt.html';
+    a.download = pFileName + '.html';
     a.click();
   }
   setTimeout(() => URL.revokeObjectURL(url), 10000);
+}
+
+// ── SHARE TO WHATSAPP AS IMAGE ──
+function shareToWhatsApp() {
+  const card = document.getElementById('receiptCard');
+  if (!card) return;
+
+  // Try to use html2canvas if available, otherwise fallback to text share
+  if (typeof html2canvas !== 'undefined') {
+    html2canvas(card, { scale: 2, backgroundColor: '#FAFCF8', useCORS: true }).then(function(canvas) {
+      canvas.toBlob(function(blob) {
+        const file = new File([blob], 'Japan-Tour-Receipt.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          navigator.share({ files: [file], title: 'Japan Tour Payment Receipt' });
+        } else {
+          // Fallback — open WhatsApp with text
+          fallbackWhatsAppShare();
+        }
+      }, 'image/png');
+    });
+  } else {
+    fallbackWhatsAppShare();
+  }
+}
+
+function fallbackWhatsAppShare() {
+  // Get receipt data from memory
+  const r = receiptMemory;
+  if (!r) return;
+  const msg = 'PAYMENT RECEIPT — Japan Group Tour 2026\n\n' +
+    'Traveller: ' + (r.payerName || '—') + '\n' +
+    'Amount Paid: ₦' + Number(r.amountPaid).toLocaleString('en-NG') + '\n' +
+    'Amount Received by Agency: ₦' + Number(r.amountReceived).toLocaleString('en-NG') + '\n' +
+    'Reference: ' + r.reference + '\n' +
+    'Date: ' + r.payDate + '\n' +
+    'Tour: Japan Group Tour — October 2026\n' +
+    'Status: ✅ CONFIRMED\n\n' +
+    'Ubah\'s Travel Space Agency | +234 802 316 8428';
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
 }
 
 // ── PASSPORT SECTION CONDITIONAL DISPLAY ──
