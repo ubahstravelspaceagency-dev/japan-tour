@@ -15,7 +15,6 @@ exports.handler = async function (event) {
   }
 
   try {
-    // ── 1. VERIFY PAYMENT WITH PAYSTACK ──
     const psRes = await fetch(
       `https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`,
       {
@@ -38,7 +37,6 @@ exports.handler = async function (event) {
     const tx = psData.data;
     const amountPaidNaira = tx.amount / 100;
 
-    // Calculate Paystack fee: 1.5% + ₦100 (if >₦2,500), capped at ₦2,000
     let fee = amountPaidNaira * 0.015;
     if (amountPaidNaira >= 2500) fee += 100;
     if (fee > 2000) fee = 2000;
@@ -54,11 +52,9 @@ exports.handler = async function (event) {
       day: '2-digit', month: 'long', year: 'numeric'
     });
 
-    // ── 2. UPDATE GOOGLE SHEET VIA SHEETDB ──
     const sheetdbUrl = process.env.SHEETDB_URL;
     if (sheetdbUrl) {
       try {
-        // Find row by email or name and update payment columns
         await fetch(`${sheetdbUrl}/email/${encodeURIComponent(payerEmail)}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
@@ -75,11 +71,9 @@ exports.handler = async function (event) {
         });
       } catch (sheetErr) {
         console.error('SheetDB update failed:', sheetErr.message);
-        // Non-fatal — still return success to customer
       }
     }
 
-    // ── 3. SEND EMAIL TO AGENCY VIA EMAILJS ──
     const emailjsServiceId  = process.env.EMAILJS_SERVICE_ID;
     const emailjsTemplateId = process.env.EMAILJS_TEMPLATE_ID;
     const emailjsUserId     = process.env.EMAILJS_USER_ID;
@@ -107,11 +101,9 @@ exports.handler = async function (event) {
         });
       } catch (emailErr) {
         console.error('EmailJS failed:', emailErr.message);
-        // Non-fatal — still return success to customer
       }
     }
 
-    // ── 4. RETURN DATA TO RECEIPT PAGE ──
     return {
       statusCode: 200,
       headers: { 'Access-Control-Allow-Origin': '*' },
