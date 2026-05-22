@@ -905,12 +905,12 @@ RESULT: Every submission will:
       <!-- CLAUSES -->
       <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 1. DEFINITIONS</div>
       <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
-        "Package" means any Japan Group Tour package including Osaka, Tokyo, and Tokyo + Osaka Premium. "Initial Deposit" means the booking deposit of <b>NGN 1,200,000</b> required to secure a reservation. "Non-Refundable Fee" means the <b>NGN 300,000</b> portion of the deposit that is non-refundable under all circumstances, covering processing, visa coordination, and reservation costs. "Land Package Price" means the total cost excluding international flights. "Departure Date" means the scheduled departure confirmed in booking documentation. "Force Majeure" means any event beyond reasonable control including acts of God, war, pandemics, or government advisories.
+        "Package" means any Japan Group Tour package including Osaka, Tokyo, and Tokyo + Osaka Premium. "Initial Deposit" means the booking deposit of <b>NGN 1,200,000</b> required to secure a reservation. "Non-Refundable Fee" means the <b>NGN 300,000</b> portion that is non-refundable under all circumstances, covering processing, visa coordination, and reservation costs. "Land Package Price" means the total cost excluding international flights. "Departure Date" means the scheduled departure confirmed in booking documentation. "Force Majeure" means any event beyond reasonable control including acts of God, war, pandemics, or government advisories.
       </p>
 
       <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 2. BOOKING CONFIRMATION AND DEPOSIT</div>
       <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
-        2.1 An initial deposit of <b>NGN 1,200,000 per person</b> is required to secure a reservation. Payment constitutes formal acceptance of this Policy. 2.2 Of this deposit, <b>NGN 300,000 is strictly non-refundable</b> under all circumstances — this covers processing, visa coordination, hotel reservation, and itinerary preparation costs. The remaining balance of the deposit may be refunded subject to the cancellation schedule in Clause 3. 2.3 Full payment must be completed <b>no later than 60 calendar days</b> prior to departure. Failure to pay may result in cancellation without refund. 2.4 The Agency may adjust pricing due to foreign exchange fluctuations with 45 days notice.
+        2.1 An initial deposit of <b>NGN 1,200,000 per person</b> is required to secure a reservation. Payment constitutes formal acceptance of this Policy. 2.2 Of this deposit, <b>NGN 300,000 is strictly non-refundable</b> under all circumstances. The remaining balance may be refunded subject to the cancellation schedule in Clause 3. 2.3 Full payment must be completed <b>no later than 60 calendar days</b> prior to departure. Failure to pay may result in cancellation without refund. 2.4 The Agency may adjust pricing due to foreign exchange fluctuations with 45 days notice.
       </p>
 
       <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 3. CANCELLATION BY THE CLIENT</div>
@@ -934,7 +934,7 @@ RESULT: Every submission will:
 
       <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 4. JAPAN VISA DENIAL</div>
       <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
-        4.1 Japan visa approval is at the absolute discretion of the Japanese Embassy. The Agency makes no guarantee of visa approval. 4.2 On denial: visa processing fees are non-refundable; the <b>NGN 300,000 non-refundable processing fee</b> is also non-refundable under all circumstances including visa denial, as it covers processing, coordination, and reservation costs already incurred; the Agency will refund all other amounts paid above the NGN 300,000 non-refundable fee and visa processing fees; the Client may also choose to transfer their slot to a future tour date within 7 days of denial notification. 4.3 The Agency provides documentation support but bears no responsibility for denial due to the Client's personal circumstances.
+        4.1 Japan visa approval is at the absolute discretion of the Japanese Embassy. The Agency makes no guarantee of visa approval. 4.2 On denial: visa processing fees are non-refundable; the <b>NGN 300,000 non-refundable processing fee</b> is also non-refundable under all circumstances including visa denial; the Agency will refund all other amounts paid above the NGN 300,000 fee and visa fees; the Client may transfer their slot to a future tour date within 7 days of denial notification. 4.3 The Agency provides documentation support but bears no responsibility for denial due to the Client's personal circumstances.
       </p>
 
       <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 5. INTERNATIONAL FLIGHTS</div>
@@ -993,7 +993,7 @@ RESULT: Every submission will:
 
   <!-- SUBMIT -->
   <div class="submit-wrap">
-    <button type="button" class="submit-btn" id="submitBtn" onclick="showPreview()">✦ &nbsp; Review My Details &nbsp; ✦</button>
+    <button type="submit" class="submit-btn" id="submitBtn">✦ &nbsp; Review My Details &nbsp; ✦</button>
     <div class="form-footer">
       After submitting, our team will reach out to you within <b>24–48 hours</b> to confirm your registration and guide you on your next steps.<br><br>
       Once you submit, a payment link will appear for your <b>₦1,200,000 initial deposit</b> or full package payment — whichever you prefer.<br><br>
@@ -1024,7 +1024,7 @@ RESULT: Every submission will:
       <p style="font-family:'Cinzel',serif; font-size:10px; letter-spacing:3px; color:rgba(232,213,163,0.6); margin-bottom:4px;">PROCEED TO PAYMENT</p>
 
       <!-- Deposit button — hidden if full payment selected -->
-      <a href="https://paystack.shop/pay/japan-tour-deposit?callback_url=YOUR_PAGE_URL%3Fpayment%3Dsuccess%26amount%3D300000"
+      <a href="https://paystack.shop/pay/japan-tour-deposit"
          target="_blank" id="depositBtn"
          style="display:flex; align-items:center; justify-content:center; gap:10px;
                 background: linear-gradient(135deg, #8B6914, #C9A84C);
@@ -1035,7 +1035,7 @@ RESULT: Every submission will:
       </a>
 
       <!-- Full payment button — always shown -->
-      <a href="https://paystack.shop/pay/japan-tour-fullpayment?callback_url=YOUR_PAGE_URL%3Fpayment%3Dsuccess"
+      <a href="https://paystack.shop/pay/japan-tour-fullpayment"
          target="_blank" id="fullPayBtn"
          style="display:flex; align-items:center; justify-content:center; gap:10px;
                 background: rgba(232,213,163,0.1);
@@ -1161,323 +1161,101 @@ window.addEventListener('popstate', function() {
   }
 });
 
-
-// ── RECEIPT MEMORY — store receipt data so refresh works ──
-let receiptMemory = null;
-
-// On page load — check if we have a reference in URL OR saved receipt in session
-(function initPage() {
-  const params    = new URLSearchParams(window.location.search);
-  const reference = params.get('reference') || params.get('trxref');
-
-  // Check if we have saved receipt data in session
-  const saved = sessionStorage.getItem('japanTourReceipt');
+// ── RESTORE PREVIEW ON REFRESH ──
+(function restorePreview() {
+  var saved = sessionStorage.getItem('japanPreview');
   if (saved) {
     try {
-      receiptMemory = JSON.parse(saved);
-      showPaymentLoadingScreen(receiptMemory.reference, true);
+      var fd = JSON.parse(saved);
+      // Restore form fields
+      var form = document.getElementById('bookingForm');
+      if (form) {
+        Object.keys(fd).forEach(function(key) {
+          var el = form.querySelector('[name="' + key + '"]');
+          if (!el) return;
+          if (el.type === 'radio' || el.type === 'checkbox') {
+            var all = form.querySelectorAll('[name="' + key + '"]');
+            all.forEach(function(r) {
+              if (r.value === fd[key]) r.checked = true;
+            });
+          } else {
+            el.value = fd[key];
+          }
+        });
+      }
+      // Show preview directly
+      showPreviewFromData(fd);
+    } catch(e) {
+      sessionStorage.removeItem('japanPreview');
+    }
+  }
+})();
+
+// ── PAYSTACK RETURN URL DETECTION ──
+(function checkPaystackReturn() {
+  var params    = new URLSearchParams(window.location.search);
+  var reference = params.get('reference') || params.get('trxref');
+  var saved     = sessionStorage.getItem('japanTourReceipt');
+
+  if (saved) {
+    try {
+      var data    = JSON.parse(saved);
+      var payDate = new Date(data.paidAt).toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
+      buildReceiptScreen();
+      renderReceiptScreen(data.amountPaid, data.amountReceived, data.paystackFee, data.payerName, data.reference, payDate);
       return;
     } catch(e) {}
   }
 
   if (reference) {
-    showPaymentLoadingScreen(reference, false);
+    buildReceiptScreen();
+    history.pushState(null, '', window.location.href);
+    window.addEventListener('popstate', function() { history.pushState(null, '', window.location.href); });
+    document.getElementById('paymentSuccessScreen').innerHTML =
+      '<span style="font-size:48px;display:block;margin-bottom:20px;">⏳</span>' +
+      '<div style="font-family:Cinzel,serif;font-size:18px;letter-spacing:2px;color:#E8D5A3;margin-bottom:12px;">PROCESSING YOUR PAYMENT...</div>' +
+      '<p style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;color:rgba(232,213,163,0.7);">Please wait a moment.</p>';
+
+    fetch('/.netlify/functions/verify-payment?reference=' + encodeURIComponent(reference))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.status === 'success') {
+          sessionStorage.setItem('japanTourReceipt', JSON.stringify(data));
+          var payDate = new Date(data.paidAt).toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
+          renderReceiptScreen(data.amountPaid, data.amountReceived, data.paystackFee, data.payerName, data.reference, payDate);
+        } else {
+          renderErrorScreen(reference, data.error || 'Payment could not be verified.');
+        }
+      })
+      .catch(function() { renderErrorScreen(reference, 'Network error. Please contact us with your reference number.'); });
   }
 })();
 
-// ── DUPLICATE CHECK via SheetDB ──
-async function checkDuplicate(email, fullName, passportNumber) {
-  try {
-    const sheetUrl = '/.netlify/functions/check-duplicate';
-    const res = await fetch(sheetUrl + '?email=' + encodeURIComponent(email) +
-      '&name=' + encodeURIComponent(fullName) +
-      '&passport=' + encodeURIComponent(passportNumber || ''));
-    const data = await res.json();
-    return data; // { duplicate: true/false, field: 'email'|'name'|'passport' }
-  } catch(e) {
-    return { duplicate: false }; // if check fails, allow submission
-  }
+function buildReceiptScreen() {
+  document.getElementById('successMsg').style.display = 'none';
+  document.querySelector('.form-wrap').style.display  = 'none';
+  document.querySelector('.hero').style.display       = 'none';
+  var s = document.createElement('div');
+  s.id = 'paymentSuccessScreen';
+  s.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#1C2B1A;color:#E8D5A3;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow-y:auto;padding:48px 24px 60px;z-index:99999;text-align:center;';
+  document.body.appendChild(s);
 }
 
-// ── PREVIEW PAGE ──
-async function showPreview() {
-  const form = document.getElementById('bookingForm');
-
-  // Run validation first
-  const btn = document.getElementById('submitBtn');
-  const allRequired = form.querySelectorAll('[required]');
-  let firstInvalid = null;
-  allRequired.forEach(function(field) {
-    if (!field.value.trim()) {
-      if (!firstInvalid) firstInvalid = field;
-    }
-  });
-
-  // Check radio groups
-  const radioGroups = ['gender','has_passport','travelled_before','visa_denied','room_type','deposit_readiness','payment_plan','medical','dietary','referral_source'];
-  let missingRadio = null;
-  radioGroups.forEach(function(name) {
-    const checked = form.querySelector('input[name="' + name + '"]:checked');
-    if (!checked && !missingRadio) missingRadio = name;
-  });
-
-  // Check checkboxes
-  const agreeDeposit = form.querySelector('input[name="agree_deposit"]:checked');
-  const agreeAccuracy = form.querySelector('input[name="agree_accuracy"]:checked');
-  const agreeTC = form.querySelector('input[name="agree_tc"]:checked');
-
-  if (firstInvalid || missingRadio || !agreeDeposit || !agreeAccuracy || !agreeTC) {
-    alert('Please fill in all required fields before reviewing your details.');
-    if (firstInvalid) firstInvalid.focus();
-    return;
-  }
-
-  // Collect form data
-  const formData = new FormData(form);
-  const fd = {};
-  formData.forEach(function(v, k) { fd[k] = v; });
-
-  // Show checking indicator
-  btn.textContent = 'Checking... Please wait';
-  btn.disabled = true;
-
-  // Check for duplicates
-  const fullName = ((fd.first_name || '') + ' ' + (fd.last_name || '')).trim();
-  const dupCheck = await checkDuplicate(fd.email || '', fullName, fd.passport_number || '');
-
-  btn.textContent = '✦  Review My Details  ✦';
-  btn.disabled = false;
-
-  if (dupCheck.duplicate) {
-    let msg = '';
-    if (dupCheck.field === 'email') msg = 'This email address (' + fd.email + ') has already been registered for this tour.';
-    else if (dupCheck.field === 'name') msg = 'This name (' + fullName + ') has already been registered for this tour.';
-    else if (dupCheck.field === 'passport') msg = 'This passport number has already been registered for this tour.';
-    msg += '\n\nIf you believe this is an error, please contact us on WhatsApp: +234 802 316 8428';
-    alert(msg);
-    return;
-  }
-
-  // Build preview
-  function previewRow(label, val) {
-    if (!val) return '';
-    return '<tr><td style="padding:8px 12px;color:#5A6B58;font-size:13px;width:45%;vertical-align:top;">' + label + '</td>' +
-           '<td style="padding:8px 12px;font-size:13px;font-weight:600;color:#111;">' + val + '</td></tr>';
-  }
-
-  const previewHTML =
-    '<section-label>PERSONAL INFORMATION</section-label>' +
-    previewRow('First Name', fd.first_name) +
-    previewRow('Last Name', fd.last_name) +
-    previewRow('Email', fd.email) +
-    previewRow('WhatsApp', fd.whatsapp) +
-    previewRow('State', fd.state) +
-    previewRow('Date of Birth', fd.dob) +
-    previewRow('Gender', fd.gender) +
-    '<tr><td colspan="2" style="padding:4px 12px;"><div style="height:1px;background:#D4C9A8;margin:4px 0;"></div></td></tr>' +
-    '<tr><td colspan="2" style="padding:8px 12px;font-family:Cinzel,serif;font-size:10px;letter-spacing:2px;color:#8B1A1A;">PASSPORT & TRAVEL</td></tr>' +
-    previewRow('Has Passport', fd.has_passport) +
-    previewRow('Passport Number', fd.passport_number) +
-    previewRow('Passport Expiry', fd.passport_expiry) +
-    previewRow('Name on Passport', fd.passport_fullname) +
-    previewRow('Travelled Before', fd.travelled_before) +
-    previewRow('Visa Denied Before', fd.visa_denied) +
-    '<tr><td colspan="2" style="padding:4px 12px;"><div style="height:1px;background:#D4C9A8;margin:4px 0;"></div></td></tr>' +
-    '<tr><td colspan="2" style="padding:8px 12px;font-family:Cinzel,serif;font-size:10px;letter-spacing:2px;color:#8B1A1A;">TOUR PREFERENCES</td></tr>' +
-    previewRow('Room Type', fd.room_type) +
-    previewRow('Group Size', fd.group_size) +
-    previewRow('Companion 1', fd.companion_1) +
-    previewRow('Companion 2', fd.companion_2) +
-    previewRow('Companion 3', fd.companion_3) +
-    previewRow('Deposit Readiness', fd.deposit_readiness) +
-    previewRow('Payment Plan', fd.payment_plan) +
-    '<tr><td colspan="2" style="padding:4px 12px;"><div style="height:1px;background:#D4C9A8;margin:4px 0;"></div></td></tr>' +
-    '<tr><td colspan="2" style="padding:8px 12px;font-family:Cinzel,serif;font-size:10px;letter-spacing:2px;color:#8B1A1A;">HEALTH & DIETARY</td></tr>' +
-    previewRow('Medical Conditions', fd.medical) +
-    previewRow('Medical Details', fd.medical_details) +
-    previewRow('Dietary', fd.dietary) +
-    previewRow('Dietary Details', fd.dietary_details) +
-    previewRow('Special Requirements', fd.special_requirements) +
-    '<tr><td colspan="2" style="padding:4px 12px;"><div style="height:1px;background:#D4C9A8;margin:4px 0;"></div></td></tr>' +
-    '<tr><td colspan="2" style="padding:8px 12px;font-family:Cinzel,serif;font-size:10px;letter-spacing:2px;color:#8B1A1A;">EMERGENCY CONTACT</td></tr>' +
-    previewRow('Emergency Name', fd.emergency_name) +
-    previewRow('Relationship', fd.emergency_relationship) +
-    previewRow('Emergency Phone', fd.emergency_phone) +
-    previewRow('How Found Us', fd.referral_source + (fd.referral_source_other ? ' — ' + fd.referral_source_other : ''));
-
-  // Store form data for submission after preview
-  sessionStorage.setItem('japanTourPreviewData', JSON.stringify(fd));
-
-  // Show preview overlay
-  const overlay = document.createElement('div');
-  overlay.id = 'previewOverlay';
-  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#1C2B1A;color:#E8D5A3;z-index:99999;overflow-y:auto;padding:0 0 60px;';
-
-  overlay.innerHTML =
-    '<div style="background:#1C2B1A;padding:20px 20px 16px;position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(232,213,163,0.2);">' +
-      '<div style="font-family:Cinzel,serif;font-size:16px;letter-spacing:2px;color:#E8D5A3;margin-bottom:4px;">📋 REVIEW YOUR DETAILS</div>' +
-      '<div style="font-size:12px;color:rgba(232,213,163,0.6);">Please check everything carefully. Once you submit, you cannot make changes.</div>' +
-    '</div>' +
-    '<div style="max-width:600px;margin:24px auto;padding:0 16px;">' +
-      '<div style="background:#FAFCF8;color:#111;border-top:4px solid #C9A84C;">' +
-        '<div style="padding:16px 12px;background:#1C2B1A;">' +
-          '<div style="font-family:Cinzel,serif;font-size:11px;letter-spacing:3px;color:#E8D5A3;">REGISTRATION DETAILS</div>' +
-          '<div style="font-family:Cinzel,serif;font-size:9px;color:rgba(232,213,163,0.6);letter-spacing:2px;margin-top:2px;">UBAH'S TRAVEL SPACE AGENCY — JAPAN TOUR 2026</div>' +
-        '</div>' +
-        '<table style="width:100%;border-collapse:collapse;">' + previewHTML + '</table>' +
-      '</div>' +
-      '<div style="background:rgba(232,213,163,0.08);border:1px solid rgba(232,213,163,0.2);padding:14px 16px;margin-top:16px;font-size:13px;color:rgba(232,213,163,0.8);line-height:1.7;">' +
-        '⚠️ <b style="color:#E8D5A3;">Important:</b> Please review all details carefully. Once submitted, you cannot edit your information. If anything is incorrect, press <b>Go Back</b> to make corrections.' +
-      '</div>' +
-      '<div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">' +
-        '<button onclick="goBackToForm()" style="flex:1;min-width:140px;background:rgba(232,213,163,0.1);border:1px solid rgba(232,213,163,0.3);color:#E8D5A3;padding:15px;font-family:Cinzel,serif;font-size:12px;letter-spacing:2px;cursor:pointer;">← GO BACK & EDIT</button>' +
-        '<button onclick="confirmSubmit()" style="flex:2;min-width:180px;background:linear-gradient(135deg,#8B6914,#C9A84C);border:none;color:#0D1F0C;padding:15px;font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;" id="confirmBtn">✦ CONFIRM & SUBMIT ✦</button>' +
-      '</div>' +
-    '</div>';
-
-  document.body.appendChild(overlay);
-  window.scrollTo(0, 0);
-}
-
-// ── GO BACK TO FORM WITH DATA PRESERVED ──
-function goBackToForm() {
-  const overlay = document.getElementById('previewOverlay');
-  if (overlay) overlay.remove();
-  // Data is still in the form — nothing was cleared
-  window.scrollTo(0, 0);
-}
-
-// ── CONFIRM AND SUBMIT ──
-async function confirmSubmit() {
-  const confirmBtn = document.getElementById('confirmBtn');
-  confirmBtn.textContent = 'Submitting...';
-  confirmBtn.disabled = true;
-
-  const savedData = sessionStorage.getItem('japanTourPreviewData');
-  if (!savedData) {
-    alert('Something went wrong. Please go back and try again.');
-    confirmBtn.textContent = '✦ CONFIRM & SUBMIT ✦';
-    confirmBtn.disabled = false;
-    return;
-  }
-
-  const formObject = JSON.parse(savedData);
-
-  try {
-    const response = await fetch('/.netlify/functions/save-submission', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formObject),
-    });
-
-    if (response.ok) {
-      sessionStorage.removeItem('japanTourPreviewData');
-      const overlay = document.getElementById('previewOverlay');
-      if (overlay) overlay.remove();
-      const paymentPlan = formObject.payment_plan;
-      const isFullPayment = paymentPlan === 'Full payment at once';
-      if (isFullPayment) {
-        const depBtn = document.getElementById('depositBtn');
-        if (depBtn) depBtn.style.display = 'none';
-      }
-      lockToSuccess();
-      window.scrollTo(0, 0);
-    } else {
-      const errData = await response.json().catch(() => ({}));
-      console.error('Save error:', errData);
-      confirmBtn.textContent = '✦ CONFIRM & SUBMIT ✦';
-      confirmBtn.disabled = false;
-      alert('Something went wrong saving your details. Please try again or contact us on WhatsApp: +234 802 316 8428');
-    }
-  } catch (err) {
-    console.error('Network error:', err);
-    confirmBtn.textContent = '✦ CONFIRM & SUBMIT ✦';
-    confirmBtn.disabled = false;
-    alert('Network error. Please check your connection and try again.');
-  }
-}
-
-
-
-// ── LOADING SCREEN WHILE VERIFYING ──
-function showPaymentLoadingScreen(reference, fromMemory) {
-  document.getElementById('successMsg').style.display  = 'none';
-  document.querySelector('.form-wrap').style.display   = 'none';
-  document.querySelector('.hero').style.display        = 'none';
-
-  // If we already have receipt data in memory — show it immediately, no API call
-  if (fromMemory && receiptMemory) {
-    const screen = document.createElement('div');
-    screen.id = 'paymentSuccessScreen';
-    screen.style.cssText = [
-      'position:fixed','top:0','left:0','width:100%','height:100%',
-      'background:#1C2B1A','color:#E8D5A3',
-      'display:flex','flex-direction:column','align-items:center',
-      'justify-content:flex-start','overflow-y:auto',
-      'padding:48px 24px 60px','z-index:99999','text-align:center'
-    ].join(';');
-    document.body.appendChild(screen);
-    renderReceiptScreen(receiptMemory.amountPaid, receiptMemory.amountReceived, receiptMemory.paystackFee, receiptMemory.payerName, receiptMemory.reference, receiptMemory.payDate);
-    return;
-  }
-
-  const screen = document.createElement('div');
-  screen.id = 'paymentSuccessScreen';
-  screen.style.cssText = [
-    'position:fixed','top:0','left:0','width:100%','height:100%',
-    'background:#1C2B1A','color:#E8D5A3',
-    'display:flex','flex-direction:column','align-items:center',
-    'justify-content:center','overflow-y:auto',
-    'padding:48px 24px 60px','z-index:99999','text-align:center'
-  ].join(';');
-  screen.innerHTML =
-    '<span style="font-size:48px;display:block;margin-bottom:20px;">⏳</span>' +
-    '<div style="font-family:Cinzel,serif;font-size:18px;letter-spacing:2px;color:#E8D5A3;margin-bottom:12px;">PROCESSING YOUR PAYMENT...</div>' +
-    '<p style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;color:rgba(232,213,163,0.7);">Please wait a moment while we process your payment.</p>';
-  document.body.appendChild(screen);
-
-  // Block going back
-  history.pushState(null, '', window.location.href);
-  window.addEventListener('popstate', function () {
-    history.pushState(null, '', window.location.href);
-  });
-
-  fetch('/.netlify/functions/verify-payment?reference=' + encodeURIComponent(reference))
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      if (data.status === 'success') {
-        const payDate = new Date(data.paidAt).toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
-        // Save to session so refresh works
-        receiptMemory = { amountPaid: data.amountPaid, amountReceived: data.amountReceived, paystackFee: data.paystackFee, payerName: data.payerName, reference: data.reference, payDate: payDate };
-        sessionStorage.setItem('japanTourReceipt', JSON.stringify(receiptMemory));
-        renderReceiptScreen(data.amountPaid, data.amountReceived, data.paystackFee, data.payerName, data.reference, payDate);
-      } else {
-        renderErrorScreen(reference, data.error || 'Payment could not be verified.');
-      }
-    })
-    .catch(function () {
-      renderErrorScreen(reference, 'Network error. Please contact us with your reference number.');
-    });
-}
-
-// ── RECEIPT SCREEN ──
 function renderReceiptScreen(amountPaid, amountReceived, paystackFee, name, reference, date) {
-  const screen      = document.getElementById('paymentSuccessScreen');
-  const fmtPaid     = '\u20A6' + Number(amountPaid).toLocaleString('en-NG');
-  const fmtReceived = '\u20A6' + Number(amountReceived).toLocaleString('en-NG');
-  const fmtFee      = '\u20A6' + Number(paystackFee).toLocaleString('en-NG');
-  const waMsg       = 'Hi! I just paid ' + fmtPaid + ' for the Japan Group Tour (Oct 2026). Reference: ' + reference;
-
+  var screen      = document.getElementById('paymentSuccessScreen');
+  var fmtPaid     = '\u20A6' + Number(amountPaid).toLocaleString('en-NG');
+  var fmtReceived = '\u20A6' + Number(amountReceived).toLocaleString('en-NG');
+  var fmtFee      = '\u20A6' + Number(paystackFee).toLocaleString('en-NG');
+  var waMsg       = 'Hi! I just paid ' + fmtPaid + ' for the Japan Group Tour (Oct 2026). Reference: ' + reference;
+  var safeN       = (name || 'Traveller').replace(/'/g, "\\'");
   screen.style.justifyContent = 'flex-start';
   screen.innerHTML =
     '<span style="font-size:56px;display:block;margin-bottom:16px;">\u2705</span>' +
     '<div style="font-family:Cinzel,serif;font-size:clamp(18px,4vw,24px);letter-spacing:2px;margin-bottom:12px;color:#E8D5A3;">PAYMENT RECEIVED!</div>' +
     '<div style="font-family:Cormorant Garamond,serif;font-size:17px;font-style:italic;color:rgba(232,213,163,0.85);line-height:1.75;max-width:480px;margin-bottom:28px;">' +
-      'Congratulations' + (name ? ', <b>' + name + '</b>' : '') + '! We have received your payment of ' +
-      '<b style="color:#E8D5A3;">' + fmtPaid + '</b> for the Japan Group Tour \u2014 October 2026.<br><br>' +
+      'Congratulations' + (name ? ', <b>' + name + '</b>' : '') + '! We have received your payment of <b style="color:#E8D5A3;">' + fmtPaid + '</b> for the Japan Group Tour \u2014 October 2026.<br><br>' +
       'Our team will be in touch within <b>24\u201348 hours</b> to confirm your booking.' +
     '</div>' +
-
     '<div id="receiptCard" style="background:#FAFCF8;color:#111;border-top:4px solid #1C2B1A;max-width:480px;width:100%;padding:28px 24px;text-align:left;margin-bottom:24px;">' +
       '<div style="font-family:Cinzel,serif;font-size:13px;font-weight:700;color:#1C2B1A;letter-spacing:2px;margin-bottom:4px;">PAYMENT RECEIPT</div>' +
       '<div style="font-family:Cinzel,serif;font-size:10px;color:#8B1A1A;letter-spacing:2px;margin-bottom:16px;">UBAH\'S TRAVEL SPACE AGENCY \u2014 JAPAN TOUR 2026</div>' +
@@ -1494,264 +1272,68 @@ function renderReceiptScreen(amountPaid, amountReceived, paystackFee, name, refe
         '<tr><td style="padding:7px 0;color:#5A6B58;">Status</td><td style="padding:7px 0;font-weight:700;color:#1C2B1A;">\u2705 CONFIRMED</td></tr>' +
       '</table>' +
       '<div style="height:1px;background:#D4C9A8;margin:16px 0;"></div>' +
-      '<div style="font-size:9.5px;color:#5A6B58;font-family:Inter,sans-serif;text-align:center;line-height:1.6;">' +
-        "Ubah's Travel Space Agency &nbsp;|&nbsp; +234 802 316 8428 &nbsp;|&nbsp; ubahstravelspaceagency@gmail.com" +
-      '</div>' +
+      '<div style="font-size:9.5px;color:#5A6B58;font-family:Inter,sans-serif;text-align:center;line-height:1.6;">Ubah\'s Travel Space Agency &nbsp;|&nbsp; +234 802 316 8428 &nbsp;|&nbsp; ubahstravelspaceagency@gmail.com</div>' +
     '</div>' +
-
     '<div style="display:flex;flex-direction:column;gap:12px;align-items:center;width:100%;max-width:340px;margin-bottom:32px;">' +
-      '<button type="button" onclick="downloadReceiptPDF()" style="width:100%;background:linear-gradient(135deg,#8B6914,#C9A84C);color:#0D1F0C;border:none;padding:15px 28px;cursor:pointer;font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:2px;">' +
-        '\u2B07\uFE0F &nbsp; Download Receipt (PDF)' +
-      '</button>' +
-      '<button type="button" onclick="shareToWhatsApp()" style="width:100%;display:flex;align-items:center;justify-content:center;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);padding:15px 28px;color:#E8D5A3;cursor:pointer;font-family:Cinzel,serif;font-size:13px;letter-spacing:2px;">' +
-        '\uD83D\uDCAC &nbsp; Share via WhatsApp' +
-      '</button>' +
+      '<button type="button" onclick="downloadReceiptPDF(\'' + safeN + '\')" style="width:100%;background:linear-gradient(135deg,#8B6914,#C9A84C);color:#0D1F0C;border:none;padding:15px 28px;cursor:pointer;font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:2px;">\u2B07\uFE0F &nbsp; Download Receipt (PDF)</button>' +
+      '<a href="https://wa.me/?text=' + encodeURIComponent(waMsg) + '" target="_blank" style="width:100%;display:flex;align-items:center;justify-content:center;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);padding:15px 28px;color:#E8D5A3;text-decoration:none;font-family:Cinzel,serif;font-size:13px;letter-spacing:2px;">\uD83D\uDCAC &nbsp; Share via WhatsApp</a>' +
     '</div>' +
     '<p style="font-size:13px;color:rgba(232,213,163,0.45);font-style:italic;">Effortless Travel, Unforgettable Experiences \uD83C\uDDEF\uD83C\uDDF5</p>';
 }
 
-// ── ERROR SCREEN ──
 function renderErrorScreen(reference, message) {
-  const screen = document.getElementById('paymentSuccessScreen');
+  var screen = document.getElementById('paymentSuccessScreen');
   screen.innerHTML =
     '<span style="font-size:48px;display:block;margin-bottom:16px;">\u26A0\uFE0F</span>' +
     '<div style="font-family:Cinzel,serif;font-size:20px;letter-spacing:2px;margin-bottom:12px;color:#E8D5A3;">VERIFICATION ISSUE</div>' +
     '<p style="font-family:Cormorant Garamond,serif;font-size:16px;font-style:italic;color:rgba(232,213,163,0.8);line-height:1.75;max-width:480px;margin-bottom:24px;">' +
-      message + '<br><br>Your reference: <b style="font-size:13px;word-break:break-all;">' + reference + '</b><br><br>' +
-      'Please send this to us on WhatsApp and we will confirm your payment manually.' +
+      message + '<br><br>Your reference: <b style="font-size:13px;word-break:break-all;">' + reference + '</b><br><br>Please send this to us on WhatsApp and we will confirm your payment manually.' +
     '</p>' +
-    '<a href="https://wa.me/2348023168428?text=' + encodeURIComponent('Hi! I paid for the Japan Tour. My Paystack reference is: ' + reference + '. Please confirm.') + '" target="_blank" style="display:flex;align-items:center;justify-content:center;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);padding:15px 28px;color:#E8D5A3;text-decoration:none;font-family:Cinzel,serif;font-size:13px;letter-spacing:2px;width:100%;max-width:340px;">' +
-      '\uD83D\uDCAC &nbsp; Send Reference via WhatsApp' +
-    '</a>';
+    '<a href="https://wa.me/2348023168428?text=' + encodeURIComponent('Hi! I paid for the Japan Tour. My Paystack reference is: ' + reference + '. Please confirm.') + '" target="_blank" style="display:flex;align-items:center;justify-content:center;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);padding:15px 28px;color:#E8D5A3;text-decoration:none;font-family:Cinzel,serif;font-size:13px;letter-spacing:2px;width:100%;max-width:340px;">\uD83D\uDCAC &nbsp; Send Reference via WhatsApp</a>';
 }
 
-// ── DOWNLOAD RECEIPT AS PDF ──
-function downloadReceiptPDF() {
-  const card = document.getElementById('receiptCard');
+function downloadReceiptPDF(traveller) {
+  var card = document.getElementById('receiptCard');
   if (!card) return;
-
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Payment Receipt — Japan Tour 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-<style>
-  @page { size: A4; margin: 0; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Inter', sans-serif;
-    background: #fff;
-    color: #111;
-    min-height: 100vh;
-    padding: 0;
-  }
-  .page {
-    width: 210mm;
-    min-height: 297mm;
-    margin: 0 auto;
-    padding: 20mm 18mm;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-  }
-  .header {
-    background: #1C2B1A;
-    color: #E8D5A3;
-    padding: 32px 28px;
-    text-align: center;
-    margin-bottom: 0;
-  }
-  .header-flag { font-size: 32px; display: block; margin-bottom: 10px; }
-  .header-agency {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: rgba(232,213,163,0.7);
-    margin-bottom: 8px;
-  }
-  .header-title {
-    font-family: 'Cinzel', serif;
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #E8D5A3;
-    margin-bottom: 4px;
-  }
-  .header-sub {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    color: rgba(232,213,163,0.6);
-    letter-spacing: 2px;
-  }
-  .gold-bar {
-    height: 4px;
-    background: linear-gradient(90deg, transparent, #C9A84C, transparent);
-    margin-bottom: 36px;
-  }
-  .receipt-box {
-    border: 1px solid #D4C9A8;
-    border-top: 5px solid #1C2B1A;
-    padding: 32px 28px;
-    margin-bottom: 28px;
-  }
-  .receipt-label {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    font-weight: 700;
-    color: #1C2B1A;
-    letter-spacing: 2px;
-    margin-bottom: 4px;
-  }
-  .receipt-sublabel {
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    color: #8B1A1A;
-    letter-spacing: 2px;
-    margin-bottom: 18px;
-  }
-  .divider { height: 1px; background: #D4C9A8; margin: 14px 0; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  td { padding: 9px 0; vertical-align: top; }
-  td:first-child { color: #5A6B58; width: 52%; }
-  td:last-child { font-weight: 600; color: #111; }
-  .amount-paid { font-size: 18px !important; font-weight: 700 !important; color: #1C2B1A !important; }
-  .fee-cell { color: #8B1A1A !important; font-weight: 400 !important; }
-  .received { font-size: 15px !important; font-weight: 700 !important; color: #1C2B1A !important; }
-  .status { font-weight: 700 !important; color: #1C2B1A !important; }
-  .ref { font-size: 11px !important; font-weight: 400 !important; word-break: break-all; }
-  .notice {
-    background: #F0F7F4;
-    border-left: 4px solid #1C2B1A;
-    padding: 14px 16px;
-    font-size: 12px;
-    color: #1C2B1A;
-    line-height: 1.7;
-    margin-bottom: 28px;
-  }
-  .footer {
-    margin-top: auto;
-    border-top: 1px solid #D4C9A8;
-    padding-top: 18px;
-    text-align: center;
-    font-size: 10px;
-    color: #5A6B58;
-    line-height: 1.8;
-  }
-  .footer-agency {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    font-weight: 700;
-    color: #1C2B1A;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
-  }
-  .stamp {
-    display: inline-block;
-    border: 2px solid #1C2B1A;
-    color: #1C2B1A;
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    padding: 8px 20px;
-    margin: 20px auto;
-    transform: rotate(-2deg);
-  }
-</style>
-</head>
-<body>
-<div class="page">
-
-  <div class="header">
-    <span class="header-flag">🇯🇵</span>
-    <div class="header-agency">UBAH'S TRAVEL SPACE AGENCY</div>
-    <div class="header-title">PAYMENT RECEIPT</div>
-    <div class="header-sub">JAPAN GROUP TOUR — OCTOBER 2026</div>
-  </div>
-  <div class="gold-bar"></div>
-
-  <div class="receipt-box">
-    <div class="receipt-label">PAYMENT RECEIPT</div>
-    <div class="receipt-sublabel">UBAH'S TRAVEL SPACE AGENCY — JAPAN TOUR 2026</div>
-    <div class="divider"></div>
-    ${card.querySelector('table').outerHTML.replace(
-      /font-size:16px/g, ''
-    )}
-    <div class="divider"></div>
-    <div style="text-align:center;">
-      <div class="stamp">✅ PAYMENT CONFIRMED</div>
-    </div>
-  </div>
-
-  <div class="notice">
-    <b>Important:</b> Please keep this receipt safe. Our team will contact you within 24–48 hours
-    to confirm your full booking. If you have questions, reach us on WhatsApp: <b>+234 802 316 8428</b>
-    or email <b>ubahstravelspaceagency@gmail.com</b>
-  </div>
-
-  <div class="footer">
-    <div class="footer-agency">UBAH'S TRAVEL SPACE AGENCY</div>
-    +234 802 316 8428 &nbsp;|&nbsp; ubahstravelspaceagency@gmail.com &nbsp;|&nbsp; @ubahs_travel_space<br>
-    Effortless Travel, Unforgettable Experiences
-  </div>
-
-</div>
-<script>window.onload = function() { window.print(); }<\/script>
-</body>
-</html>`;
-
-  const blob = new Blob([html], { type: 'text/html' });
-  const url  = URL.createObjectURL(blob);
-  const pName = receiptMemory ? receiptMemory.payerName.replace(/[^a-zA-Z0-9 ]/g,'').trim() : 'Customer';
-  const pFileName = 'Payment for Japan Tour by ' + pName;
-  const win  = window.open(url, '_blank');
-  if (!win) {
-    const a    = document.createElement('a');
-    a.href     = url;
-    a.download = pFileName + '.html';
-    a.click();
-  }
-  setTimeout(() => URL.revokeObjectURL(url), 10000);
-}
-
-// ── SHARE TO WHATSAPP AS IMAGE ──
-function shareToWhatsApp() {
-  const card = document.getElementById('receiptCard');
-  if (!card) return;
-
-  // Try to use html2canvas if available, otherwise fallback to text share
-  if (typeof html2canvas !== 'undefined') {
-    html2canvas(card, { scale: 2, backgroundColor: '#FAFCF8', useCORS: true }).then(function(canvas) {
-      canvas.toBlob(function(blob) {
-        const file = new File([blob], 'Japan-Tour-Receipt.png', { type: 'image/png' });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          navigator.share({ files: [file], title: 'Japan Tour Payment Receipt' });
-        } else {
-          // Fallback — open WhatsApp with text
-          fallbackWhatsAppShare();
-        }
-      }, 'image/png');
-    });
-  } else {
-    fallbackWhatsAppShare();
-  }
-}
-
-function fallbackWhatsAppShare() {
-  // Get receipt data from memory
-  const r = receiptMemory;
-  if (!r) return;
-  const msg = 'PAYMENT RECEIPT — Japan Group Tour 2026\n\n' +
-    'Traveller: ' + (r.payerName || '—') + '\n' +
-    'Amount Paid: ₦' + Number(r.amountPaid).toLocaleString('en-NG') + '\n' +
-    'Amount Received by Agency: ₦' + Number(r.amountReceived).toLocaleString('en-NG') + '\n' +
-    'Reference: ' + r.reference + '\n' +
-    'Date: ' + r.payDate + '\n' +
-    'Tour: Japan Group Tour — October 2026\n' +
-    'Status: ✅ CONFIRMED\n\n' +
-    'Ubah\'s Travel Space Agency | +234 802 316 8428';
-  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+  var fileName  = 'Payment for Japan Tour by ' + (traveller || 'Traveller');
+  var tableHTML = card.querySelector('table') ? card.querySelector('table').outerHTML : '';
+  var html = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>' + fileName + '</title>' +
+    '<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">' +
+    '<style>@page{size:A4;margin:0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Inter,sans-serif;background:#fff;color:#111;}' +
+    '.page{width:210mm;min-height:297mm;margin:0 auto;padding:20mm 18mm;display:flex;flex-direction:column;}' +
+    '.hdr{background:#1C2B1A;color:#E8D5A3;padding:32px 28px;text-align:center;margin-bottom:0;}' +
+    '.hflag{font-size:32px;display:block;margin-bottom:10px;}' +
+    '.hagency{font-family:Cinzel,serif;font-size:11px;letter-spacing:3px;color:rgba(232,213,163,0.7);margin-bottom:8px;}' +
+    '.htitle{font-family:Cinzel,serif;font-size:22px;font-weight:700;letter-spacing:2px;color:#E8D5A3;margin-bottom:4px;}' +
+    '.hsub{font-family:Cinzel,serif;font-size:11px;color:rgba(232,213,163,0.6);letter-spacing:2px;}' +
+    '.gold{height:4px;background:linear-gradient(90deg,transparent,#C9A84C,transparent);margin-bottom:36px;}' +
+    '.rbox{border:1px solid #D4C9A8;border-top:5px solid #1C2B1A;padding:32px 28px;margin-bottom:28px;}' +
+    '.rlbl{font-family:Cinzel,serif;font-size:13px;font-weight:700;color:#1C2B1A;letter-spacing:2px;margin-bottom:4px;}' +
+    '.rsub{font-family:Cinzel,serif;font-size:9px;color:#8B1A1A;letter-spacing:2px;margin-bottom:18px;}' +
+    '.div{height:1px;background:#D4C9A8;margin:14px 0;}' +
+    'table{width:100%;border-collapse:collapse;font-size:13px;}td{padding:9px 0;vertical-align:top;}' +
+    'td:first-child{color:#5A6B58;width:52%;}td:last-child{font-weight:600;color:#111;}' +
+    '.stamp{display:inline-block;border:2px solid #1C2B1A;color:#1C2B1A;font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;padding:8px 20px;margin:20px auto;transform:rotate(-2deg);}' +
+    '.notice{background:#F0F7F4;border-left:4px solid #1C2B1A;padding:14px 16px;font-size:12px;color:#1C2B1A;line-height:1.7;margin-bottom:28px;}' +
+    '.ftr{margin-top:auto;border-top:1px solid #D4C9A8;padding-top:18px;text-align:center;font-size:10px;color:#5A6B58;line-height:1.8;}' +
+    '.fagency{font-family:Cinzel,serif;font-size:11px;font-weight:700;color:#1C2B1A;letter-spacing:1px;margin-bottom:4px;}' +
+    '</style></head><body>' +
+    '<div class="page">' +
+    '<div class="hdr"><span class="hflag">&#127481;&#127477;</span><div class="hagency">UBAH\'S TRAVEL SPACE AGENCY</div><div class="htitle">PAYMENT RECEIPT</div><div class="hsub">JAPAN GROUP TOUR &mdash; OCTOBER 2026</div></div>' +
+    '<div class="gold"></div>' +
+    '<div class="rbox"><div class="rlbl">PAYMENT RECEIPT</div><div class="rsub">UBAH\'S TRAVEL SPACE AGENCY &mdash; JAPAN TOUR 2026</div><div class="div"></div>' +
+    tableHTML +
+    '<div class="div"></div><div style="text-align:center;"><div class="stamp">&#9989; PAYMENT CONFIRMED</div></div></div>' +
+    '<div class="notice"><b>Important:</b> Please keep this receipt safe. Our team will contact you within 24&ndash;48 hours. WhatsApp: <b>+234 802 316 8428</b> | Email: <b>ubahstravelspaceagency@gmail.com</b></div>' +
+    '<div class="ftr"><div class="fagency">UBAH\'S TRAVEL SPACE AGENCY</div>+234 802 316 8428 &nbsp;|&nbsp; ubahstravelspaceagency@gmail.com<br>Effortless Travel, Unforgettable Experiences</div>' +
+    '</div>' +
+    '<scr' + 'ipt>window.onload=function(){window.print();}</scr' + 'ipt>' +
+    '</body></html>';
+  var blob = new Blob([html], { type: 'text/html' });
+  var url  = URL.createObjectURL(blob);
+  var win  = window.open(url, '_blank');
+  if (!win) { var a = document.createElement('a'); a.href = url; a.download = fileName + '.html'; a.click(); }
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 10000);
 }
 
 // ── PASSPORT SECTION CONDITIONAL DISPLAY ──
@@ -2006,45 +1588,153 @@ form.addEventListener('submit', async function(e) {
     return;
   }
 
-  // ── ALL VALID — SUBMIT ──
-  btn.textContent = 'Submitting... Please wait';
+  // ── ALL VALID — SHOW PREVIEW ──
+  showPreview();
+  return false;
+});
+
+// ── DUPLICATE CHECK ──
+async function checkDuplicate(email, fullName, passport) {
+  try {
+    var res = await fetch('/.netlify/functions/check-duplicate?email=' + encodeURIComponent(email) + '&name=' + encodeURIComponent(fullName) + '&passport=' + encodeURIComponent(passport || ''));
+    return await res.json();
+  } catch(e) { return { duplicate: false }; }
+}
+
+// ── PREVIEW PAGE ──
+async function showPreview() {
+  var form = document.getElementById('bookingForm');
+  var btn  = document.getElementById('submitBtn');
+  var formData = new FormData(form);
+  var fd = {};
+  formData.forEach(function(v,k){ fd[k]=v; });
+
+  btn.textContent = 'Checking... Please wait';
   btn.disabled = true;
 
-  // Collect all form data as JSON
-  const formData    = new FormData(form);
-  const formObject  = {};
-  formData.forEach((value, key) => { formObject[key] = value; });
+  var fullName = ((fd.first_name||'') + ' ' + (fd.last_name||'')).trim();
+  var dup = await checkDuplicate(fd.email||'', fullName, fd.passport_number||'');
 
+  btn.textContent = '✦  Review My Details  ✦';
+  btn.disabled = false;
+
+  if (dup.duplicate) {
+    var msg = '';
+    if (dup.field==='email') msg = 'This email (' + fd.email + ') has already been registered for this tour.';
+    else if (dup.field==='name') msg = 'This name (' + fullName + ') has already been registered for this tour.';
+    else if (dup.field==='passport') msg = 'This passport number has already been registered for this tour.';
+    msg += '\n\nIf you believe this is an error, contact us on WhatsApp: +234 802 316 8428';
+    alert(msg);
+    return;
+  }
+
+  sessionStorage.setItem('japanPreview', JSON.stringify(fd));
+  showPreviewFromData(fd);
+}
+
+function showPreviewFromData(fd) {
+  function pRow(label, val) {
+    if (!val) return '';
+    return '<tr><td style="padding:8px 12px;color:#5A6B58;font-size:13px;width:45%;vertical-align:top;">' + label + '</td><td style="padding:8px 12px;font-size:13px;font-weight:600;color:#111;">' + val + '</td></tr>';
+  }
+
+  var html =
+    '<tr><td colspan="2" style="padding:8px 12px;font-family:Cinzel,serif;font-size:10px;letter-spacing:2px;color:#8B1A1A;border-bottom:1px solid #D4C9A8;">PERSONAL INFORMATION</td></tr>' +
+    pRow('First Name', fd.first_name) + pRow('Last Name', fd.last_name) +
+    pRow('Email', fd.email) + pRow('WhatsApp', fd.whatsapp) +
+    pRow('State', fd.state) + pRow('Date of Birth', fd.dob) + pRow('Gender', fd.gender) +
+    '<tr><td colspan="2" style="padding:8px 12px;font-family:Cinzel,serif;font-size:10px;letter-spacing:2px;color:#8B1A1A;border-bottom:1px solid #D4C9A8;">PASSPORT & TRAVEL</td></tr>' +
+    pRow('Has Passport', fd.has_passport) + pRow('Passport Number', fd.passport_number) +
+    pRow('Passport Expiry', fd.passport_expiry) + pRow('Name on Passport', fd.passport_fullname) +
+    pRow('Travelled Before', fd.travelled_before) + pRow('Visa Denied Before', fd.visa_denied) +
+    '<tr><td colspan="2" style="padding:8px 12px;font-family:Cinzel,serif;font-size:10px;letter-spacing:2px;color:#8B1A1A;border-bottom:1px solid #D4C9A8;">TOUR PREFERENCES</td></tr>' +
+    pRow('Room Type', fd.room_type) + pRow('Group Size', fd.group_size) +
+    pRow('Companion 1', fd.companion_1) + pRow('Companion 2', fd.companion_2) + pRow('Companion 3', fd.companion_3) +
+    pRow('Deposit Readiness', fd.deposit_readiness) + pRow('Payment Plan', fd.payment_plan) +
+    '<tr><td colspan="2" style="padding:8px 12px;font-family:Cinzel,serif;font-size:10px;letter-spacing:2px;color:#8B1A1A;border-bottom:1px solid #D4C9A8;">HEALTH & DIETARY</td></tr>' +
+    pRow('Medical Conditions', fd.medical) + pRow('Medical Details', fd.medical_details) +
+    pRow('Dietary', fd.dietary) + pRow('Dietary Details', fd.dietary_details) +
+    pRow('Special Requirements', fd.special_requirements) +
+    '<tr><td colspan="2" style="padding:8px 12px;font-family:Cinzel,serif;font-size:10px;letter-spacing:2px;color:#8B1A1A;border-bottom:1px solid #D4C9A8;">EMERGENCY CONTACT</td></tr>' +
+    pRow('Emergency Name', fd.emergency_name) + pRow('Relationship', fd.emergency_relationship) +
+    pRow('Emergency Phone', fd.emergency_phone) +
+    pRow('How Found Us', fd.referral_source + (fd.referral_source_other ? ' — ' + fd.referral_source_other : ''));
+
+  var ov = document.createElement('div');
+  ov.id = 'previewOverlay';
+  ov.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#1C2B1A;color:#E8D5A3;z-index:99999;overflow-y:auto;padding:0 0 60px;';
+  ov.innerHTML =
+    '<div style="background:#1C2B1A;padding:20px;position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(232,213,163,0.2);">' +
+      '<div style="font-family:Cinzel,serif;font-size:16px;letter-spacing:2px;color:#E8D5A3;margin-bottom:4px;">REVIEW YOUR DETAILS</div>' +
+      '<div style="font-size:12px;color:rgba(232,213,163,0.6);">Check everything carefully. Once submitted you cannot make changes.</div>' +
+    '</div>' +
+    '<div style="max-width:600px;margin:24px auto;padding:0 16px;">' +
+      '<div style="background:#FAFCF8;color:#111;border-top:4px solid #C9A84C;">' +
+        '<div style="padding:16px 12px;background:#1C2B1A;">' +
+          '<div style="font-family:Cinzel,serif;font-size:11px;letter-spacing:3px;color:#E8D5A3;">REGISTRATION DETAILS</div>' +
+          '<div style="font-family:Cinzel,serif;font-size:9px;color:rgba(232,213,163,0.6);letter-spacing:2px;margin-top:2px;">UBAH\'S TRAVEL SPACE AGENCY — JAPAN TOUR 2026</div>' +
+        '</div>' +
+        '<table style="width:100%;border-collapse:collapse;">' + html + '</table>' +
+      '</div>' +
+      '<div style="background:rgba(232,213,163,0.08);border:1px solid rgba(232,213,163,0.2);padding:14px 16px;margin-top:16px;font-size:13px;color:rgba(232,213,163,0.8);line-height:1.7;">' +
+        'Please review all details carefully. Once submitted you cannot edit your information. If anything is wrong press <b>Go Back</b>.' +
+      '</div>' +
+      '<div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">' +
+        '<button onclick="goBackToForm()" style="flex:1;min-width:140px;background:rgba(232,213,163,0.1);border:1px solid rgba(232,213,163,0.3);color:#E8D5A3;padding:15px;font-family:Cinzel,serif;font-size:12px;letter-spacing:2px;cursor:pointer;">← GO BACK & EDIT</button>' +
+        '<button onclick="confirmSubmit()" id="confirmBtn" style="flex:2;min-width:180px;background:linear-gradient(135deg,#8B6914,#C9A84C);border:none;color:#0D1F0C;padding:15px;font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;">✦ CONFIRM & SUBMIT ✦</button>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(ov);
+  window.scrollTo(0, 0);
+}
+
+function goBackToForm() {
+  sessionStorage.removeItem('japanPreview');
+  var ov = document.getElementById('previewOverlay');
+  if (ov) ov.remove();
+  window.scrollTo(0, 0);
+}
+
+async function confirmSubmit() {
+  var confirmBtn = document.getElementById('confirmBtn');
+  confirmBtn.textContent = 'Submitting...';
+  confirmBtn.disabled = true;
+  var saved = sessionStorage.getItem('japanPreview');
+  if (!saved) {
+    alert('Something went wrong. Please go back and try again.');
+    confirmBtn.textContent = '✦ CONFIRM & SUBMIT ✦';
+    confirmBtn.disabled = false;
+    return;
+  }
+  var fd = JSON.parse(saved);
   try {
-    // Save to Google Sheet via our Netlify function
-    const response = await fetch('/.netlify/functions/save-submission', {
+    var res = await fetch('/.netlify/functions/save-submission', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formObject),
+      body: JSON.stringify(fd)
     });
-
-    if (response.ok) {
-      const paymentPlan   = form.querySelector('input[name="payment_plan"]:checked');
-      const isFullPayment = paymentPlan && paymentPlan.value === 'Full payment at once';
-      if (isFullPayment) {
-        const depBtn = document.getElementById('depositBtn');
+    if (res.ok) {
+      sessionStorage.removeItem('japanPreview');
+      var ov = document.getElementById('previewOverlay');
+      if (ov) ov.remove();
+      if (fd.payment_plan === 'Full payment at once') {
+        var depBtn = document.getElementById('depositBtn');
         if (depBtn) depBtn.style.display = 'none';
       }
       lockToSuccess();
       window.scrollTo(0, 0);
     } else {
-      btn.textContent = '✦  Submit Registration  ✦';
-      btn.disabled    = false;
+      confirmBtn.textContent = '✦ CONFIRM & SUBMIT ✦';
+      confirmBtn.disabled = false;
       alert('Something went wrong. Please try again or contact us on WhatsApp: +234 802 316 8428');
     }
-  } catch (err) {
-    btn.textContent = '✦  Submit Registration  ✦';
-    btn.disabled    = false;
+  } catch(err) {
+    confirmBtn.textContent = '✦ CONFIRM & SUBMIT ✦';
+    confirmBtn.disabled = false;
     alert('Network error. Please check your connection and try again.');
   }
+}
 
-  return false;
-});
 </script>
 
 <!-- AGENCY FOOTER -->
