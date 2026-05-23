@@ -15,7 +15,9 @@ exports.handler = async function (event) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const sheetdbUrl = process.env.SHEETDB_URL;
+  // Remove any ?sheet= query from URL and use clean base URL
+  let sheetdbUrl = (process.env.SHEETDB_URL || '').split('?')[0].trim();
+
   if (!sheetdbUrl) {
     return {
       statusCode: 500,
@@ -86,13 +88,14 @@ exports.handler = async function (event) {
     const sheetRes = await fetch(sheetdbUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: row }),
+      body: JSON.stringify({ data: [row] }),
     });
 
     const sheetText = await sheetRes.text();
+    console.log('SheetDB status:', sheetRes.status, 'body:', sheetText);
 
     if (!sheetRes.ok) {
-      throw new Error('SheetDB returned ' + sheetRes.status + ': ' + sheetText);
+      throw new Error('SheetDB error ' + sheetRes.status + ': ' + sheetText);
     }
 
     return {
@@ -102,6 +105,7 @@ exports.handler = async function (event) {
     };
 
   } catch (err) {
+    console.error('Error:', err.message);
     return {
       statusCode: 500,
       headers: { 'Access-Control-Allow-Origin': '*' },
