@@ -84,7 +84,6 @@ exports.handler = async function (event) {
   };
 
   try {
-    // Use server-to-server request — no Origin header, no browser headers
     const sheetRes = await fetch(sheetdbUrl, {
       method: 'POST',
       headers: {
