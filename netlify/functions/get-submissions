@@ -1,0 +1,56 @@
+exports.handler = async function(event) {
+  if (event.httpMethod !== 'GET') {
+    return { statusCode: 405, body: 'Method Not Allowed' };
+  }
+
+  const siteId = process.env.NETLIFY_SITE_ID;
+  const token  = process.env.NETLIFY_ACCESS_TOKEN;
+
+  if (!siteId || !token) {
+    return {
+      statusCode: 500,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: 'Netlify credentials not configured' }),
+    };
+  }
+
+  try {
+    const res   = await fetch(
+      'https://api.netlify.com/api/v1/sites/' + siteId + '/forms',
+      { headers: { Authorization: 'Bearer ' + token } }
+    );
+    const forms = await res.json();
+    const form  = Array.isArray(forms) && forms.find(function(f) { return f.name === 'japan-tour-booking'; });
+
+    if (!form) {
+      return {
+        statusCode: 200,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify({ submissions: [] }),
+      };
+    }
+
+    const subRes      = await fetch(
+      'https://api.netlify.com/api/v1/forms/' + form.id + '/submissions?per_page=500',
+      { headers: { Authorization: 'Bearer ' + token } }
+    );
+    const submissions = await subRes.json();
+
+    const cleaned = Array.isArray(submissions) ? submissions.map(function(s) {
+      return Object.assign({ _created_at: s.created_at }, s.data || {});
+    }) : [];
+
+    return {
+      statusCode: 200,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ submissions: cleaned }),
+    };
+
+  } catch(err) {
+    return {
+      statusCode: 500,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: err.message }),
+    };
+  }
+};
