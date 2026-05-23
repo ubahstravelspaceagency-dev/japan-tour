@@ -428,11 +428,14 @@ RESULT: Every submission will:
 <div class="form-wrap">
 <form id="bookingForm"
       method="POST"
+      name="japan-tour-booking"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
       novalidate>
 
-  <!-- Hidden fields for Formspree -->
-  <input type="hidden" name="_subject" value="🇯🇵 New Japan Tour Booking Registration">
-  <input type="hidden" name="_captcha" value="false">
+  <!-- Netlify Forms hidden fields -->
+  <input type="hidden" name="form-name" value="japan-tour-booking">
+  <input type="hidden" name="bot-field" style="display:none">
 
   <!-- SECTION 1: Personal Information -->
   <div class="section-card">
@@ -1708,10 +1711,16 @@ async function confirmSubmit() {
   }
   var fd = JSON.parse(saved);
   try {
-    var res = await fetch('/.netlify/functions/save-submission', {
+    // Submit to Netlify Forms
+    var formData = new FormData();
+    formData.append('form-name', 'japan-tour-booking');
+    Object.keys(fd).forEach(function(key) {
+      formData.append(key, fd[key] || '');
+    });
+
+    var res = await fetch('/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(fd)
+      body: formData
     });
     if (res.ok) {
       sessionStorage.removeItem('japanPreview');
