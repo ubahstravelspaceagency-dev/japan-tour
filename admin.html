@@ -443,7 +443,7 @@ const ADMIN_PASSWORD = 'Shylock0802#';   // ← CHANGE THIS TO YOUR OWN PASSWORD
 
 // ── SheetDB URL — filled from meta tag (set this in your env or hardcode for testing) ──
 // Replace the value below with your actual SheetDB URL after you set it up
-const SHEETDB_URL = 'https://sheetdb.io/api/v1/yjiv7fpkysz8j';
+const API_URL = '/.netlify/functions/get-submissions';
 
 let allData = [];
 
@@ -492,23 +492,19 @@ if (sessionStorage.getItem('adminAuth') === '1') {
 async function loadData() {
   document.getElementById('listWrap').innerHTML = '<div class="loading-msg">Loading registrations...</div>';
 
-  if (!SHEETDB_URL || SHEETDB_URL === 'YOUR_SHEETDB_URL_HERE') {
-    document.getElementById('listWrap').innerHTML =
-      '<div class="loading-msg">⚠️ SheetDB URL not configured yet.<br>Add your SheetDB URL to the admin.html file.</div>';
-    return;
-  }
-
   try {
-    const res  = await fetch(SHEETDB_URL);
-    const data = await res.json();
+    const res  = await fetch(API_URL);
+    const json = await res.json();
+
+    if (json.error) throw new Error(json.error);
 
     // Newest first
-    allData = (Array.isArray(data) ? data : []).reverse();
+    allData = (json.submissions || []).reverse();
     renderStats();
     renderList(allData);
   } catch (err) {
     document.getElementById('listWrap').innerHTML =
-      '<div class="loading-msg">❌ Could not load data. Check your SheetDB URL.<br><small>' + err.message + '</small></div>';
+      '<div class="loading-msg">❌ Could not load data.<br><small>' + err.message + '</small></div>';
   }
 }
 
@@ -547,7 +543,7 @@ function renderList(data) {
       const name    = ((r.first_name || '') + ' ' + (r.last_name || '')).trim() || 'Unknown';
       const paid    = r.payment_status === 'PAID';
       const amount  = r.amount_paid || '';
-      const date    = r.submitted_at ? r.submitted_at.split(',')[0] : '';
+      const date    = r.submitted_at ? r.submitted_at.split(',')[0] : (r._created_at ? new Date(r._created_at).toLocaleDateString('en-GB') : '');
       const email   = r.email || '';
 
       return `<div class="registrant-card ${paid ? 'paid' : ''}" onclick="openDetail(${i})">
