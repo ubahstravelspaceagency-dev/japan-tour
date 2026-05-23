@@ -15,7 +15,6 @@ exports.handler = async function (event) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  // Remove any ?sheet= query from URL and use clean base URL
   let sheetdbUrl = (process.env.SHEETDB_URL || '').split('?')[0].trim();
 
   if (!sheetdbUrl) {
@@ -85,10 +84,14 @@ exports.handler = async function (event) {
   };
 
   try {
+    // Use server-to-server request — no Origin header, no browser headers
     const sheetRes = await fetch(sheetdbUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: [row] }),
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'NetlifyFunction/1.0',
+      },
+      body: JSON.stringify({ data: row }),
     });
 
     const sheetText = await sheetRes.text();
