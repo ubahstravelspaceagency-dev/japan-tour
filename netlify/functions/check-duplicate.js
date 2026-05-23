@@ -1,10 +1,13 @@
-exports.handler = async function (event) {
+exports.handler = async function(event) {
   if (event.httpMethod !== 'GET') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const sheetdbUrl = process.env.SHEETDB_URL;
-  if (!sheetdbUrl) {
+  const siteId = process.env.NETLIFY_SITE_ID;
+  const token  = process.env.NETLIFY_ACCESS_TOKEN;
+
+  // If credentials not set, allow submission
+  if (!siteId || !token) {
     return {
       statusCode: 200,
       headers: { 'Access-Control-Allow-Origin': '*' },
@@ -18,10 +21,15 @@ exports.handler = async function (event) {
   const passport = (params.passport || '').toLowerCase().trim();
 
   try {
-    const res  = await fetch(sheetdbUrl);
-    const rows = await res.json();
+    // Get all form submissions from Netlify
+    const res   = await fetch(
+      'https://api.netlify.com/api/v1/sites/' + siteId + '/forms',
+      { headers: { Authorization: 'Bearer ' + token } }
+    );
+    const forms = await res.json();
+    const form  = Array.isArray(forms) && forms.find(function(f) { return f.name === 'japan-tour-booking'; });
 
-    if (!Array.isArray(rows) || rows.length === 0) {
+    if (!form) {
       return {
         statusCode: 200,
         headers: { 'Access-Control-Allow-Origin': '*' },
@@ -29,37 +37,50 @@ exports.handler = async function (event) {
       };
     }
 
+    const subRes      = await fetch(
+      'https://api.netlify.com/api/v1/forms/' + form.id + '/submissions?per_page=500',
+      { headers: { Authorization: 'Bearer ' + token } }
+    );
+    const submissions = await subRes.json();
+
+    if (!Array.isArray(submissions) || submissions.length === 0) {
+      return {
+        statusCode: 200,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify({ duplicate: false }),
+      };
+    }
+
+    const rows = submissions.map(function(s) { return s.data || {}; });
+
+    // Check email
     if (email) {
-      const emailMatch = rows.find(r => (r.email || '').toLowerCase().trim() === email);
-      if (emailMatch) {
-        return {
-          statusCode: 200,
-          headers: { 'Access-Control-Allow-Origin': '*' },
-          body: JSON.stringify({ duplicate: true, field: 'email' }),
-        };
-      }
+      const match = rows.find(function(r) { return (r.email || '').toLowerCase().trim() === email; });
+      if (match) return {
+        statusCode: 200,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify({ duplicate: true, field: 'email' }),
+      };
     }
 
+    // Check full name
     if (name) {
-      const nameMatch = rows.find(r => (r.full_name || '').toLowerCase().trim() === name);
-      if (nameMatch) {
-        return {
-          statusCode: 200,
-          headers: { 'Access-Control-Allow-Origin': '*' },
-          body: JSON.stringify({ duplicate: true, field: 'name' }),
-        };
-      }
+      const match = rows.find(function(r) { return (r.full_name || '').toLowerCase().trim() === name; });
+      if (match) return {
+        statusCode: 200,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify({ duplicate: true, field: 'name' }),
+      };
     }
 
+    // Check passport
     if (passport) {
-      const passportMatch = rows.find(r => (r.passport_number || '').toLowerCase().trim() === passport);
-      if (passportMatch) {
-        return {
-          statusCode: 200,
-          headers: { 'Access-Control-Allow-Origin': '*' },
-          body: JSON.stringify({ duplicate: true, field: 'passport' }),
-        };
-      }
+      const match = rows.find(function(r) { return (r.passport_number || '').toLowerCase().trim() === passport; });
+      if (match) return {
+        statusCode: 200,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify({ duplicate: true, field: 'passport' }),
+      };
     }
 
     return {
@@ -68,7 +89,8 @@ exports.handler = async function (event) {
       body: JSON.stringify({ duplicate: false }),
     };
 
-  } catch (err) {
+  } catch(err) {
+    // If check fails, allow submission
     return {
       statusCode: 200,
       headers: { 'Access-Control-Allow-Origin': '*' },
