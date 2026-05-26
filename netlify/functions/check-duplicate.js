@@ -3,11 +3,10 @@ exports.handler = async function(event) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const siteId = process.env.NETLIFY_SITE_ID;
-  const token  = process.env.NETLIFY_ACCESS_TOKEN;
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
-  // If credentials not set, allow submission
-  if (!siteId || !token) {
+  if (!supabaseUrl || !supabaseKey) {
     return {
       statusCode: 200,
       headers: { 'Access-Control-Allow-Origin': '*' },
@@ -21,66 +20,52 @@ exports.handler = async function(event) {
   const passport = (params.passport || '').toLowerCase().trim();
 
   try {
-    // Get all form submissions from Netlify
-    const res   = await fetch(
-      'https://api.netlify.com/api/v1/sites/' + siteId + '/forms',
-      { headers: { Authorization: 'Bearer ' + token } }
-    );
-    const forms = await res.json();
-    const form  = Array.isArray(forms) && forms.find(function(f) { return f.name === 'japan-tour-booking'; });
-
-    if (!form) {
-      return {
-        statusCode: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ duplicate: false }),
-      };
-    }
-
-    const subRes      = await fetch(
-      'https://api.netlify.com/api/v1/forms/' + form.id + '/submissions?per_page=500',
-      { headers: { Authorization: 'Bearer ' + token } }
-    );
-    const submissions = await subRes.json();
-
-    if (!Array.isArray(submissions) || submissions.length === 0) {
-      return {
-        statusCode: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ duplicate: false }),
-      };
-    }
-
-    const rows = submissions.map(function(s) { return s.data || {}; });
-
     // Check email
     if (email) {
-      const match = rows.find(function(r) { return (r.email || '').toLowerCase().trim() === email; });
-      if (match) return {
-        statusCode: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ duplicate: true, field: 'email' }),
-      };
+      const res  = await fetch(
+        supabaseUrl + '/rest/v1/bookings?email=eq.' + encodeURIComponent(email) + '&select=email&limit=1',
+        { headers: { 'apikey': supabaseKey, 'Authorization': 'Bearer ' + supabaseKey } }
+      );
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        return {
+          statusCode: 200,
+          headers: { 'Access-Control-Allow-Origin': '*' },
+          body: JSON.stringify({ duplicate: true, field: 'email' }),
+        };
+      }
     }
 
     // Check full name
     if (name) {
-      const match = rows.find(function(r) { return (r.full_name || '').toLowerCase().trim() === name; });
-      if (match) return {
-        statusCode: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ duplicate: true, field: 'name' }),
-      };
+      const res  = await fetch(
+        supabaseUrl + '/rest/v1/bookings?full_name=ilike.' + encodeURIComponent(name) + '&select=full_name&limit=1',
+        { headers: { 'apikey': supabaseKey, 'Authorization': 'Bearer ' + supabaseKey } }
+      );
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        return {
+          statusCode: 200,
+          headers: { 'Access-Control-Allow-Origin': '*' },
+          body: JSON.stringify({ duplicate: true, field: 'name' }),
+        };
+      }
     }
 
     // Check passport
     if (passport) {
-      const match = rows.find(function(r) { return (r.passport_number || '').toLowerCase().trim() === passport; });
-      if (match) return {
-        statusCode: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ duplicate: true, field: 'passport' }),
-      };
+      const res  = await fetch(
+        supabaseUrl + '/rest/v1/bookings?passport_number=ilike.' + encodeURIComponent(passport) + '&select=passport_number&limit=1',
+        { headers: { 'apikey': supabaseKey, 'Authorization': 'Bearer ' + supabaseKey } }
+      );
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        return {
+          statusCode: 200,
+          headers: { 'Access-Control-Allow-Origin': '*' },
+          body: JSON.stringify({ duplicate: true, field: 'passport' }),
+        };
+      }
     }
 
     return {
@@ -90,7 +75,6 @@ exports.handler = async function(event) {
     };
 
   } catch(err) {
-    // If check fails, allow submission
     return {
       statusCode: 200,
       headers: { 'Access-Control-Allow-Origin': '*' },
