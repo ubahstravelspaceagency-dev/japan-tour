@@ -15,11 +15,12 @@ exports.handler = async function (event) {
   }
 
   try {
+    // Verify payment with Paystack
     const psRes = await fetch(
-      `https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`,
+      'https://api.paystack.co/transaction/verify/' + encodeURIComponent(reference),
       {
         headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+          Authorization: 'Bearer ' + process.env.PAYSTACK_SECRET_KEY,
           'Content-Type': 'application/json',
         },
       }
@@ -43,40 +44,53 @@ exports.handler = async function (event) {
     fee = Math.round(fee);
 
     const amountReceived = amountPaidNaira - fee;
-    const payerEmail     = tx.customer?.email || '';
-    const payerName      = tx.customer?.first_name
-      ? (tx.customer.first_name + ' ' + tx.customer.last_name).trim()
-      : (tx.metadata?.custom_fields?.find(f => f.variable_name === 'name')?.value || '');
-    const paidAt         = tx.paid_at || new Date().toISOString();
-    const payDate        = new Date(paidAt).toLocaleDateString('en-GB', {
+    const payerEmail = tx.customer && tx.customer.email ? tx.customer.email : '';
+    const firstName = tx.customer && tx.customer.first_name ? tx.customer.first_name : '';
+    const lastName = tx.customer && tx.customer.last_name ? tx.customer.last_name : '';
+    const payerName = (firstName + ' ' + lastName).trim() ||
+      (tx.metadata && tx.metadata.custom_fields
+        ? (tx.metadata.custom_fields.find(function(f){ return f.variable_name === 'name'; }) || {}).value || ''
+        : '');
+    const paidAt = tx.paid_at || new Date().toISOString();
+    const payDate = new Date(paidAt).toLocaleDateString('en-GB', {
       day: '2-digit', month: 'long', year: 'numeric'
     });
 
-    const sheetdbUrl = process.env.SHEETDB_URL;
-    if (sheetdbUrl) {
+    // Update Supabase with payment details
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_ANON_KEY;
+
+    if (supabaseUrl && supabaseKey && payerEmail) {
       try {
-        await fetch(`${sheetdbUrl}/email/${encodeURIComponent(payerEmail)}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            data: {
+        await fetch(
+          supabaseUrl + '/rest/v1/bookings?email=eq.' + encodeURIComponent(payerEmail),
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': supabaseKey,
+              'Authorization': 'Bearer ' + supabaseKey,
+              'Prefer': 'return=minimal',
+            },
+            body: JSON.stringify({
               payment_reference: reference,
-              amount_paid:       `₦${amountPaidNaira.toLocaleString('en-NG')}`,
-              amount_received:   `₦${amountReceived.toLocaleString('en-NG')}`,
-              paystack_fee:      `₦${fee.toLocaleString('en-NG')}`,
-              payment_date:      payDate,
-              payment_status:    'PAID',
-            }
-          })
-        });
-      } catch (sheetErr) {
-        console.error('SheetDB update failed:', sheetErr.message);
+              amount_paid: '\u20A6' + amountPaidNaira.toLocaleString('en-NG'),
+              amount_received: '\u20A6' + amountReceived.toLocaleString('en-NG'),
+              paystack_fee: '\u20A6' + fee.toLocaleString('en-NG'),
+              payment_date: payDate,
+              payment_status: 'PAID',
+            }),
+          }
+        );
+      } catch(e) {
+        console.error('Supabase update failed:', e.message);
       }
     }
 
-    const emailjsServiceId  = process.env.EMAILJS_SERVICE_ID;
+    // Send email via EmailJS
+    const emailjsServiceId = process.env.EMAILJS_SERVICE_ID;
     const emailjsTemplateId = process.env.EMAILJS_TEMPLATE_ID;
-    const emailjsUserId     = process.env.EMAILJS_USER_ID;
+    const emailjsUserId = process.env.EMAILJS_USER_ID;
 
     if (emailjsServiceId && emailjsTemplateId && emailjsUserId) {
       try {
@@ -84,23 +98,23 @@ exports.handler = async function (event) {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            service_id:  emailjsServiceId,
+            service_id: emailjsServiceId,
             template_id: emailjsTemplateId,
-            user_id:     emailjsUserId,
+            user_id: emailjsUserId,
             template_params: {
-              payer_name:      payerName || 'Unknown',
-              payer_email:     payerEmail,
-              amount_paid:     `₦${amountPaidNaira.toLocaleString('en-NG')}`,
-              amount_received: `₦${amountReceived.toLocaleString('en-NG')}`,
-              paystack_fee:    `₦${fee.toLocaleString('en-NG')}`,
-              reference:       reference,
-              pay_date:        payDate,
-              tour:            'Japan Group Tour — October 2026',
+              payer_name: payerName || 'Unknown',
+              payer_email: payerEmail,
+              amount_paid: '\u20A6' + amountPaidNaira.toLocaleString('en-NG'),
+              amount_received: '\u20A6' + amountReceived.toLocaleString('en-NG'),
+              paystack_fee: '\u20A6' + fee.toLocaleString('en-NG'),
+              reference: reference,
+              pay_date: payDate,
+              tour: 'Japan Group Tour \u2014 October 2026',
             }
           })
         });
-      } catch (emailErr) {
-        console.error('EmailJS failed:', emailErr.message);
+      } catch(e) {
+        console.error('EmailJS failed:', e.message);
       }
     }
 
@@ -108,14 +122,14 @@ exports.handler = async function (event) {
       statusCode: 200,
       headers: { 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify({
-        status:          'success',
-        reference,
-        amountPaid:      amountPaidNaira,
-        paystackFee:     fee,
-        amountReceived,
-        payerName,
-        payerEmail,
-        paidAt,
+        status: 'success',
+        reference: reference,
+        amountPaid: amountPaidNaira,
+        paystackFee: fee,
+        amountReceived: amountReceived,
+        payerName: payerName,
+        payerEmail: payerEmail,
+        paidAt: paidAt,
       }),
     };
 
