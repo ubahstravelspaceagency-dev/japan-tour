@@ -1711,16 +1711,11 @@ async function confirmSubmit() {
   }
   var fd = JSON.parse(saved);
   try {
-    // Submit to Netlify Forms
-    var formData = new FormData();
-    formData.append('form-name', 'japan-tour-booking');
-    Object.keys(fd).forEach(function(key) {
-      formData.append(key, fd[key] || '');
-    });
-
-    var res = await fetch('/', {
+    // Submit to Supabase via Netlify function
+    var res = await fetch('/.netlify/functions/save-submission', {
       method: 'POST',
-      body: formData
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(fd)
     });
     if (res.ok) {
       sessionStorage.removeItem('japanPreview');
