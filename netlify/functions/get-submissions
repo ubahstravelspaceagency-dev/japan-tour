@@ -3,47 +3,28 @@ exports.handler = async function(event) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const siteId = process.env.NETLIFY_SITE_ID;
-  const token  = process.env.NETLIFY_ACCESS_TOKEN;
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
-  if (!siteId || !token) {
+  if (!supabaseUrl || !supabaseKey) {
     return {
       statusCode: 500,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ error: 'Netlify credentials not configured' }),
+      body: JSON.stringify({ error: 'Supabase credentials not configured' }),
     };
   }
 
   try {
-    const res   = await fetch(
-      'https://api.netlify.com/api/v1/sites/' + siteId + '/forms',
-      { headers: { Authorization: 'Bearer ' + token } }
+    const res = await fetch(
+      supabaseUrl + '/rest/v1/bookings?select=*&order=id.desc&limit=500',
+      { headers: { 'apikey': supabaseKey, 'Authorization': 'Bearer ' + supabaseKey } }
     );
-    const forms = await res.json();
-    const form  = Array.isArray(forms) && forms.find(function(f) { return f.name === 'japan-tour-booking'; });
-
-    if (!form) {
-      return {
-        statusCode: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ submissions: [] }),
-      };
-    }
-
-    const subRes      = await fetch(
-      'https://api.netlify.com/api/v1/forms/' + form.id + '/submissions?per_page=500',
-      { headers: { Authorization: 'Bearer ' + token } }
-    );
-    const submissions = await subRes.json();
-
-    const cleaned = Array.isArray(submissions) ? submissions.map(function(s) {
-      return Object.assign({ _created_at: s.created_at }, s.data || {});
-    }) : [];
+    const data = await res.json();
 
     return {
       statusCode: 200,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ submissions: cleaned }),
+      body: JSON.stringify({ submissions: Array.isArray(data) ? data : [] }),
     };
 
   } catch(err) {
