@@ -15,7 +15,7 @@ exports.handler = async function(event) {
   }
 
   try {
-    const res = await fetch(
+    const res  = await fetch(
       supabaseUrl + '/rest/v1/bookings?select=*&order=id.desc&limit=500',
       { headers: { 'apikey': supabaseKey, 'Authorization': 'Bearer ' + supabaseKey } }
     );
