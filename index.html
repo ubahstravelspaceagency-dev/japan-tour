@@ -1213,7 +1213,10 @@ window.addEventListener('popstate', function() {
   if (reference) {
     buildReceiptScreen();
     history.pushState(null, '', window.location.href);
-    window.addEventListener('popstate', function() { history.pushState(null, '', window.location.href); });
+    window.addEventListener('popstate', function() {
+    // Always stay on receipt page once payment is verified
+    history.pushState(null, '', window.location.href);
+  });
     document.getElementById('paymentSuccessScreen').innerHTML =
       '<span style="font-size:48px;display:block;margin-bottom:20px;">⏳</span>' +
       '<div style="font-family:Cinzel,serif;font-size:18px;letter-spacing:2px;color:#E8D5A3;margin-bottom:12px;">PROCESSING YOUR PAYMENT...</div>' +
@@ -1223,6 +1226,9 @@ window.addEventListener('popstate', function() {
       .then(function(r) { return r.json(); })
       .then(function(data) {
         if (data.status === 'success') {
+          // Lock back navigation - cannot go back to Paystack
+          sessionStorage.setItem('paymentComplete', '1');
+          history.replaceState(null, '', window.location.href);
           sessionStorage.setItem('japanTourReceipt', JSON.stringify(data));
           var payDate = new Date(data.paidAt).toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
           renderReceiptScreen(data.amountPaid, data.amountReceived, data.paystackFee, data.payerName, data.reference, payDate);
@@ -1279,7 +1285,6 @@ function renderReceiptScreen(amountPaid, amountReceived, paystackFee, name, refe
     '</div>' +
     '<div style="display:flex;flex-direction:column;gap:12px;align-items:center;width:100%;max-width:340px;margin-bottom:32px;">' +
       '<button type="button" onclick="downloadReceiptPDF(\'' + safeN + '\')" style="width:100%;background:linear-gradient(135deg,#8B6914,#C9A84C);color:#0D1F0C;border:none;padding:15px 28px;cursor:pointer;font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:2px;">\u2B07\uFE0F &nbsp; Download Receipt (PDF)</button>' +
-      '<a href="https://wa.me/?text=' + encodeURIComponent(waMsg) + '" target="_blank" style="width:100%;display:flex;align-items:center;justify-content:center;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);padding:15px 28px;color:#E8D5A3;text-decoration:none;font-family:Cinzel,serif;font-size:13px;letter-spacing:2px;">\uD83D\uDCAC &nbsp; Share via WhatsApp</a>' +
     '</div>' +
     '<p style="font-size:13px;color:rgba(232,213,163,0.45);font-style:italic;">Effortless Travel, Unforgettable Experiences \uD83C\uDDEF\uD83C\uDDF5</p>';
 }
