@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japan Group Tour 2026 — Ubah's Travel Space Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --black:  #0A0A0A;
+  --white:  #FAFAF8;
+  --red:    #CC2200;
+  --gold:   #B8924A;
+  --muted:  #6B6560;
+  --cream:  #F5F0E8;
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 0;
+}
+
+.hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  filter: brightness(0.6) contrast(1.1);
+}
+
+/* Dark gradient overlay - heavier at bottom for text */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.2) 0%,
+    rgba(0,0,0,0.1) 30%,
+    rgba(0,0,0,0.5) 65%,
+    rgba(0,0,0,0.85) 100%
+  );
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 24px 48px;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: rgba(255,255,255,0.4);
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(52px, 14vw, 88px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 0.9;
+  letter-spacing: -2px;
+  margin-bottom: 2px;
+}
+.hero-title .red { color: var(--red); }
+
+.hero-script {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(32px, 8vw, 56px);
+  font-weight: 700;
+  color: var(--red);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.hero-date {
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.hero-scroll {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.hero-scroll::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,0.3);
+  animation: scrollPulse 1.5s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* Agency badge top */
+.hero-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 2;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+}
+.agency-badge {
+  text-align: center;
+}
+.agency-name {
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: white;
+  text-transform: uppercase;
+}
+.agency-sub {
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+/* ── PRICING STRIP ── */
+.pricing-strip {
+  background: var(--black);
+  color: white;
+  padding: 28px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  position: relative;
+}
+.pricing-strip::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--red);
+}
+
+.price-block { text-align: center; }
+.price-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.price-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: white;
+  line-height: 1;
+}
+.price-usd {
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 400;
+}
+.price-type {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 2px;
+  letter-spacing: 1px;
+}
+
+/* Deposit pill */
+.deposit-pill {
+  grid-column: 1 / -1;
+  background: var(--red);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
+.deposit-pill .label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.8);
+  text-transform: uppercase;
+}
+.deposit-pill .amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: white;
+}
+.deposit-pill .usd {
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+}
+
+/* ── DETAILS ROW ── */
+.details-row {
+  background: var(--cream);
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.detail-item { display: flex; align-items: center; gap: 10px; }
+.detail-icon { font-size: 20px; }
+.detail-label { font-size: 9px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+.detail-value { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: var(--black); }
+
+/* ── SECTION: ABOUT ── */
+.about-section {
+  padding: 48px 24px;
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
+.section-eyebrow {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 6vw, 40px);
+  font-weight: 400;
+  color: var(--black);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.section-title em { font-style: italic; color: var(--muted); }
+.section-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+/* ── FULL WIDTH JAPAN IMAGE ── */
+.full-img-wrap {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  position: relative;
+}
+.full-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.85) contrast(1.05);
+  transition: transform 8s ease;
+}
+.full-img-wrap:hover img { transform: scale(1.03); }
+
+.img-caption {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+}
+
+/* ── PACKAGE SECTION ── */
+.package-section {
+  background: var(--black);
+  padding: 40px 24px;
+  color: white;
+}
+.package-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: white;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.package-title em { font-style: italic; color: var(--gold); }
+.package-sub {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.pkg-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+}
+.pkg-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.5;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.pkg-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+/* ── IMAGE GALLERY ROW ── */
+.gallery-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 240px;
+}
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8) contrast(1.05);
+}
+
+/* ── FORM SECTION ── */
+.form-section {
+  padding: 48px 24px;
+  background: var(--white);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.form-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--black);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.form-title em { font-style: italic; }
+.form-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.field { margin-bottom: 20px; }
+.field label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.field input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  color: var(--black);
+  padding: 10px 0;
+  font-size: 15px;
+  font-family: 'Jost', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+.field input::placeholder { color: rgba(0,0,0,0.2); }
+.field input:focus { border-bottom-color: var(--black); }
+.field input.error { border-bottom-color: var(--red); }
+.field-error { font-size: 11px; color: var(--red); margin-top: 4px; display: none; }
+
+.submit-btn {
+  width: 100%;
+  background: var(--black);
+  color: white;
+  border: none;
+  padding: 18px;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.3s;
+  margin-top: 8px;
+}
+.submit-btn:hover { background: #2C2C2C; }
+.submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── SUCCESS ── */
+.success-state {
+  display: none;
+  text-align: center;
+  padding: 40px 0;
+}
+.success-icon { font-size: 56px; display: block; margin-bottom: 20px; animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both; }
+.success-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+.success-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--black);
+  padding: 48px 24px 32px;
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: white;
+  margin-bottom: 4px;
+}
+.footer-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 32px;
+}
+
+.social-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.social-btn {
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: rgba(255,255,255,0.5);
+  transition: all 0.2s;
+}
+.social-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(204,34,0,0.08);
+}
+
+.social-handle {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.25);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.footer-contact {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 24px;
+  margin-bottom: 24px;
+}
+.contact-line {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.footer-copy {
+  font-size: 10px;
+  color: rgba(255,255,255,0.15);
+  letter-spacing: 1px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 20px;
+}
+
+/* Divider */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
+  margin: 0;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes popIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <!-- Full screen Japan photo -->
+  <img class="hero-img"
+    src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80"
+    alt="Japan torii gates"
+    onerror="this.src='https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800&q=80'">
+  <div class="hero-overlay"></div>
+
+  <!-- Agency name top -->
+  <div class="hero-top">
+    <div class="agency-badge">
+      <div class="agency-name">Ubah's Travel Space Agency</div>
+      <div class="agency-sub">One Trip &nbsp;·&nbsp; Endless Memories</div>
+    </div>
+  </div>
+
+  <!-- Main content bottom -->
+  <div class="hero-content">
+    <div class="hero-eyebrow">Group Tour &nbsp;·&nbsp; October 2026</div>
+    <div class="hero-title">J<span class="red">A</span>PAN</div>
+    <div class="hero-script">Tour</div>
+    <div class="hero-date">October 22nd, 2026 &nbsp;·&nbsp; 6 Nights / 7 Days</div>
+    <div class="hero-scroll">Discover more</div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+<div class="pricing-strip">
+  <div class="price-block">
+    <div class="price-label">Sharing</div>
+    <div class="price-amount">₦3.4M <span class="price-usd">$2,290</span></div>
+    <div class="price-type">Per Person</div>
+  </div>
+  <div class="price-block">
+    <div class="price-label">Single</div>
+    <div class="price-amount">₦3.9M <span class="price-usd">$2,630</span></div>
+    <div class="price-type">Occupancy</div>
+  </div>
+  <div class="deposit-pill">
+    <div>
+      <div class="label">🛡️ &nbsp; Secure your slot with</div>
+      <div class="amount">₦1.2M <span class="usd">($920) Initial Deposit</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOUR DETAILS ── -->
+<div class="details-row">
+  <div class="detail-item">
+    <span class="detail-icon">🗓️</span>
+    <div>
+      <div class="detail-label">Departure</div>
+      <div class="detail-value">Oct 22nd, 2026</div>
+    </div>
+  </div>
+  <div class="detail-item">
+    <span class="detail-icon">✈️</span>
+    <div>
+      <div class="detail-label">Duration</div>
+      <div class="detail-value">6 Nights / 7 Days</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ABOUT ── -->
+<div class="about-section">
+  <div class="section-eyebrow">About The Tour</div>
+  <h2 class="section-title">Discover Tradition.<br><em>Experience Modernity.</em></h2>
+  <p class="section-text">
+    A fully guided group experience through the heart of Japan — from the neon lights of Tokyo to the ancient temples of Kyoto. Everything is planned so you just show up, connect with incredible people, and experience Japan in the most unforgettable way.
+  </p>
+</div>
+
+<!-- ── FULL WIDTH JAPAN IMAGE ── -->
+<div class="full-img-wrap">
+  <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&q=80"
+    alt="Japan street"
+    onerror="this.src='https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&q=80'">
+  <div class="img-caption">Tokyo, Japan</div>
+</div>
+
+<!-- ── PACKAGE INCLUDES ── -->
+<div class="package-section">
+  <div class="package-title">What's <em>Included</em></div>
+  <div class="package-sub">Everything in your package</div>
+  <div class="pkg-grid">
+    <div class="pkg-item"><span class="pkg-icon">🌐</span> Japan Visa Assistance</div>
+    <div class="pkg-item"><span class="pkg-icon">🚌</span> Transportation During Tours</div>
+    <div class="pkg-item"><span class="pkg-icon">🏨</span> 3-Star Hotel (6 Nights)</div>
+    <div class="pkg-item"><span class="pkg-icon">🎟️</span> Entry Tickets to Attractions</div>
+    <div class="pkg-item"><span class="pkg-icon">☕</span> Daily Breakfast</div>
+    <div class="pkg-item"><span class="pkg-icon">💧</span> Bottled Water During Tours</div>
+    <div class="pkg-item"><span class="pkg-icon">🍱</span> 3–4 Lunches on Guided Days</div>
+    <div class="pkg-item"><span class="pkg-icon">🧾</span> All Taxes & Service Charges</div>
+    <div class="pkg-item"><span class="pkg-icon">🚗</span> Airport Transfers</div>
+    <div class="pkg-item"><span class="pkg-icon">📞</span> 24/7 Travel Support</div>
+    <div class="pkg-item"><span class="pkg-icon">👤</span> Professional Tour Guide</div>
+    <div class="pkg-item"><span class="pkg-icon">📸</span> Memories of a Lifetime</div>
+  </div>
+</div>
+
+<!-- ── GALLERY ROW ── -->
+<div class="gallery-row">
+  <img class="gallery-img"
+    src="https://images.unsplash.com/photo-1480796927426-f609979314bd?w=400&q=80"
+    alt="Japan temple"
+    onerror="this.style.background='#1a1a1a'">
+  <img class="gallery-img"
+    src="https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?w=400&q=80"
+    alt="Japan city"
+    onerror="this.style.background='#2a2a2a'">
+</div>
+
+<!-- ── FORM SECTION ── -->
+<section class="form-section">
+  <div id="formContent">
+    <div class="form-label">Limited Slots Available</div>
+    <h2 class="form-title">Register Your <em>Interest</em></h2>
+    <p class="form-sub">
+      Drop your details below. Our team will reach out within 24–48 hours with the full tour package, pricing breakdown, and how to secure your slot.
+    </p>
+
+    <div class="field">
+      <label>Full Name</label>
+      <input type="text" id="nameInput" placeholder="Your full name" autocomplete="name">
+      <div class="field-error" id="nameError">Please enter your name</div>
+    </div>
+
+    <div class="field">
+      <label>WhatsApp Number</label>
+      <input type="tel" id="whatsappInput" placeholder="+234 800 000 0000" autocomplete="tel">
+      <div class="field-error" id="whatsappError">Please enter your WhatsApp number</div>
+    </div>
+
+    <div class="field">
+      <label>Email Address</label>
+      <input type="email" id="emailInput" placeholder="your@email.com" autocomplete="email">
+      <div class="field-error" id="emailError">Please enter a valid email</div>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">
+      Express My Interest
+    </button>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-state" id="successState">
+    <span class="success-icon">🎌</span>
+    <div class="success-title">You're on the list!</div>
+    <p class="success-sub">
+      Thank you for your interest in the Japan Group Tour 2026.<br><br>
+      Our team will reach out within <strong>24–48 hours</strong> via WhatsApp or email with full details and next steps.<br><br>
+      <em>Japan awaits you. 🇯🇵</em>
+    </p>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-logo">Ubah's Travel Space Agency</div>
+  <div class="footer-tagline">Effortless Travel, Unforgettable Experiences</div>
+
+  <div class="social-row">
+    <!-- Instagram -->
+    <a class="social-btn" href="https://www.instagram.com/ubahs_travel_space_agency?igsh=cDh5a3ppZ3QybGxn" target="_blank" title="Instagram">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+      </svg>
+    </a>
+    <!-- Facebook -->
+    <a class="social-btn" href="https://www.facebook.com/profile.php?id=61584732983340" target="_blank" title="Facebook">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+      </svg>
+    </a>
+    <!-- TikTok -->
+    <a class="social-btn" href="https://www.tiktok.com/@ubahs.travel.space" target="_blank" title="TikTok">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.27 8.27 0 004.84 1.55V6.79a4.85 4.85 0 01-1.07-.1z"/>
+      </svg>
+    </a>
+    <!-- WhatsApp -->
+    <a class="social-btn" href="https://wa.me/2348023168428" target="_blank" title="WhatsApp">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="social-handle">@ubahs_travel_space_agency</div>
+
+  <div class="footer-contact">
+    <div class="contact-line">💬 &nbsp; +234 802 316 8428 &nbsp;(WhatsApp Available)</div>
+    <div class="contact-line">✉️ &nbsp; ubahstravelspaceagency@gmail.com</div>
+  </div>
+
+  <div class="footer-copy">© 2026 Ubah's Travel Space Agency &nbsp;·&nbsp; All rights reserved</div>
+</footer>
+
+<script>
+(function() {
+  if (sessionStorage.getItem('landingSubmitted')) {
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('successState').style.display = 'block';
+  }
+})();
+
+async function handleSubmit() {
+  var nameEl     = document.getElementById('nameInput');
+  var whatsappEl = document.getElementById('whatsappInput');
+  var emailEl    = document.getElementById('emailInput');
+  var btn        = document.getElementById('submitBtn');
+
+  ['nameError','whatsappError','emailError'].forEach(function(id) {
+    document.getElementById(id).style.display = 'none';
+  });
+  ['nameInput','whatsappInput','emailInput'].forEach(function(id) {
+    document.getElementById(id).classList.remove('error');
+  });
+
+  var valid = true;
+  if (!nameEl.value.trim()) {
+    document.getElementById('nameError').style.display = 'block';
+    nameEl.classList.add('error'); valid = false;
+  }
+  if (!whatsappEl.value.trim()) {
+    document.getElementById('whatsappError').style.display = 'block';
+    whatsappEl.classList.add('error'); valid = false;
+  }
+  if (!emailEl.value.trim() || !emailEl.value.includes('@')) {
+    document.getElementById('emailError').style.display = 'block';
+    emailEl.classList.add('error'); valid = false;
+  }
+  if (!valid) return;
+
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  try {
+    await fetch('/.netlify/functions/save-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:      nameEl.value.trim(),
+        whatsapp:  whatsappEl.value.trim(),
+        email:     emailEl.value.trim(),
+        source:    'Landing Page Ad',
+        submitted: new Date().toLocaleString('en-GB', {
+          day:'2-digit', month:'long', year:'numeric',
+          hour:'2-digit', minute:'2-digit'
+        }),
+      }),
+    });
+  } catch(e) {}
+
+  sessionStorage.setItem('landingSubmitted', '1');
+  document.getElementById('formContent').style.display = 'none';
+  document.getElementById('successState').style.display = 'block';
+  history.replaceState(null, '', window.location.href);
+}
+
+window.addEventListener('popstate', function() {
+  if (sessionStorage.getItem('landingSubmitted')) {
+    history.pushState(null, '', window.location.href);
+  }
+});
+</script>
+</body>
+</html>
+<style>
+/* ── RESPONSIVE — LAPTOP & TABLET ── */
+@media (min-width: 768px) {
+  .hero { min-height: 100vh; }
+
+  .hero-content { max-width: 640px; padding-bottom: 80px; }
+
+  .hero-title { font-size: clamp(80px, 10vw, 120px); letter-spacing: -4px; }
+
+  .hero-script { font-size: clamp(48px, 6vw, 72px); }
+
+  .hero-top { padding: 32px 48px; }
+
+  .agency-name { font-size: 16px; letter-spacing: 5px; }
+
+  .pricing-strip {
+    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 36px 48px;
+  }
+
+  .deposit-pill { grid-column: 3; align-self: center; }
+
+  .details-row {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px 48px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .about-section {
+    padding: 80px 48px;
+    max-width: 700px;
+  }
+
+  .section-title { font-size: clamp(36px, 4vw, 52px); }
+
+  .section-text { font-size: 20px; }
+
+  .full-img-wrap { height: 420px; }
+
+  .package-section {
+    padding: 60px 48px;
+    max-width: 100%;
+  }
+
+  .pkg-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 800px;
+    margin: 0 auto;
+    gap: 14px 32px;
+  }
+
+  .gallery-row { height: 360px; grid-template-columns: 1fr 1fr 1fr; }
+
+  .form-section {
+    padding: 80px 48px;
+    max-width: 680px;
+  }
+
+  .form-title { font-size: 42px; }
+
+  .footer { padding: 60px 48px 40px; }
+
+  .social-row { gap: 16px; }
+
+  .social-btn { width: 52px; height: 52px; }
+
+  .price-amount { font-size: 32px; }
+
+  .deposit-pill .amount { font-size: 20px; }
+}
+
+@media (min-width: 1024px) {
+  .hero-title { font-size: 120px; }
+  .hero-script { font-size: 80px; }
+
+  .pricing-strip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    padding: 32px 0;
+  }
+
+  .price-block {
+    padding: 0 48px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .deposit-pill {
+    padding: 16px 32px;
+    margin: 0 24px;
+    border-radius: 0;
+  }
+
+  .gallery-row { height: 400px; }
+
+  .full-img-wrap { height: 500px; }
+}
+</style>
