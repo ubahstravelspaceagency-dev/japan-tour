@@ -382,9 +382,21 @@
       <div class="top-bar-sub">Japan Group Tour — October 2026</div>
     </div>
     <div style="display:flex;gap:10px;">
-      <button class="refresh-btn" onclick="loadData()">🔄 Refresh</button>
+      <button class="refresh-btn" onclick="refreshCurrent()">🔄 Refresh</button>
       <button class="logout-btn" onclick="doLogout()">✕ Logout</button>
     </div>
+  </div>
+
+  <!-- TABS -->
+  <div style="background:#1C2B1A;border-bottom:1px solid rgba(232,213,163,0.1);display:flex;">
+    <button id="tab-registrations" onclick="switchTab('registrations')"
+      style="flex:1;padding:12px;font-family:Cinzel,serif;font-size:11px;letter-spacing:2px;border:none;cursor:pointer;background:rgba(232,213,163,0.15);color:#E8D5A3;border-bottom:2px solid #C9A84C;">
+      📋 REGISTRATIONS
+    </button>
+    <button id="tab-leads" onclick="switchTab('leads')"
+      style="flex:1;padding:12px;font-family:Cinzel,serif;font-size:11px;letter-spacing:2px;border:none;cursor:pointer;background:transparent;color:rgba(232,213,163,0.4);border-bottom:2px solid transparent;">
+      ✨ LEADS
+    </button>
   </div>
 
   <div class="dashboard-body">
@@ -546,18 +558,19 @@ function renderList(data) {
       const date    = r.submitted_at ? r.submitted_at.split(',')[0] : (r._created_at ? new Date(r._created_at).toLocaleDateString('en-GB') : '');
       const email   = r.email || '';
 
-      return `<div class="registrant-card ${paid ? 'paid' : ''}" onclick="openDetail(${i})">
-        <div class="card-left">
+      return `<div class="registrant-card ${paid ? 'paid' : ''}">
+        <div class="card-left" onclick="openDetail(${i})" style="flex:1;cursor:pointer;">
           <div class="card-name">${name}</div>
           <div class="card-meta">${email}${date ? ' &nbsp;·&nbsp; Registered: ' + date : ''}</div>
         </div>
-        <div class="card-right">
+        <div class="card-right" onclick="openDetail(${i})" style="cursor:pointer;">
           <div class="payment-badge ${paid ? 'badge-paid' : 'badge-nopay'}">
             ${paid ? '✅ PAID' : '⏳ NOT PAID'}
           </div>
           ${paid && amount ? '<div class="amount-shown">' + amount + '</div>' : ''}
         </div>
-        <div class="chevron">›</div>
+        <div class="chevron" onclick="openDetail(${i})" style="cursor:pointer;">›</div>
+        <button onclick="deleteRecord(${i}, event)" title="Delete this record" style="background:rgba(139,26,26,0.15);border:1px solid rgba(139,26,26,0.3);color:#8B1A1A;padding:6px 10px;font-size:13px;cursor:pointer;margin-left:8px;flex-shrink:0;">🗑️</button>
       </div>`;
     }).join('') +
   '</div>';
@@ -672,11 +685,22 @@ function openDetail(index) {
 
   document.getElementById('modalBody').innerHTML  = body;
 
-  // Footer buttons
-  const waText = 'Hi ' + (r.first_name || '') + '! This is Ubah\'s Travel Space Agency. We received your Japan Tour registration. Please proceed with your payment to secure your slot.';
+  // Footer buttons - smart WhatsApp messages based on payment status
+  const depositLink    = 'https://paystack.shop/pay/japan-tour-deposit';
+  const fullPayLink    = 'https://paystack.shop/pay/japan-tour-fullpayment';
+
+  let waText = '';
+  if (paid) {
+    // Paid message - payment confirmation
+    waText = 'Hi ' + (r.first_name || '') + '! 🎉 This is Ubah\'s Travel Space Agency confirming your payment of ' + (r.amount_paid || 'your payment') + ' for the Japan Group Tour — October 2026. Your reference number is: ' + (r.payment_reference || '—') + '. Our team will be in touch within 24–48 hours to confirm your full booking details. Thank you! 🇯🇵';
+  } else {
+    // Not paid message - registration confirmed, payment pending
+    waText = 'Hi ' + (r.first_name || '') + '! 👋 This is Ubah\'s Travel Space Agency. We have received your registration for the Japan Group Tour — October 2026! 🇯🇵\n\nHowever, we notice you are yet to make your payment to secure your slot.\n\nYou can pay using either of these links:\n\n💳 DEPOSIT (₦1,200,000):\n' + depositLink + '\n\n💳 FULL PAYMENT:\n' + fullPayLink + '\n\nPlease make payment as soon as possible to secure your slot. Feel free to contact us if you have any questions!';
+  }
+
   document.getElementById('modalFooter').innerHTML =
-    (r.whatsapp ? `<a class="modal-btn btn-wa" href="https://wa.me/${r.whatsapp.replace(/\D/g,'')}?text=${encodeURIComponent(waText)}" target="_blank">💬 WhatsApp</a>` : '') +
-    (r.email ? `<a class="modal-btn btn-wa" href="mailto:${r.email}" style="background:rgba(232,213,163,0.1);border:1px solid #D4C9A8;color:#1C2B1A;">✉️ Email</a>` : '') +
+    (r.whatsapp ? `<a class="modal-btn btn-wa" href="https://wa.me/${r.whatsapp.replace(/\D/g,'')}?text=${encodeURIComponent(waText)}" target="_blank">💬 ${paid ? 'Send Confirmation' : 'Send Payment Link'}</a>` : '') +
+    (r.email ? `<a class="modal-btn btn-wa" href="mailto:${r.email}?subject=Japan Tour 2026 - ${paid ? 'Payment Confirmed' : 'Payment Pending'}&body=${encodeURIComponent(waText)}" style="background:rgba(232,213,163,0.1);border:1px solid #D4C9A8;color:#1C2B1A;">✉️ Email</a>` : '') +
     `<button class="modal-btn btn-dark" onclick="closeDetailModal()">✕ Close</button>`;
 
   document.getElementById('detailModal').style.display = 'block';
@@ -690,6 +714,152 @@ function closeDetailModal() {
 
 function closeModal(e) {
   if (e.target === document.getElementById('detailModal')) closeDetailModal();
+}
+
+// ── DELETE RECORD ──
+async function deleteRecord(index, event) {
+  event.stopPropagation();
+  const r    = allData[index];
+  const name = ((r.first_name || '') + ' ' + (r.last_name || '')).trim() || 'this person';
+
+  const confirmed = confirm('Are you sure you want to delete ' + name + '\'s record?\n\nThis will permanently remove all their details from the database. This cannot be undone.');
+  if (!confirmed) return;
+
+  try {
+    const res = await fetch('/.netlify/functions/delete-record?id=' + encodeURIComponent(r.id));
+    const data = await res.json();
+    if (data.success) {
+      alert(name + '\'s record has been deleted successfully.');
+      loadData();
+    } else {
+      alert('Could not delete record. Please try again.\n' + (data.error || ''));
+    }
+  } catch(err) {
+    alert('Network error. Please try again.');
+  }
+}
+
+// ── TAB SWITCHING ──
+var currentTab = 'registrations';
+
+function switchTab(tab) {
+  currentTab = tab;
+  var regBtn  = document.getElementById('tab-registrations');
+  var leadsBtn = document.getElementById('tab-leads');
+
+  if (tab === 'registrations') {
+    regBtn.style.background   = 'rgba(232,213,163,0.15)';
+    regBtn.style.color        = '#E8D5A3';
+    regBtn.style.borderBottom = '2px solid #C9A84C';
+    leadsBtn.style.background   = 'transparent';
+    leadsBtn.style.color        = 'rgba(232,213,163,0.4)';
+    leadsBtn.style.borderBottom = '2px solid transparent';
+    loadData();
+  } else {
+    leadsBtn.style.background   = 'rgba(232,213,163,0.15)';
+    leadsBtn.style.color        = '#E8D5A3';
+    leadsBtn.style.borderBottom = '2px solid #C9A84C';
+    regBtn.style.background   = 'transparent';
+    regBtn.style.color        = 'rgba(232,213,163,0.4)';
+    regBtn.style.borderBottom = '2px solid transparent';
+    loadLeads();
+  }
+}
+
+function refreshCurrent() {
+  if (currentTab === 'registrations') loadData();
+  else loadLeads();
+}
+
+// ── LOAD LEADS ──
+async function loadLeads() {
+  // Hide stats, show leads list
+  document.querySelector('.stats-row').style.display = 'none';
+  document.getElementById('searchInput').placeholder = 'Search by name, email or WhatsApp...';
+
+  document.getElementById('listWrap').innerHTML = '<div class="loading-msg">Loading leads...</div>';
+
+  try {
+    const res  = await fetch('/.netlify/functions/get-leads');
+    const json = await res.json();
+    if (json.error) throw new Error(json.error);
+    renderLeads(json.leads || []);
+  } catch(err) {
+    document.getElementById('listWrap').innerHTML =
+      '<div class="loading-msg">❌ Could not load leads.<br><small>' + err.message + '</small></div>';
+  }
+}
+
+var allLeads = [];
+
+function renderLeads(data) {
+  allLeads = data;
+  const wrap = document.getElementById('listWrap');
+
+  if (!data.length) {
+    wrap.innerHTML = '<div class="empty-state">No leads yet. Share your landing page to get started!</div>';
+    return;
+  }
+
+  wrap.innerHTML = '<div class="registrant-list">' +
+    data.map(function(r, i) {
+      const name  = r.name || 'Unknown';
+      const date  = r.submitted ? r.submitted.split(',')[0] : (r.created_at ? new Date(r.created_at).toLocaleDateString('en-GB') : '');
+      return `<div class="registrant-card" style="border-left-color:#C9A84C;">
+        <div class="card-left" style="flex:1;">
+          <div class="card-name">${name}</div>
+          <div class="card-meta">${r.email || ''} &nbsp;·&nbsp; ${r.whatsapp || ''} &nbsp;·&nbsp; ${date}</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0;">
+          ${r.whatsapp ? `<a href="https://wa.me/${r.whatsapp.replace(/\D/g,'')}?text=${encodeURIComponent('Hi ' + name + '! This is Ubah\'s Travel Space Agency. Thank you for your interest in our Japan Group Tour 2026! We\'d love to give you more details. When would be a good time to chat?')}" target="_blank" style="background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);color:#2DB55D;padding:6px 10px;font-size:12px;text-decoration:none;">💬</a>` : ''}
+          ${r.email ? `<a href="mailto:${r.email}?subject=Japan Tour 2026 - More Details&body=${encodeURIComponent('Hi ' + name + ',\n\nThank you for your interest in our Japan Group Tour 2026!\n\nWe\'d love to share all the details with you. Please let us know when you\'re available to chat.\n\nUbah\'s Travel Space Agency\n+234 802 316 8428')}" style="background:rgba(232,213,163,0.1);border:1px solid rgba(232,213,163,0.3);color:#E8D5A3;padding:6px 10px;font-size:12px;text-decoration:none;">✉️</a>` : ''}
+          <button onclick="deleteLead(${i}, event)" style="background:rgba(139,26,26,0.15);border:1px solid rgba(139,26,26,0.3);color:#8B1A1A;padding:6px 10px;font-size:12px;cursor:pointer;">🗑️</button>
+        </div>
+      </div>`;
+    }).join('') +
+  '</div>';
+}
+
+async function deleteLead(index, event) {
+  event.stopPropagation();
+  const r = allLeads[index];
+  const confirmed = confirm('Delete ' + (r.name || 'this lead') + '\'s record?\n\nThis cannot be undone.');
+  if (!confirmed) return;
+
+  try {
+    const res  = await fetch('/.netlify/functions/delete-lead?id=' + encodeURIComponent(r.id));
+    const data = await res.json();
+    if (data.success) {
+      loadLeads();
+    } else {
+      alert('Could not delete. Please try again.');
+    }
+  } catch(err) {
+    alert('Network error. Please try again.');
+  }
+}
+
+// Override filterList to handle both tabs
+var origFilterList = filterList;
+function filterList() {
+  if (currentTab === 'leads') {
+    const q = document.getElementById('searchInput').value.toLowerCase().trim();
+    if (!q) { renderLeads(allLeads); return; }
+    renderLeads(allLeads.filter(function(r) {
+      return (r.name||'').toLowerCase().includes(q) ||
+             (r.email||'').toLowerCase().includes(q) ||
+             (r.whatsapp||'').toLowerCase().includes(q);
+    }));
+  } else {
+    origFilterList();
+  }
+}
+
+// Show stats when on registrations tab
+var origLoadData = loadData;
+function loadData() {
+  document.querySelector('.stats-row').style.display = 'grid';
+  origLoadData();
 }
 </script>
 </body>
