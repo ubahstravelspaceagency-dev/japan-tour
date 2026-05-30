@@ -500,25 +500,11 @@ if (sessionStorage.getItem('adminAuth') === '1') {
   loadData();
 }
 
-// ── LOAD DATA FROM SHEETDB ──
+// ── LOAD DATA FROM API ──
 async function loadData() {
-  document.getElementById('listWrap').innerHTML = '<div class="loading-msg">Loading registrations...</div>';
-
-  try {
-    const res  = await fetch(API_URL);
-    const json = await res.json();
-
-    if (json.error) throw new Error(json.error);
-
-    // Newest first
-    allData = (json.submissions || []).reverse();
-    renderStats();
-    renderList(allData);
-  } catch (err) {
-    document.getElementById('listWrap').innerHTML =
-      '<div class="loading-msg">❌ Could not load data.<br><small>' + err.message + '</small></div>';
-  }
+  await fetchRegistrations();
 }
+
 
 // ── STATS ──
 function renderStats() {
@@ -744,78 +730,93 @@ var currentTab = 'registrations';
 
 function switchTab(tab) {
   currentTab = tab;
-  var regBtn  = document.getElementById('tab-registrations');
+  var regBtn   = document.getElementById('tab-registrations');
   var leadsBtn = document.getElementById('tab-leads');
 
   if (tab === 'registrations') {
-    regBtn.style.background   = 'rgba(232,213,163,0.15)';
-    regBtn.style.color        = '#E8D5A3';
-    regBtn.style.borderBottom = '2px solid #C9A84C';
+    regBtn.style.background     = 'rgba(232,213,163,0.15)';
+    regBtn.style.color          = '#E8D5A3';
+    regBtn.style.borderBottom   = '2px solid #C9A84C';
     leadsBtn.style.background   = 'transparent';
     leadsBtn.style.color        = 'rgba(232,213,163,0.4)';
     leadsBtn.style.borderBottom = '2px solid transparent';
-    loadData();
+    document.querySelector('.stats-row').style.display = 'grid';
+    document.getElementById('searchInput').placeholder = 'Search by name or payment reference...';
+    fetchRegistrations();
   } else {
     leadsBtn.style.background   = 'rgba(232,213,163,0.15)';
     leadsBtn.style.color        = '#E8D5A3';
     leadsBtn.style.borderBottom = '2px solid #C9A84C';
-    regBtn.style.background   = 'transparent';
-    regBtn.style.color        = 'rgba(232,213,163,0.4)';
-    regBtn.style.borderBottom = '2px solid transparent';
-    loadLeads();
+    regBtn.style.background     = 'transparent';
+    regBtn.style.color          = 'rgba(232,213,163,0.4)';
+    regBtn.style.borderBottom   = '2px solid transparent';
+    document.querySelector('.stats-row').style.display = 'none';
+    document.getElementById('searchInput').placeholder = 'Search by name, email or WhatsApp...';
+    fetchLeads();
   }
 }
 
 function refreshCurrent() {
-  if (currentTab === 'registrations') loadData();
-  else loadLeads();
+  if (currentTab === 'registrations') fetchRegistrations();
+  else fetchLeads();
 }
 
-// ── LOAD LEADS ──
-async function loadLeads() {
-  // Hide stats, show leads list
-  document.querySelector('.stats-row').style.display = 'none';
-  document.getElementById('searchInput').placeholder = 'Search by name, email or WhatsApp...';
+// ── FETCH REGISTRATIONS ──
+async function fetchRegistrations() {
+  document.getElementById('listWrap').innerHTML = '<div class="loading-msg">Loading registrations...</div>';
+  try {
+    const res  = await fetch(API_URL);
+    const json = await res.json();
+    if (json.error) throw new Error(json.error);
+    allData = (json.submissions || []);
+    renderStats();
+    renderList(allData);
+  } catch(err) {
+    document.getElementById('listWrap').innerHTML =
+      '<div class="loading-msg">❌ Could not load data.<br><small>' + err.message + '</small></div>';
+  }
+}
 
+// ── FETCH LEADS ──
+var allLeads = [];
+
+async function fetchLeads() {
   document.getElementById('listWrap').innerHTML = '<div class="loading-msg">Loading leads...</div>';
-
   try {
     const res  = await fetch('/.netlify/functions/get-leads');
     const json = await res.json();
     if (json.error) throw new Error(json.error);
-    renderLeads(json.leads || []);
+    allLeads = json.leads || [];
+    renderLeads(allLeads);
   } catch(err) {
     document.getElementById('listWrap').innerHTML =
       '<div class="loading-msg">❌ Could not load leads.<br><small>' + err.message + '</small></div>';
   }
 }
 
-var allLeads = [];
-
 function renderLeads(data) {
-  allLeads = data;
   const wrap = document.getElementById('listWrap');
-
   if (!data.length) {
     wrap.innerHTML = '<div class="empty-state">No leads yet. Share your landing page to get started!</div>';
     return;
   }
-
   wrap.innerHTML = '<div class="registrant-list">' +
     data.map(function(r, i) {
-      const name  = r.name || 'Unknown';
-      const date  = r.submitted ? r.submitted.split(',')[0] : (r.created_at ? new Date(r.created_at).toLocaleDateString('en-GB') : '');
-      return `<div class="registrant-card" style="border-left-color:#C9A84C;">
-        <div class="card-left" style="flex:1;">
-          <div class="card-name">${name}</div>
-          <div class="card-meta">${r.email || ''} &nbsp;·&nbsp; ${r.whatsapp || ''} &nbsp;·&nbsp; ${date}</div>
-        </div>
-        <div style="display:flex;gap:8px;flex-shrink:0;">
-          ${r.whatsapp ? `<a href="https://wa.me/${r.whatsapp.replace(/\D/g,'')}?text=${encodeURIComponent('Hi ' + name + '! This is Ubah\'s Travel Space Agency. Thank you for your interest in our Japan Group Tour 2026! We\'d love to give you more details. When would be a good time to chat?')}" target="_blank" style="background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);color:#2DB55D;padding:6px 10px;font-size:12px;text-decoration:none;">💬</a>` : ''}
-          ${r.email ? `<a href="mailto:${r.email}?subject=Japan Tour 2026 - More Details&body=${encodeURIComponent('Hi ' + name + ',\n\nThank you for your interest in our Japan Group Tour 2026!\n\nWe\'d love to share all the details with you. Please let us know when you\'re available to chat.\n\nUbah\'s Travel Space Agency\n+234 802 316 8428')}" style="background:rgba(232,213,163,0.1);border:1px solid rgba(232,213,163,0.3);color:#E8D5A3;padding:6px 10px;font-size:12px;text-decoration:none;">✉️</a>` : ''}
-          <button onclick="deleteLead(${i}, event)" style="background:rgba(139,26,26,0.15);border:1px solid rgba(139,26,26,0.3);color:#8B1A1A;padding:6px 10px;font-size:12px;cursor:pointer;">🗑️</button>
-        </div>
-      </div>`;
+      const name = r.name || 'Unknown';
+      const date = r.submitted ? r.submitted.split(',')[0] : (r.created_at ? new Date(r.created_at).toLocaleDateString('en-GB') : '');
+      const waMsg = encodeURIComponent('Hi ' + name + '! This is Ubah\'s Travel Space Agency. Thank you for your interest in our Japan Group Tour 2026! We\'d love to give you more details. When would be a good time to chat?');
+      const emailBody = encodeURIComponent('Hi ' + name + ',\n\nThank you for your interest in our Japan Group Tour 2026!\n\nWe\'d love to share all the details with you.\n\nUbah\'s Travel Space Agency\n+234 802 316 8428');
+      return '<div class="registrant-card" style="border-left-color:#C9A84C;">' +
+        '<div class="card-left" style="flex:1;">' +
+          '<div class="card-name">' + name + '</div>' +
+          '<div class="card-meta">' + (r.email||'') + ' &nbsp;·&nbsp; ' + (r.whatsapp||'') + (date ? ' &nbsp;·&nbsp; ' + date : '') + '</div>' +
+        '</div>' +
+        '<div style="display:flex;gap:8px;flex-shrink:0;align-items:center;">' +
+          (r.whatsapp ? '<a href="https://wa.me/' + r.whatsapp.replace(/\D/g,'') + '?text=' + waMsg + '" target="_blank" style="background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);color:#2DB55D;padding:6px 10px;font-size:12px;text-decoration:none;">💬</a>' : '') +
+          (r.email ? '<a href="mailto:' + r.email + '?subject=Japan Tour 2026&body=' + emailBody + '" style="background:rgba(232,213,163,0.1);border:1px solid rgba(232,213,163,0.3);color:#E8D5A3;padding:6px 10px;font-size:12px;text-decoration:none;">✉️</a>' : '') +
+          '<button onclick="deleteLead(' + i + ', event)" style="background:rgba(139,26,26,0.15);border:1px solid rgba(139,26,26,0.3);color:#8B1A1A;padding:6px 10px;font-size:12px;cursor:pointer;">🗑️</button>' +
+        '</div>' +
+      '</div>';
     }).join('') +
   '</div>';
 }
@@ -823,27 +824,21 @@ function renderLeads(data) {
 async function deleteLead(index, event) {
   event.stopPropagation();
   const r = allLeads[index];
-  const confirmed = confirm('Delete ' + (r.name || 'this lead') + '\'s record?\n\nThis cannot be undone.');
-  if (!confirmed) return;
-
+  if (!confirm('Delete ' + (r.name || 'this lead') + '\'s record?\n\nThis cannot be undone.')) return;
   try {
     const res  = await fetch('/.netlify/functions/delete-lead?id=' + encodeURIComponent(r.id));
     const data = await res.json();
-    if (data.success) {
-      loadLeads();
-    } else {
-      alert('Could not delete. Please try again.');
-    }
+    if (data.success) fetchLeads();
+    else alert('Could not delete. Please try again.');
   } catch(err) {
     alert('Network error. Please try again.');
   }
 }
 
-// Override filterList to handle both tabs
-var origFilterList = filterList;
+// ── OVERRIDE FILTER TO HANDLE BOTH TABS ──
 function filterList() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
   if (currentTab === 'leads') {
-    const q = document.getElementById('searchInput').value.toLowerCase().trim();
     if (!q) { renderLeads(allLeads); return; }
     renderLeads(allLeads.filter(function(r) {
       return (r.name||'').toLowerCase().includes(q) ||
@@ -851,16 +846,17 @@ function filterList() {
              (r.whatsapp||'').toLowerCase().includes(q);
     }));
   } else {
-    origFilterList();
+    if (!q) { renderList(allData); return; }
+    const filtered = allData.filter(function(r) {
+      const name = ((r.first_name||'') + ' ' + (r.last_name||'')).toLowerCase();
+      const ref  = (r.payment_reference||'').toLowerCase();
+      const email = (r.email||'').toLowerCase();
+      return name.includes(q) || ref.includes(q) || email.includes(q);
+    });
+    renderList(filtered);
   }
 }
 
-// Show stats when on registrations tab
-var origLoadData = loadData;
-function loadData() {
-  document.querySelector('.stats-row').style.display = 'grid';
-  origLoadData();
-}
 </script>
 </body>
 </html>
