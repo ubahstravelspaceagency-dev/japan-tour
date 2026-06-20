@@ -29,25 +29,25 @@ RESULT: Every submission will:
   ✅ Be accessible in your Formspree dashboard anytime
 =================================================================
 -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --forest:  #1C2B1A;
-    --gold:    #8B6914;
-    --crimson: #8B1A1A;
-    --mint:    #F0F7F4;
-    --cream:   #FAF6EE;
-    --sage:    #5A6B58;
-    --black:   #111111;
-    --border:  #D4C9A8;
+    --forest:  #0A0A0A;
+    --gold:    #B8924A;
+    --crimson: #CC2200;
+    --mint:    #FAFAF8;
+    --cream:   #F5F0E8;
+    --sage:    #6B6560;
+    --black:   #0A0A0A;
+    --border:  rgba(184,146,74,0.25);
     --white:   #FFFFFF;
   }
 
   body {
     background: var(--mint);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Jost', sans-serif;
     color: var(--black);
     min-height: 100vh;
     padding: 0 0 60px;
@@ -56,21 +56,36 @@ RESULT: Every submission will:
   /* ── HERO HEADER ── */
   .hero {
     background: var(--forest);
+    background-image: url('https://images.unsplash.com/photo-1493780474015-ba834fd0ce2f?w=800&q=80');
+    background-size: cover;
+    background-position: center;
     padding: 48px 24px 36px;
     text-align: center;
     position: relative;
     overflow: hidden;
   }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.55) 0%,
+      rgba(0,0,0,0.65) 100%
+    );
+    z-index: 0;
+  }
+  .hero > * { position: relative; z-index: 1; }
   .hero::before {
     content: '日本';
     position: absolute;
     right: -10px; top: 50%;
     transform: translateY(-50%);
-    font-family: 'Noto Serif JP', serif;
     font-size: 140px;
     color: rgba(255,255,255,0.04);
     line-height: 1;
     pointer-events: none;
+    z-index: 1;
   }
   .hero-top-line {
     width: 100%;
@@ -79,28 +94,30 @@ RESULT: Every submission will:
     margin-bottom: 28px;
   }
   .hero-tag {
-    font-family: 'Noto Serif JP', serif;
+    font-family: 'Jost', sans-serif;
     font-size: 11px;
     letter-spacing: 6px;
     color: rgba(232,213,163,0.7);
     margin-bottom: 14px;
     display: block;
+    text-transform: uppercase;
   }
   .hero-title {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(22px, 5vw, 36px);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 6vw, 48px);
     font-weight: 700;
-    color: #E8D5A3;
-    letter-spacing: 2px;
+    color: #FAFAF8;
+    letter-spacing: 1px;
     line-height: 1.2;
     margin-bottom: 8px;
   }
   .hero-sub {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(13px, 2.5vw, 17px);
-    color: rgba(232,213,163,0.6);
+    font-family: 'Jost', sans-serif;
+    font-size: clamp(11px, 2.5vw, 14px);
+    color: rgba(232,213,163,0.7);
     letter-spacing: 4px;
     margin-bottom: 20px;
+    text-transform: uppercase;
   }
   .hero-divider {
     display: flex;
@@ -114,8 +131,8 @@ RESULT: Every submission will:
   .hero-divider .dot  { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); }
   .hero-intro {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(14px, 2.5vw, 17px);
-    color: rgba(232,213,163,0.8);
+    font-size: clamp(15px, 2.5vw, 18px);
+    color: rgba(232,213,163,0.85);
     line-height: 1.75;
     max-width: 640px;
     margin: 0 auto 24px;
@@ -134,10 +151,11 @@ RESULT: Every submission will:
     background: rgba(232,213,163,0.1);
     border: 1px solid rgba(232,213,163,0.3);
     color: #E8D5A3;
-    font-family: 'Cinzel', serif;
+    font-family: 'Jost', sans-serif;
     font-size: 10px;
     letter-spacing: 1.5px;
     padding: 6px 14px;
+    text-transform: uppercase;
   }
 
   .hero-bottom-line {
@@ -158,7 +176,7 @@ RESULT: Every submission will:
   .section-card {
     background: var(--white);
     border: 1px solid var(--border);
-    border-top: 3px solid var(--forest);
+    border-top: 3px solid var(--black);
     margin-top: 28px;
     padding: 28px 28px 24px;
     position: relative;
@@ -167,7 +185,7 @@ RESULT: Every submission will:
   .section-card.red-top  { border-top-color: var(--crimson); }
 
   .section-title {
-    font-family: 'Cinzel', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 3px;
@@ -187,7 +205,7 @@ RESULT: Every submission will:
   .section-num {
     background: var(--forest);
     color: #E8D5A3;
-    font-family: 'Cinzel', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 10px;
     width: 22px; height: 22px;
     display: flex; align-items: center; justify-content: center;
@@ -199,7 +217,7 @@ RESULT: Every submission will:
   .field:last-child { margin-bottom: 0; }
 
   .field-label {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Jost', sans-serif;
     font-size: 12px;
     font-weight: 500;
     color: var(--forest);
@@ -226,23 +244,24 @@ RESULT: Every submission will:
   select,
   textarea {
     width: 100%;
-    border: 1px solid var(--border);
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
     border-radius: 0;
-    padding: 10px 13px;
-    font-family: 'Inter', sans-serif;
-    font-size: 13.5px;
+    padding: 10px 0;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
     color: var(--black);
-    background: var(--cream);
+    background: transparent;
     outline: none;
     transition: border-color 0.2s;
     -webkit-appearance: none;
   }
   input:focus, select:focus, textarea:focus {
-    border-color: var(--forest);
-    background: var(--white);
+    border-bottom-color: var(--black);
+    background: transparent;
   }
-  textarea { resize: vertical; min-height: 90px; }
-  select { cursor: pointer; }
+  textarea { resize: vertical; min-height: 90px; border: 1px solid rgba(0,0,0,0.15); padding: 10px 12px; background: var(--cream); }
+  select { cursor: pointer; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.2); background: transparent; }
 
   /* Radio / Checkbox groups */
   .options-group {
@@ -260,7 +279,7 @@ RESULT: Every submission will:
     background: var(--cream);
     transition: border-color 0.2s, background 0.2s;
   }
-  .option-item:hover { border-color: var(--forest); background: var(--white); }
+  .option-item:hover { border-color: var(--black); background: var(--white); }
   .option-item input[type="radio"],
   .option-item input[type="checkbox"] {
     width: 16px; height: 16px;
@@ -276,7 +295,7 @@ RESULT: Every submission will:
     line-height: 1.4;
   }
   .option-price {
-    font-family: 'Cinzel', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 11px;
     color: var(--gold);
     display: block;
@@ -311,20 +330,29 @@ RESULT: Every submission will:
     margin-top: 32px;
   }
   .submit-btn {
-    background: var(--forest);
-    color: #E8D5A3;
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    letter-spacing: 3px;
+    background: var(--black);
+    color: #FAFAF8;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 4px;
     padding: 16px 48px;
     border: none;
     cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
+    transition: background 0.3s, letter-spacing 0.2s;
     text-transform: uppercase;
     width: 100%;
     max-width: 340px;
+    position: relative;
   }
-  .submit-btn:hover { background: #2A3D28; }
+  .submit-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+  .submit-btn:hover { background: #2C2C2C; letter-spacing: 5px; }
   .submit-btn:active { transform: scale(0.98); }
 
   .form-footer {
@@ -344,14 +372,14 @@ RESULT: Every submission will:
     margin-top: 48px;
   }
   .agency-bar p {
-    font-family: 'Cinzel', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 11px;
     color: #E8D5A3;
     letter-spacing: 2px;
     margin-bottom: 4px;
   }
   .agency-bar span {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Jost', sans-serif;
     font-size: 11px;
     color: rgba(232,213,163,0.6);
   }
@@ -376,7 +404,7 @@ RESULT: Every submission will:
     margin-bottom: 16px;
   }
   .success-msg h2 {
-    font-family: 'Cinzel', serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(18px, 4vw, 24px);
     letter-spacing: 2px;
     margin-bottom: 14px;
@@ -548,9 +576,9 @@ RESULT: Every submission will:
            background:#FFF8E1; border:1px solid #FFD54F; border-left:3px solid #FFA000;
            font-size:12px; color:#5D4037; line-height:1.6;">
         📋 <b>Passport Renewal Notice:</b> Please enter the details of your current passport below.
-        Kindly note that you <b>must apply for and receive your new passport before August 2026</b>
-        — our registration deadline. Failure to do so may affect your ability to travel with us.
-        Please begin your renewal process as soon as possible.
+        Kindly ensure your passport will be valid for the duration of the tour.
+        Please begin your renewal process as soon as possible so you can travel with us.
+        Our team will follow up with you on your passport status.
       </div>
 
       <div class="two-col">
@@ -564,8 +592,8 @@ RESULT: Every submission will:
           <div id="passportWarning" style="display:none; margin-top:8px; padding:10px 12px;
                background:#FFF8E1; border:1px solid #FFD54F; border-left:3px solid #FFA000;
                font-size:12px; color:#5D4037; line-height:1.6;">
-            📋 <b>Please Note:</b> Your passport may need renewal before this trip. Kindly begin
-            your renewal process as soon as possible so you can travel with us.
+            📋 <b>Please Note:</b> Please ensure your passport is valid for the duration of the tour.
+            Kindly begin your renewal process as soon as possible so you can travel with us.
             You can still complete your registration — our team will guide you.
           </div>
           <div id="passportOk" style="display:none; margin-top:8px; padding:10px 12px;
@@ -589,10 +617,9 @@ RESULT: Every submission will:
          background:#FFF8E1; border:1px solid #FFD54F; border-left:3px solid #FFA000;
          font-size:13px; color:#5D4037; line-height:1.7; font-family:'Cormorant Garamond',serif;
          font-style:italic;">
-      📋 <b>Important:</b> You will need a valid Nigerian International Passport to travel with us.
+      📋 <b>Important:</b> You will need a valid Nigerian International Passport and Japan visa to travel with us.
       Please begin your passport application process as soon as possible.
-      Our registration deadline is <b>August 2026</b>. You must have your passport ready before then.
-      You can still complete this registration — our team will follow up with you on your passport status.
+      You can still complete this registration — our team will follow up with you and guide you through the process.
     </div>
 
     <div class="field" style="margin-top:16px;">
@@ -679,11 +706,11 @@ RESULT: Every submission will:
     <div class="section-title"><span class="section-num">4</span> Payment Readiness</div>
 
     <div class="notice-box">
-      An initial deposit of <b>₦1,200,000</b> is required to confirm your reservation. Please note that <b>₦300,000</b> of this deposit is strictly non-refundable and covers processing, visa coordination, and reservation fees. Full payment must be completed no later than 60 days before departure. Our departure is scheduled for <b>October 2026.</b>
+      An initial deposit of <b>₦1,250,000</b> is required to confirm your reservation. Please note that <b>₦300,000</b> of this deposit is strictly non-refundable and covers processing, visa coordination, and reservation fees. Full payment must be completed no later than 60 days before departure. Our departure is scheduled for <b>October 2026.</b>
     </div>
 
     <div class="field">
-      <label class="field-label">Are you ready to pay the ₦1,200,000 deposit? <span class="required">*</span></label>
+      <label class="field-label">Are you ready to pay the ₦1,250,000 deposit? <span class="required">*</span></label>
       <div class="options-group">
         <label class="option-item"><input type="radio" name="deposit_readiness" value="Yes — ready to pay immediately" required><span class="option-label">Yes — I am ready to pay immediately</span></label>
         <label class="option-item"><input type="radio" name="deposit_readiness" value="Yes — within 1 week"><span class="option-label">Yes — I can pay within 1 week</span></label>
@@ -837,11 +864,11 @@ RESULT: Every submission will:
     <div class="section-title"><span class="section-num" style="background:var(--gold);">8</span> Agreement & Declaration</div>
 
     <div class="notice-box">
-      Please read carefully before submitting. By submitting this form you confirm that all information provided is accurate and that you agree to our Terms and Conditions and Refund & Cancellation Policy. The initial deposit of ₦1,200,000 includes a non-refundable fee of ₦300,000 which cannot be returned under any circumstances.
+      Please read carefully before submitting. By submitting this form you confirm that all information provided is accurate and that you agree to our Terms and Conditions and Refund & Cancellation Policy. The initial deposit of ₦1,250,000 includes a non-refundable fee of ₦300,000 which cannot be returned under any circumstances.
       <br><br>
       <span style="font-style:normal;">
         👉 <a href="#" onclick="openTandC(); return false;"
-              style="color:var(--forest); font-weight:700; text-decoration:underline; font-family:'Inter',sans-serif; font-size:13px;">
+              style="color:var(--forest); font-weight:700; text-decoration:underline; font-family:'Jost',sans-serif; font-size:13px;">
           Tap here to read our full Terms &amp; Conditions
         </a>
       </span>
@@ -854,7 +881,7 @@ RESULT: Every submission will:
       </label>
       <label class="option-item">
         <input type="checkbox" name="agree_deposit" value="Confirmed" required>
-        <span class="option-label">I understand that the initial deposit is <b>₦1,200,000</b>, and that <b>₦300,000</b> of this is strictly <b>non-refundable</b> under any circumstances. <span class="required">*</span></span>
+        <span class="option-label">I understand that the initial deposit is <b>₦1,250,000</b>, and that <b>₦300,000</b> of this is strictly <b>non-refundable</b> under any circumstances. <span class="required">*</span></span>
       </label>
       <label class="option-item">
         <input type="checkbox" name="agree_visa" value="Confirmed" required>
@@ -865,13 +892,75 @@ RESULT: Every submission will:
         <span class="option-label">I have read and agree to the full <a href="#" onclick="openTandC(); return false;" style="color:var(--forest); font-weight:700;">Terms and Conditions</a> and Refund &amp; Cancellation Policy of Ubah's Travel Space Agency. <span class="required">*</span></span>
       </label>
       <label class="option-item">
+        <input type="checkbox" name="agree_privacy" value="Confirmed" required>
+        <span class="option-label">I have read and agree to the <a href="#" onclick="openPrivacy(); return false;" style="color:var(--forest); font-weight:700;">Privacy Policy</a> of Ubah's Travel Space Agency. I consent to my personal data being processed for the purpose of this booking. <span class="required">*</span></span>
+      </label>
+      <label class="option-item">
         <input type="checkbox" name="agree_contact" value="Confirmed">
         <span class="option-label">I consent to Ubah's Travel Space Agency contacting me via WhatsApp and email regarding this booking and future travel opportunities.</span>
       </label>
     </div>
   </div>
 
-  <!-- TERMS & CONDITIONS MODAL -->
+  <!-- PRIVACY POLICY MODAL -->
+  <div id="privacyModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+       background:rgba(0,0,0,0.85); z-index:99999; overflow-y:auto; padding:20px 16px;">
+    <div style="max-width:680px; margin:0 auto; background:#FAFCF8; padding:32px 28px;
+                border-top:4px solid #0A0A0A; position:relative;">
+      <button onclick="closePrivacy()"
+        style="position:absolute; top:16px; right:16px; background:none; border:none;
+               font-size:22px; cursor:pointer; color:#0A0A0A; line-height:1;">✕</button>
+
+      <div style="font-family:'Playfair Display',serif; font-size:18px; font-weight:700; color:#0A0A0A; margin-bottom:4px;">Privacy Policy</div>
+      <div style="font-size:10px; letter-spacing:2px; color:#CC2200; margin-bottom:20px; font-family:'Jost',sans-serif; text-transform:uppercase;">Ubah's Travel Space Agency — Japan Tour 2026</div>
+      <div style="height:1px; background:rgba(0,0,0,0.1); margin-bottom:20px;"></div>
+
+      <div style="font-size:13px; line-height:1.8; color:#333; font-family:'Jost',sans-serif;">
+
+        <p style="margin-bottom:14px;"><b>Last Updated: June 2026</b></p>
+
+        <p style="margin-bottom:14px;">This Privacy Policy describes how <b>Ubah's Travel Space Agency</b> ("we", "us", "our") collects, uses, stores, and protects the personal information you provide when registering for the Japan Group Tour 2026 or using our services.</p>
+
+        <p style="font-weight:700; margin-bottom:6px; color:#0A0A0A;">1. Information We Collect</p>
+        <p style="margin-bottom:14px;">We collect personal information you voluntarily provide including: full name, email address, WhatsApp number, date of birth, gender, state of residence, passport details, travel history, medical and dietary information, emergency contact details, and payment information. We collect this information solely for the purpose of processing your tour registration and providing our travel services.</p>
+
+        <p style="font-weight:700; margin-bottom:6px; color:#0A0A0A;">2. How We Use Your Information</p>
+        <p style="margin-bottom:14px;">We use your personal information to: process your tour registration and booking, facilitate visa applications and travel documentation, communicate booking confirmations and tour updates, process payments and issue receipts, coordinate accommodation and travel logistics, and comply with legal obligations. We do not use your information for any other purpose without your explicit consent.</p>
+
+        <p style="font-weight:700; margin-bottom:6px; color:#0A0A0A;">3. Third-Party Sharing</p>
+        <p style="margin-bottom:14px;">We do not sell, rent, or trade your personal information to third parties. We may share limited information only with: the Japanese Embassy for visa processing purposes, accommodation providers for booking confirmation, airline and transport providers where applicable, and payment processors (Paystack/Flutterwave) for secure payment processing. All third parties are required to maintain appropriate security measures and are prohibited from using your data for any other purpose.</p>
+
+        <p style="font-weight:700; margin-bottom:6px; color:#0A0A0A;">4. Data Storage and Security</p>
+        <p style="margin-bottom:14px;">Your data is stored securely using industry-standard encryption. We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. Your data is retained only for as long as necessary to fulfil the purposes for which it was collected and to comply with legal obligations.</p>
+
+        <p style="font-weight:700; margin-bottom:6px; color:#0A0A0A;">5. Your Rights</p>
+        <p style="margin-bottom:14px;">You have the right to: access the personal information we hold about you, request correction of inaccurate information, request deletion of your data (subject to legal and contractual obligations), withdraw consent for marketing communications at any time, and lodge a complaint with the relevant data protection authority.</p>
+
+        <p style="font-weight:700; margin-bottom:6px; color:#0A0A0A;">6. Sensitive Information</p>
+        <p style="margin-bottom:14px;">Medical and dietary information you provide is collected solely to ensure your safety and comfort during the tour. This information is treated with the highest level of confidentiality and shared only with service providers directly involved in your tour experience on a strictly need-to-know basis.</p>
+
+        <p style="font-weight:700; margin-bottom:6px; color:#0A0A0A;">7. Marketing Communications</p>
+        <p style="margin-bottom:14px;">We may contact you regarding your booking, tour updates, and future travel opportunities. You may opt out of marketing communications at any time by contacting us. Opting out of marketing communications does not affect communications necessary for your current booking.</p>
+
+        <p style="font-weight:700; margin-bottom:6px; color:#0A0A0A;">8. Contact Us</p>
+        <p style="margin-bottom:20px;">If you have any questions about this Privacy Policy or how we handle your personal data, please contact us at:<br><br>
+        <b>Ubah's Travel Space Agency</b><br>
+        📞 +234 802 316 8428<br>
+        ✉️ ubahstravelspaceagency@gmail.com<br>
+        📸 @ubahs_travel_space_agency</p>
+
+        <p style="font-size:11px; color:#888; font-style:italic;">By submitting your registration form, you acknowledge that you have read and understood this Privacy Policy and consent to the collection and use of your personal information as described herein.</p>
+
+      </div>
+
+      <div style="height:1px; background:rgba(0,0,0,0.1); margin:20px 0;"></div>
+      <button type="button" onclick="closePrivacy()"
+        style="width:100%; background:#0A0A0A; color:#FAFAF8; border:none; padding:14px;
+               font-family:'Jost',sans-serif; font-size:12px; letter-spacing:3px; cursor:pointer; text-transform:uppercase;">
+        I UNDERSTAND — CLOSE
+      </button>
+    </div>
+  </div>
   <div id="tandcModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
        background:rgba(0,0,0,0.85); z-index:99999; overflow-y:auto; padding:20px 16px;">
     <div style="max-width:680px; margin:0 auto; background:#FAFCF8; padding:32px 28px;
@@ -893,35 +982,35 @@ RESULT: Every submission will:
                   margin-bottom:6px; letter-spacing:2px;">
         JAPAN GROUP TOUR PACKAGES
       </div>
-      <div style="font-size:8.5px; color:#333; margin-bottom:20px; font-family:'Inter',sans-serif;">
+      <div style="font-size:8.5px; color:#333; margin-bottom:20px; font-family:'Jost',sans-serif;">
         Effective Date: May 2026 | Version 1.0 | Jurisdiction: Federal Republic of Nigeria
       </div>
       <div style="width:100%; height:1px; background:#D4C9A8; margin-bottom:20px;"></div>
 
       <!-- PREAMBLE -->
-      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px;
+      <div style="font-family:'Jost',sans-serif; font-weight:700; font-size:10px;
                   color:#1C2B1A; letter-spacing:3px; margin-bottom:8px;">PREAMBLE</div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:16px; font-family:'Inter',sans-serif; text-align:justify;">
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:16px; font-family:'Jost',sans-serif; text-align:justify;">
         This Refund and Cancellation Policy constitutes a legally binding agreement between <b>Ubah's Travel Space Agency</b> ("the Agency") and any individual ("the Client") who purchases or engages any travel package offered by the Agency. By remitting any payment, the Client acknowledges having read, understood, and agreed to be bound by all terms herein.
       </p>
 
       <!-- CLAUSES -->
-      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 1. DEFINITIONS</div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
-        "Package" means any Japan Group Tour package including Osaka, Tokyo, and Tokyo + Osaka Premium. "Initial Deposit" means the booking deposit of <b>NGN 1,200,000</b> required to secure a reservation. "Non-Refundable Fee" means the <b>NGN 300,000</b> portion that is non-refundable under all circumstances, covering processing, visa coordination, and reservation costs. "Land Package Price" means the total cost excluding international flights. "Departure Date" means the scheduled departure confirmed in booking documentation. "Force Majeure" means any event beyond reasonable control including acts of God, war, pandemics, or government advisories.
+      <div style="font-family:'Jost',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 1. DEFINITIONS</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Jost',sans-serif; text-align:justify;">
+        "Package" means any Japan Group Tour package including Osaka, Tokyo, and Tokyo + Osaka Premium. "Initial Deposit" means the booking deposit of <b>NGN 1,250,000</b> required to secure a reservation. "Non-Refundable Fee" means the <b>NGN 300,000</b> portion that is non-refundable under all circumstances, covering processing, visa coordination, and reservation costs. "Land Package Price" means the total cost excluding international flights. "Departure Date" means the scheduled departure confirmed in booking documentation. "Force Majeure" means any event beyond reasonable control including acts of God, war, pandemics, or government advisories.
       </p>
 
-      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 2. BOOKING CONFIRMATION AND DEPOSIT</div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
-        2.1 An initial deposit of <b>NGN 1,200,000 per person</b> is required to secure a reservation. Payment constitutes formal acceptance of this Policy. 2.2 Of this deposit, <b>NGN 300,000 is strictly non-refundable</b> under all circumstances. The remaining balance may be refunded subject to the cancellation schedule in Clause 3. 2.3 Full payment must be completed <b>no later than 60 calendar days</b> prior to departure. Failure to pay may result in cancellation without refund. 2.4 The Agency may adjust pricing due to foreign exchange fluctuations with 45 days notice.
+      <div style="font-family:'Jost',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 2. BOOKING CONFIRMATION AND DEPOSIT</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Jost',sans-serif; text-align:justify;">
+        2.1 An initial deposit of <b>NGN 1,250,000 per person</b> is required to secure a reservation. Payment constitutes formal acceptance of this Policy. 2.2 Of this deposit, <b>NGN 300,000 is strictly non-refundable</b> under all circumstances. The remaining balance may be refunded subject to the cancellation schedule in Clause 3. 2.3 Full payment must be completed <b>no later than 60 calendar days</b> prior to departure. Failure to pay may result in cancellation without refund. 2.4 The Agency may adjust pricing due to foreign exchange fluctuations with 45 days notice.
       </p>
 
-      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 3. CANCELLATION BY THE CLIENT</div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:4px; font-family:'Inter',sans-serif; text-align:justify;">
+      <div style="font-family:'Jost',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 3. CANCELLATION BY THE CLIENT</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:4px; font-family:'Jost',sans-serif; text-align:justify;">
         3.1 Cancellations must be submitted in writing to ubahstravelspaceagency@gmail.com. 3.2 The cancellation date is when the Agency receives written notice.
       </p>
       <div style="background:#F5F0E0; border:1px solid #D4C9A8; margin:10px 0; overflow:hidden;">
-        <table style="width:100%; border-collapse:collapse; font-size:9px; font-family:'Inter',sans-serif;">
+        <table style="width:100%; border-collapse:collapse; font-size:9px; font-family:'Jost',sans-serif;">
           <tr style="background:#1C2B1A; color:#E8D5A3;">
             <td style="padding:8px 10px; font-weight:700;">NOTICE PERIOD</td>
             <td style="padding:8px 10px; font-weight:700;">REFUND</td>
@@ -933,55 +1022,55 @@ RESULT: Every submission will:
           <tr style="background:#F5F0E0;"><td style="padding:7px 10px; color:#111;">No-show</td><td style="padding:7px 10px; color:#111;">No refund</td></tr>
         </table>
       </div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; font-family:'Inter',sans-serif;">3.3 Refunds processed within 14–21 working days of confirmation.</p>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; font-family:'Jost',sans-serif;">3.3 Refunds processed within 14–21 working days of confirmation.</p>
 
-      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 4. JAPAN VISA DENIAL</div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+      <div style="font-family:'Jost',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 4. JAPAN VISA DENIAL</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Jost',sans-serif; text-align:justify;">
         4.1 Japan visa approval is at the absolute discretion of the Japanese Embassy. The Agency makes no guarantee of visa approval. 4.2 On denial: visa processing fees are non-refundable; the <b>NGN 300,000 non-refundable processing fee</b> is also non-refundable under all circumstances including visa denial; the Agency will refund all other amounts paid above the NGN 300,000 fee and visa fees; the Client may transfer their slot to a future tour date within 7 days of denial notification. 4.3 The Agency provides documentation support but bears no responsibility for denial due to the Client's personal circumstances.
       </p>
 
-      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 5. INTERNATIONAL FLIGHTS</div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+      <div style="font-family:'Jost',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 5. INTERNATIONAL FLIGHTS</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Jost',sans-serif; text-align:justify;">
         5.1 International return flights are <b>not included</b> in land package prices. Clients are solely responsible for flight arrangements. 5.2 Any airline fees for flight changes arranged through the Agency are borne by the Client. 5.3 The Agency bears no liability for flight delays, cancellations, or disruptions.
       </p>
 
-      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 6. CANCELLATION BY THE AGENCY</div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+      <div style="font-family:'Jost',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 6. CANCELLATION BY THE AGENCY</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Jost',sans-serif; text-align:justify;">
         6.1 The Agency may cancel if: group size falls below 8 persons; Force Majeure occurs; key suppliers fail to deliver; or a government travel advisory is issued. 6.2 On Agency cancellation: 30 days written notice will be provided; full land package refund issued excluding visa fees; or transfer to rescheduled date offered. 6.3 Agency liability is limited to monies paid to the Agency only.
       </p>
 
-      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 7. AMENDMENTS</div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+      <div style="font-family:'Jost',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 7. AMENDMENTS</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Jost',sans-serif; text-align:justify;">
         Name amendment: NGN 25,000. Room upgrade: subject to availability and price difference. Room downgrade: treated as partial cancellation per Clause 3. Date change: treated as cancellation and re-booking at current pricing.
       </p>
 
-      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 8. TRAVEL INSURANCE</div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+      <div style="font-family:'Jost',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 8. TRAVEL INSURANCE</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Jost',sans-serif; text-align:justify;">
         Travel insurance is strongly recommended and is not included in any package. Recommended coverage: trip cancellation, medical emergencies, baggage loss, flight delays, and visa denial where available.
       </p>
 
-      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 9. STRICTLY NON-REFUNDABLE ITEMS</div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
-        The following are non-refundable under all circumstances: the NGN 300,000 non-refundable processing fee (part of the NGN 1,200,000 initial deposit); visa processing fees; airline tickets purchased on Client's behalf; pre-confirmed attraction tickets and experiences; ancillary fees already incurred.
+      <div style="font-family:'Jost',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 9. STRICTLY NON-REFUNDABLE ITEMS</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Jost',sans-serif; text-align:justify;">
+        The following are non-refundable under all circumstances: the NGN 300,000 non-refundable processing fee (part of the NGN 1,250,000 initial deposit); visa processing fees; airline tickets purchased on Client's behalf; pre-confirmed attraction tickets and experiences; ancillary fees already incurred.
       </p>
 
-      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 10. LIMITATION OF LIABILITY</div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+      <div style="font-family:'Jost',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 10. LIMITATION OF LIABILITY</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Jost',sans-serif; text-align:justify;">
         The Agency acts as intermediary between the Client and third-party providers. Total Agency liability shall not exceed the land package price paid. The Agency is not liable for losses arising from Force Majeure events.
       </p>
 
-      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 11. DISPUTE RESOLUTION</div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Inter',sans-serif; text-align:justify;">
+      <div style="font-family:'Jost',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 11. DISPUTE RESOLUTION</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:8px; font-family:'Jost',sans-serif; text-align:justify;">
         Disputes shall first be resolved through good-faith negotiation. Unresolved disputes within 30 days are subject to Nigerian law and court jurisdiction. Contact: ubahstravelspaceagency@gmail.com | +234 802 316 8428.
       </p>
 
-      <div style="font-family:'Inter',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 12. POLICY UPDATES</div>
-      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:20px; font-family:'Inter',sans-serif; text-align:justify;">
+      <div style="font-family:'Jost',sans-serif; font-weight:700; font-size:10px; color:#8B1A1A; letter-spacing:2px; margin-bottom:6px; margin-top:16px;">CLAUSE 12. POLICY UPDATES</div>
+      <p style="font-size:9.5px; color:#111; line-height:1.7; margin-bottom:20px; font-family:'Jost',sans-serif; text-align:justify;">
         The Agency reserves the right to amend this Policy. Clients will be notified of material changes. The Policy in effect at time of booking governs that booking.
       </p>
 
       <div style="width:100%; height:1px; background:#D4C9A8; margin-bottom:16px;"></div>
-      <div style="text-align:center; font-size:8.5px; color:#5A6B58; font-family:'Inter',sans-serif; margin-bottom:20px;">
+      <div style="text-align:center; font-size:8.5px; color:#5A6B58; font-family:'Jost',sans-serif; margin-bottom:20px;">
         Ubah's Travel Space Agency | +234 802 316 8428 | ubahstravelspaceagency@gmail.com | @ubahs_travel_space
       </div>
 
@@ -999,7 +1088,7 @@ RESULT: Every submission will:
     <button type="submit" class="submit-btn" id="submitBtn">✦ &nbsp; Review My Details &nbsp; ✦</button>
     <div class="form-footer">
       After submitting, our team will reach out to you within <b>24–48 hours</b> to confirm your registration and guide you on your next steps.<br><br>
-      Once you submit, a payment link will appear for your <b>₦1,200,000 initial deposit</b> or full package payment — whichever you prefer.<br><br>
+      Once you submit, a payment link will appear for your <b>₦1,250,000 initial deposit</b> or full package payment — whichever you prefer.<br><br>
       📞 +234 802 316 8428 &nbsp;|&nbsp; ✉️ ubahstravelspaceagency@gmail.com &nbsp;|&nbsp; 📸 @ubahs_travel_space
     </div>
   </div>
@@ -1024,34 +1113,58 @@ RESULT: Every submission will:
     <!-- Payment Buttons - shown dynamically based on payment plan choice -->
     <div style="display:flex; flex-direction:column; gap:12px; align-items:center; margin-bottom:28px;">
 
-      <p style="font-family:'Cinzel',serif; font-size:10px; letter-spacing:3px; color:rgba(232,213,163,0.6); margin-bottom:4px;">PROCEED TO PAYMENT</p>
+      <p style="font-family:'Playfair Display',serif; font-size:10px; letter-spacing:3px; color:rgba(232,213,163,0.6); margin-bottom:4px;">PROCEED TO PAYMENT</p>
 
-      <!-- Deposit button — hidden if full payment selected -->
-      <a href="https://paystack.shop/pay/japan-tour-deposit"
-         target="_blank" id="depositBtn"
+      <!-- DEPOSIT BUTTON — inline Paystack popup -->
+      <button type="button" onclick="payDeposit()" id="depositBtn"
          style="display:flex; align-items:center; justify-content:center; gap:10px;
-                background: linear-gradient(135deg, #8B6914, #C9A84C);
-                padding:16px 28px; color:#0D1F0C; text-decoration:none;
-                font-family:'Cinzel',serif; font-size:13px; font-weight:700;
-                letter-spacing:2px; width:100%; max-width:340px;">
-        💳 &nbsp; Pay Deposit — ₦1,200,000
-      </a>
+                background: linear-gradient(135deg, #8B5E1A, #C9A84C);
+                padding:16px 28px; color:#0D1F0C; border:none; cursor:pointer;
+                font-family:'Playfair Display',serif; font-size:13px; font-weight:700;
+                letter-spacing:2px; width:100%; max-width:340px; position:relative;">
+        💳 &nbsp; Pay Deposit — ₦1,250,000
+        <span style="position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(0,0,0,0.2);"></span>
+      </button>
 
-      <!-- Full payment button — always shown -->
-      <a href="https://paystack.shop/pay/japan-tour-fullpayment"
-         target="_blank" id="fullPayBtn"
-         style="display:flex; align-items:center; justify-content:center; gap:10px;
-                background: rgba(232,213,163,0.1);
-                border: 1px solid rgba(232,213,163,0.4);
-                padding:16px 28px; color:#E8D5A3; text-decoration:none;
-                font-family:'Cinzel',serif; font-size:13px; letter-spacing:2px;
-                width:100%; max-width:340px;">
-        💰 &nbsp; Make Full Payment
-      </a>
+      <!-- FULL PAYMENT — amount input then Paystack -->
+      <div id="fullPaySection" style="width:100%; max-width:340px;">
+        <button type="button" onclick="toggleFullPay()" id="fullPayToggle"
+           style="display:flex; align-items:center; justify-content:center; gap:10px;
+                  background: rgba(232,213,163,0.08);
+                  border: 1px solid rgba(232,213,163,0.35);
+                  padding:16px 28px; color:#E8D5A3; cursor:pointer;
+                  font-family:'Playfair Display',serif; font-size:13px; letter-spacing:2px;
+                  width:100%;">
+          💰 &nbsp; Make Full Payment
+        </button>
 
-      <p style="font-size:11px; color:rgba(232,213,163,0.45); font-style:italic; max-width:340px; text-align:center; margin-top:4px;">
-        ⚠️ For full payment, please ensure your exact amount has been confirmed with our agent before proceeding.
-      </p>
+        <!-- Amount dropdown — shown when full pay toggled -->
+        <div id="fullPayInput" style="display:none; margin-top:0; border:1px solid rgba(232,213,163,0.3); border-top:none; background:rgba(0,0,0,0.3); padding:20px 16px;">
+          <p style="font-size:11px; letter-spacing:2px; color:rgba(232,213,163,0.5); margin-bottom:12px; font-family:'Jost',sans-serif; text-transform:uppercase;">Enter Amount (₦)</p>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <div style="position:relative; flex:1;">
+              <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:rgba(232,213,163,0.6); font-size:14px; pointer-events:none;">₦</span>
+              <input type="number" id="fullPayAmount" placeholder="e.g. 3400000"
+                style="width:100%; background:rgba(255,255,255,0.07); border:1px solid rgba(232,213,163,0.25);
+                       color:#E8D5A3; padding:13px 12px 13px 28px; font-size:14px;
+                       font-family:'Jost',sans-serif; outline:none; border-radius:0;
+                       -webkit-appearance:none;"
+                onkeydown="if(event.key==='Enter') proceedFullPay()">
+            </div>
+            <button type="button" onclick="proceedFullPay()"
+              style="background:linear-gradient(135deg,#8B5E1A,#C9A84C); color:#0D1F0C; border:none;
+                     padding:13px 18px; cursor:pointer; font-size:18px; flex-shrink:0;">
+              →
+            </button>
+          </div>
+          <p style="font-size:11px; color:rgba(232,213,163,0.35); margin-top:10px; font-style:italic;">
+            Enter the amount you wish to pay. Paystack service charge will be added at checkout.
+          </p>
+          <p id="fullPayError" style="font-size:11px; color:#FF6B6B; margin-top:6px; display:none;">
+            Please enter a valid amount.
+          </p>
+        </div>
+      </div>
 
     </div>
 
@@ -1137,6 +1250,14 @@ function openTandC() {
 }
 function closeTandC() {
   document.getElementById('tandcModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+function openPrivacy() {
+  document.getElementById('privacyModal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+function closePrivacy() {
+  document.getElementById('privacyModal').style.display = 'none';
   document.body.style.overflow = '';
 }
 
@@ -1305,38 +1426,103 @@ function downloadReceiptPDF(traveller) {
   if (!card) return;
   var fileName  = 'Payment for Japan Tour by ' + (traveller || 'Traveller');
   var tableHTML = card.querySelector('table') ? card.querySelector('table').outerHTML : '';
+
   var html = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>' + fileName + '</title>' +
-    '<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">' +
-    '<style>@page{size:A4;margin:0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Inter,sans-serif;background:#fff;color:#111;}' +
-    '.page{width:210mm;min-height:297mm;margin:0 auto;padding:20mm 18mm;display:flex;flex-direction:column;}' +
-    '.hdr{background:#1C2B1A;color:#E8D5A3;padding:32px 28px;text-align:center;margin-bottom:0;}' +
-    '.hflag{font-size:32px;display:block;margin-bottom:10px;}' +
-    '.hagency{font-family:Cinzel,serif;font-size:11px;letter-spacing:3px;color:rgba(232,213,163,0.7);margin-bottom:8px;}' +
-    '.htitle{font-family:Cinzel,serif;font-size:22px;font-weight:700;letter-spacing:2px;color:#E8D5A3;margin-bottom:4px;}' +
-    '.hsub{font-family:Cinzel,serif;font-size:11px;color:rgba(232,213,163,0.6);letter-spacing:2px;}' +
-    '.gold{height:4px;background:linear-gradient(90deg,transparent,#C9A84C,transparent);margin-bottom:36px;}' +
-    '.rbox{border:1px solid #D4C9A8;border-top:5px solid #1C2B1A;padding:32px 28px;margin-bottom:28px;}' +
-    '.rlbl{font-family:Cinzel,serif;font-size:13px;font-weight:700;color:#1C2B1A;letter-spacing:2px;margin-bottom:4px;}' +
-    '.rsub{font-family:Cinzel,serif;font-size:9px;color:#8B1A1A;letter-spacing:2px;margin-bottom:18px;}' +
-    '.div{height:1px;background:#D4C9A8;margin:14px 0;}' +
-    'table{width:100%;border-collapse:collapse;font-size:13px;}td{padding:9px 0;vertical-align:top;}' +
-    'td:first-child{color:#5A6B58;width:52%;}td:last-child{font-weight:600;color:#111;}' +
-    '.stamp{display:inline-block;border:2px solid #1C2B1A;color:#1C2B1A;font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;padding:8px 20px;margin:20px auto;transform:rotate(-2deg);}' +
-    '.notice{background:#F0F7F4;border-left:4px solid #1C2B1A;padding:14px 16px;font-size:12px;color:#1C2B1A;line-height:1.7;margin-bottom:28px;}' +
-    '.ftr{margin-top:auto;border-top:1px solid #D4C9A8;padding-top:18px;text-align:center;font-size:10px;color:#5A6B58;line-height:1.8;}' +
-    '.fagency{font-family:Cinzel,serif;font-size:11px;font-weight:700;color:#1C2B1A;letter-spacing:1px;margin-bottom:4px;}' +
+    '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">' +
+    '<style>' +
+    '@page{size:A4;margin:0;}' +
+    '*{box-sizing:border-box;margin:0;padding:0;}' +
+    'body{font-family:Jost,sans-serif;background:#fff;color:#111;}' +
+    '.page{width:210mm;min-height:297mm;margin:0 auto;padding:18mm 16mm;display:flex;flex-direction:column;page-break-after:always;}' +
+    '.page:last-child{page-break-after:auto;}' +
+    '.hdr{background:#0A0A0A;color:#F5F0E8;padding:28px 24px;text-align:center;}' +
+    '.hflag{font-size:28px;display:block;margin-bottom:8px;}' +
+    '.hagency{font-family:Jost,sans-serif;font-size:10px;letter-spacing:4px;color:rgba(245,240,232,0.6);margin-bottom:6px;text-transform:uppercase;}' +
+    '.htitle{font-family:Playfair Display,serif;font-size:24px;font-weight:700;color:#F5F0E8;margin-bottom:4px;}' +
+    '.hsub{font-family:Jost,sans-serif;font-size:10px;color:rgba(245,240,232,0.5);letter-spacing:2px;text-transform:uppercase;}' +
+    '.gold{height:3px;background:linear-gradient(90deg,transparent,#B8924A,transparent);margin-bottom:28px;}' +
+    '.rbox{border:1px solid rgba(0,0,0,0.1);border-top:4px solid #0A0A0A;padding:28px 24px;margin-bottom:20px;}' +
+    '.rlbl{font-family:Jost,sans-serif;font-size:11px;font-weight:600;color:#0A0A0A;letter-spacing:3px;margin-bottom:4px;text-transform:uppercase;}' +
+    '.rsub{font-family:Jost,sans-serif;font-size:9px;color:#CC2200;letter-spacing:2px;margin-bottom:16px;text-transform:uppercase;}' +
+    '.div{height:1px;background:rgba(0,0,0,0.1);margin:12px 0;}' +
+    'table{width:100%;border-collapse:collapse;font-size:12px;}' +
+    'td{padding:8px 0;vertical-align:top;border-bottom:1px solid rgba(0,0,0,0.05);}' +
+    'td:first-child{color:#6B6560;width:52%;}' +
+    'td:last-child{font-weight:600;color:#0A0A0A;}' +
+    '.stamp{display:inline-block;border:2px solid #0A0A0A;color:#0A0A0A;font-family:Jost,sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;padding:7px 18px;margin:16px auto;transform:rotate(-2deg);text-transform:uppercase;}' +
+    '.notice{background:#F5F0E8;border-left:3px solid #B8924A;padding:12px 14px;font-size:11px;color:#0A0A0A;line-height:1.7;margin-bottom:20px;}' +
+    '.ftr{margin-top:auto;border-top:1px solid rgba(0,0,0,0.1);padding-top:14px;text-align:center;font-size:10px;color:#6B6560;line-height:1.8;}' +
+    '.fagency{font-family:Playfair Display,serif;font-size:12px;font-weight:700;color:#0A0A0A;margin-bottom:4px;}' +
+    /* PAGE 2 T&C styles */
+    '.tc-page{width:210mm;min-height:297mm;margin:0 auto;padding:18mm 16mm;font-size:10px;line-height:1.6;color:#333;}' +
+    '.tc-header{background:#0A0A0A;color:#F5F0E8;padding:20px 24px;text-align:center;margin-bottom:20px;}' +
+    '.tc-title{font-family:Playfair Display,serif;font-size:18px;font-weight:700;color:#F5F0E8;}' +
+    '.tc-sub{font-size:9px;letter-spacing:2px;color:rgba(245,240,232,0.5);text-transform:uppercase;margin-top:4px;}' +
+    '.tc-section{margin-bottom:14px;}' +
+    '.tc-section-title{font-family:Jost,sans-serif;font-size:10px;font-weight:700;color:#0A0A0A;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid rgba(0,0,0,0.1);padding-bottom:4px;margin-bottom:8px;}' +
+    '.tc-text{font-size:9.5px;line-height:1.65;color:#333;}' +
+    '.highlight{color:#CC2200;font-weight:600;}' +
     '</style></head><body>' +
+
+    /* ── PAGE 1: RECEIPT ── */
     '<div class="page">' +
-    '<div class="hdr"><span class="hflag">&#127481;&#127477;</span><div class="hagency">UBAH\'S TRAVEL SPACE AGENCY</div><div class="htitle">PAYMENT RECEIPT</div><div class="hsub">JAPAN GROUP TOUR &mdash; OCTOBER 2026</div></div>' +
+    '<div class="hdr"><span class="hflag">&#127481;&#127477;</span>' +
+    '<div class="hagency">Ubah\'s Travel Space Agency</div>' +
+    '<div class="htitle">Payment Receipt</div>' +
+    '<div class="hsub">Japan Group Tour &mdash; October 2026</div></div>' +
     '<div class="gold"></div>' +
-    '<div class="rbox"><div class="rlbl">PAYMENT RECEIPT</div><div class="rsub">UBAH\'S TRAVEL SPACE AGENCY &mdash; JAPAN TOUR 2026</div><div class="div"></div>' +
+    '<div class="rbox">' +
+    '<div class="rlbl">Payment Receipt</div>' +
+    '<div class="rsub">Ubah\'s Travel Space Agency &mdash; Japan Tour 2026</div>' +
+    '<div class="div"></div>' +
     tableHTML +
-    '<div class="div"></div><div style="text-align:center;"><div class="stamp">&#9989; PAYMENT CONFIRMED</div></div></div>' +
-    '<div class="notice"><b>Important:</b> Please keep this receipt safe. Our team will contact you within 24&ndash;48 hours. WhatsApp: <b>+234 802 316 8428</b> | Email: <b>ubahstravelspaceagency@gmail.com</b></div>' +
-    '<div class="ftr"><div class="fagency">UBAH\'S TRAVEL SPACE AGENCY</div>+234 802 316 8428 &nbsp;|&nbsp; ubahstravelspaceagency@gmail.com<br>Effortless Travel, Unforgettable Experiences</div>' +
+    '<div class="div"></div>' +
+    '<div style="text-align:center;"><div class="stamp">&#9989; Payment Confirmed</div></div>' +
     '</div>' +
+    '<div class="notice"><b>Important:</b> Please keep this receipt safe. Our team will contact you within 24&ndash;48 hours to confirm your full booking. WhatsApp: <b>+234 802 316 8428</b> | Email: <b>ubahstravelspaceagency@gmail.com</b></div>' +
+    '<div class="ftr"><div class="fagency">Ubah\'s Travel Space Agency</div>+234 802 316 8428 &nbsp;|&nbsp; ubahstravelspaceagency@gmail.com<br>Effortless Travel, Unforgettable Experiences</div>' +
+    '</div>' +
+
+    /* ── PAGE 2: TERMS & CONDITIONS ── */
+    '<div class="tc-page">' +
+    '<div class="tc-header">' +
+    '<div class="tc-title">Terms &amp; Conditions</div>' +
+    '<div class="tc-sub">Japan Group Tour &mdash; October 2026 &mdash; Ubah\'s Travel Space Agency</div>' +
+    '</div>' +
+
+    '<div class="tc-section"><div class="tc-section-title">1. Definitions</div>' +
+    '<div class="tc-text">"Package" means any Japan Group Tour package. "Initial Deposit" means the booking deposit of <span class="highlight">NGN 1,200,000</span> required to secure a reservation. "Non-Refundable Fee" means the <span class="highlight">NGN 300,000</span> portion of the deposit that is non-refundable under all circumstances, covering processing, visa coordination, and reservation costs. "Departure Date" means October 22nd, 2026.</div></div>' +
+
+    '<div class="tc-section"><div class="tc-section-title">2. Payment Terms</div>' +
+    '<div class="tc-text">2.1 An initial deposit of <span class="highlight">NGN 1,200,000 per person</span> is required to secure a reservation. 2.2 Of this deposit, <span class="highlight">NGN 300,000 is strictly non-refundable</span> under all circumstances. The remaining balance may be refunded subject to the cancellation schedule in Clause 3. 2.3 Full payment must be completed no later than 60 calendar days prior to departure. 2.4 The Agency may adjust pricing due to foreign exchange fluctuations with 45 days notice.</div></div>' +
+
+    '<div class="tc-section"><div class="tc-section-title">3. Cancellation Policy</div>' +
+    '<div class="tc-text">3.1 All cancellations must be submitted in writing. 3.2 Cancellation 90+ days before departure: refund of all amounts paid above the NGN 300,000 non-refundable fee. 3.3 Cancellation 60-89 days: 50% refund of amounts paid above the non-refundable fee. 3.4 Cancellation 30-59 days: 25% refund. 3.5 Cancellation less than 30 days: no refund. 3.6 The NGN 300,000 non-refundable fee is never refunded under any circumstances.</div></div>' +
+
+    '<div class="tc-section"><div class="tc-section-title">4. Visa Denial</div>' +
+    '<div class="tc-text">4.1 Japan visa approval is at the absolute discretion of the Japanese Embassy. The Agency makes no guarantee of visa approval. 4.2 On denial: visa processing fees are non-refundable; the <span class="highlight">NGN 300,000 non-refundable processing fee</span> is also non-refundable; the Agency will refund all other amounts paid above these fees; the Client may transfer their slot to a future tour date within 7 days of denial notification.</div></div>' +
+
+    '<div class="tc-section"><div class="tc-section-title">5. Agency Responsibilities</div>' +
+    '<div class="tc-text">5.1 The Agency will provide: 3-star hotel accommodation (6 nights), airport transfers, daily breakfast, 3-4 lunches on guided days, professional tour guide, entry tickets to stated attractions, bottled water during tours, Japan visa assistance, transportation during tours, 24/7 travel support. 5.2 International flights are NOT included in the package price unless explicitly stated.</div></div>' +
+
+    '<div class="tc-section"><div class="tc-section-title">6. Client Responsibilities</div>' +
+    '<div class="tc-text">6.1 The Client must hold a valid Nigerian international passport for the duration of the tour. 6.2 The Client must obtain a Japan tourist visa before departure. 6.3 The Client must have valid travel insurance. 6.4 The Client must comply with Japanese laws and regulations throughout the tour.</div></div>' +
+
+    '<div class="tc-section"><div class="tc-section-title">7. Non-Refundable Items</div>' +
+    '<div class="tc-text">The following are non-refundable under all circumstances: the <span class="highlight">NGN 300,000 non-refundable processing fee</span>; visa processing fees; airline tickets purchased on Client\'s behalf; pre-confirmed attraction tickets; ancillary fees already incurred.</div></div>' +
+
+    '<div class="tc-section"><div class="tc-section-title">8. Governing Law</div>' +
+    '<div class="tc-text">These terms are governed by the laws of the Federal Republic of Nigeria. Any disputes shall be resolved through negotiation and, if necessary, through the appropriate Nigerian courts.</div></div>' +
+
+    '<div style="margin-top:20px;padding:12px;background:#F5F0E8;font-size:9px;color:#6B6560;text-align:center;line-height:1.6;">' +
+    'By making payment, the Client confirms they have read, understood, and agreed to these Terms &amp; Conditions in full.<br>' +
+    'Ubah\'s Travel Space Agency &nbsp;|&nbsp; +234 802 316 8428 &nbsp;|&nbsp; ubahstravelspaceagency@gmail.com' +
+    '</div>' +
+    '</div>' +
+
     '<scr' + 'ipt>window.onload=function(){window.print();}</scr' + 'ipt>' +
     '</body></html>';
+
   var blob = new Blob([html], { type: 'text/html' });
   var url  = URL.createObjectURL(blob);
   var win  = window.open(url, '_blank');
@@ -1449,14 +1635,14 @@ function showGroupFields(count) {
     memberFields.innerHTML += `
       <div>
         <label style="font-size:12px; font-weight:500; color:var(--forest);
-                      display:block; margin-bottom:6px; font-family:'Inter',sans-serif;">
+                      display:block; margin-bottom:6px; font-family:'Jost',sans-serif;">
           ${label} — Full Name as on Passport <span style="color:#8B1A1A;">*</span>
         </label>
         <input type="text" name="companion_${i}"
                placeholder="e.g. CHIDI EMEKA OKAFOR"
                required
                style="width:100%; border:1px solid var(--border); padding:10px 13px;
-                      font-family:'Inter',sans-serif; font-size:13.5px;
+                      font-family:'Jost',sans-serif; font-size:13.5px;
                       color:var(--black); background:var(--cream); outline:none;">
       </div>`;
   }
@@ -1586,6 +1772,7 @@ form.addEventListener('submit', async function(e) {
   checkCheckbox('agree_deposit', 'Acknowledgement that deposit is non-refundable');
   checkCheckbox('agree_visa', 'Acknowledgement of visa uncertainty');
   checkCheckbox('agree_terms', 'Agreement to Terms and Conditions');
+  checkCheckbox('agree_privacy', 'Agreement to Privacy Policy');
 
   // ── SHOW ERRORS IF ANY ──
   if (errors.length > 0) {
@@ -1744,7 +1931,81 @@ async function confirmSubmit() {
   }
 }
 
-</script>
+// ── PAYSTACK PAYMENT FUNCTIONS ──
+
+// Get saved form data for pre-filling Paystack
+function getFormData() {
+  var saved = sessionStorage.getItem('japanPreview');
+  if (saved) {
+    try { return JSON.parse(saved); } catch(e) {}
+  }
+  return {};
+}
+
+// Pay deposit — fixed ₦1,250,000
+function payDeposit() {
+  var fd    = getFormData();
+  var email = fd.email     || '';
+  var name  = ((fd.first_name || '') + ' ' + (fd.last_name || '')).trim();
+  var phone = fd.whatsapp  || '';
+
+  // Build Paystack URL with prefilled data
+  var baseUrl = 'https://paystack.shop/pay/japan-tour-deposit_test_1781016280719_test';
+  var params  = new URLSearchParams();
+  if (email) params.set('email', email);
+  if (name)  params.set('name', name);
+  if (phone) params.set('phone', phone);
+
+  var url = params.toString() ? baseUrl + '?' + params.toString() : baseUrl;
+  window.location.href = url;
+}
+
+// Toggle full pay amount input
+function toggleFullPay() {
+  var input  = document.getElementById('fullPayInput');
+  var toggle = document.getElementById('fullPayToggle');
+  if (input.style.display === 'none' || input.style.display === '') {
+    input.style.display  = 'block';
+    toggle.style.borderBottom = 'none';
+    document.getElementById('fullPayAmount').focus();
+  } else {
+    input.style.display  = 'none';
+    toggle.style.borderBottom = '';
+  }
+}
+
+// Proceed with full payment
+function proceedFullPay() {
+  var amountInput = document.getElementById('fullPayAmount');
+  var errorEl     = document.getElementById('fullPayError');
+  var amount      = parseFloat(amountInput.value);
+
+  errorEl.style.display = 'none';
+
+  if (!amount || isNaN(amount) || amount < 100) {
+    errorEl.textContent   = 'Please enter a valid amount (minimum ₦100).';
+    errorEl.style.display = 'block';
+    amountInput.focus();
+    return;
+  }
+
+  var fd    = getFormData();
+  var email = fd.email    || '';
+  var name  = ((fd.first_name || '') + ' ' + (fd.last_name || '')).trim();
+  var phone = fd.whatsapp || '';
+
+  // Build Paystack URL — amount in kobo (multiply by 100)
+  var baseUrl = 'https://paystack.shop/pay/japan-tour-fullpayment_test_1781016280719_test';
+  var params  = new URLSearchParams();
+  if (email)  params.set('email',  email);
+  if (name)   params.set('name',   name);
+  if (phone)  params.set('phone',  phone);
+  params.set('amount', Math.round(amount * 100));
+
+  window.location.href = baseUrl + '?' + params.toString();
+}
+
+
 
 <!-- AGENCY FOOTER -->
 <div class="agency-bar">
