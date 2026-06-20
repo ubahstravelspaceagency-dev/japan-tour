@@ -556,7 +556,8 @@ function renderList(data) {
           ${paid && amount ? '<div class="amount-shown">' + amount + '</div>' : ''}
         </div>
         <div class="chevron" onclick="openDetail(${i})" style="cursor:pointer;">›</div>
-        <button onclick="deleteRecord(${i}, event)" title="Delete this record" style="background:rgba(139,26,26,0.15);border:1px solid rgba(139,26,26,0.3);color:#8B1A1A;padding:6px 10px;font-size:13px;cursor:pointer;margin-left:8px;flex-shrink:0;">🗑️</button>
+        <button onclick="downloadRecord(${i}, event)" title="Download details" style="background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:#C9A84C;padding:6px 10px;font-size:13px;cursor:pointer;margin-left:8px;flex-shrink:0;">⬇️</button>
+        <button onclick="deleteRecord(${i}, event)" title="Delete this record" style="background:rgba(139,26,26,0.15);border:1px solid rgba(139,26,26,0.3);color:#8B1A1A;padding:6px 10px;font-size:13px;cursor:pointer;margin-left:4px;flex-shrink:0;">🗑️</button>
       </div>`;
     }).join('') +
   '</div>';
@@ -653,7 +654,7 @@ function openDetail(index) {
   if (paid) {
     body += `<div class="payment-summary">
       <div class="pay-row"><span>Amount Paid by Customer</span><strong>${r.amount_paid || '—'}</strong></div>
-      <div class="pay-row"><span>Paystack Fee</span><span style="color:#8B1A1A;">${r.paystack_fee ? '− ' + r.paystack_fee : '—'}</span></div>
+      <div class="pay-row"><span>Payment Fee</span><span style="color:#8B1A1A;">${r.paystack_fee ? '− ' + r.paystack_fee : '—'}</span></div>
       <div class="pay-row"><span>Amount Received by Agency</span><strong>${r.amount_received || '—'}</strong></div>
       <div class="pay-row" style="border-top:1px solid #D4C9A8;padding-top:8px;margin-top:4px;">
         <span>Date</span><span>${r.payment_date || '—'}</span>
@@ -672,8 +673,8 @@ function openDetail(index) {
   document.getElementById('modalBody').innerHTML  = body;
 
   // Footer buttons - smart WhatsApp messages based on payment status
-  const depositLink    = 'https://paystack.shop/pay/japan-tour-deposit';
-  const fullPayLink    = 'https://paystack.shop/pay/japan-tour-fullpayment';
+  const depositLink    = 'https://ubah-japan-tour.netlify.app#deposit';
+  const fullPayLink    = 'https://ubah-japan-tour.netlify.app#fullpayment';
 
   let waText = '';
   if (paid) {
@@ -777,20 +778,283 @@ async function fetchRegistrations() {
   }
 }
 
+// ── DOWNLOAD RECORD AS PDF ──
+function downloadRecord(index, event) {
+  event.stopPropagation();
+  const r    = allData[index];
+  const name = ((r.first_name || '') + ' ' + (r.last_name || '')).trim() || 'Unknown';
+  const paid = r.payment_status === 'PAID';
+  const today = new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>${name} — Japan Tour Registration</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Jost, sans-serif; background: #fff; color: #111; font-size: 11px; }
+.page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 16mm 15mm; display: flex; flex-direction: column; page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+.hdr { background: #0A0A0A; color: #F5F0E8; padding: 22px 20px; text-align: center; margin-bottom: 0; }
+.hflag { font-size: 24px; display: block; margin-bottom: 6px; }
+.hagency { font-size: 9px; letter-spacing: 4px; color: rgba(245,240,232,0.6); margin-bottom: 5px; text-transform: uppercase; }
+.htitle { font-family: Playfair Display, serif; font-size: 20px; font-weight: 700; color: #F5F0E8; margin-bottom: 3px; }
+.hsub { font-size: 9px; color: rgba(245,240,232,0.5); letter-spacing: 2px; text-transform: uppercase; }
+.gold { height: 3px; background: linear-gradient(90deg, transparent, #B8924A, transparent); margin-bottom: 18px; }
+.section { margin-bottom: 14px; }
+.section-title { font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #CC2200; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 4px; margin-bottom: 8px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+.row { display: flex; gap: 8px; padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+.row-label { color: #6B6560; width: 45%; flex-shrink: 0; font-size: 10px; }
+.row-value { font-weight: 600; color: #0A0A0A; font-size: 10px; }
+.paid-badge { display: inline-block; background: #E6F9EE; color: #1A7A3F; padding: 3px 10px; font-size: 10px; font-weight: 700; border: 1px solid #2DB55D; }
+.nopay-badge { display: inline-block; background: #FFF3F3; color: #8B1A1A; padding: 3px 10px; font-size: 10px; font-weight: 700; border: 1px solid #CC2200; }
+.agree-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; font-size: 10px; line-height: 1.5; }
+.agree-check { color: #1A7A3F; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+.sig-box { border: 1px solid rgba(0,0,0,0.15); padding: 14px 16px; margin-bottom: 10px; }
+.sig-label { font-size: 9px; letter-spacing: 2px; color: #6B6560; text-transform: uppercase; margin-bottom: 20px; }
+.sig-line { border-bottom: 1px solid #0A0A0A; margin-bottom: 6px; height: 24px; }
+.sig-name { font-size: 10px; color: #0A0A0A; font-weight: 600; }
+.sig-role { font-size: 9px; color: #6B6560; }
+.tc-text { font-size: 9.5px; line-height: 1.65; color: #333; margin-bottom: 10px; }
+.tc-clause { margin-bottom: 12px; }
+.tc-clause-title { font-size: 10px; font-weight: 700; color: #0A0A0A; margin-bottom: 4px; letter-spacing: 1px; }
+.highlight { color: #CC2200; font-weight: 600; }
+.footer { margin-top: auto; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 10px; text-align: center; font-size: 9px; color: #6B6560; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- ══ PAGE 1: REGISTRATION DETAILS ══ -->
+<div class="page">
+  <div class="hdr">
+    <span class="hflag">🇯🇵</span>
+    <div class="hagency">Ubah's Travel Space Agency</div>
+    <div class="htitle">Registration Record</div>
+    <div class="hsub">Japan Group Tour — October 2026</div>
+  </div>
+  <div class="gold"></div>
+
+  <div class="section">
+    <div class="section-title">Personal Information</div>
+    <div class="row"><span class="row-label">Full Name</span><span class="row-value">${name}</span></div>
+    <div class="row"><span class="row-label">Email</span><span class="row-value">${r.email || '—'}</span></div>
+    <div class="row"><span class="row-label">WhatsApp</span><span class="row-value">${r.whatsapp || '—'}</span></div>
+    <div class="row"><span class="row-label">State</span><span class="row-value">${r.state || '—'}</span></div>
+    <div class="row"><span class="row-label">Date of Birth</span><span class="row-value">${r.dob || '—'}</span></div>
+    <div class="row"><span class="row-label">Gender</span><span class="row-value">${r.gender || '—'}</span></div>
+    <div class="row"><span class="row-label">Date Registered</span><span class="row-value">${r.submitted_at || r.created_at || '—'}</span></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Passport & Travel History</div>
+    <div class="row"><span class="row-label">Has Passport</span><span class="row-value">${r.has_passport || '—'}</span></div>
+    <div class="row"><span class="row-label">Passport Number</span><span class="row-value">${r.passport_number || '—'}</span></div>
+    <div class="row"><span class="row-label">Passport Expiry</span><span class="row-value">${r.passport_expiry || '—'}</span></div>
+    <div class="row"><span class="row-label">Name on Passport</span><span class="row-value">${r.passport_fullname || '—'}</span></div>
+    <div class="row"><span class="row-label">Travelled Before</span><span class="row-value">${r.travelled_before || '—'}</span></div>
+    <div class="row"><span class="row-label">Visa Denied Before</span><span class="row-value">${r.visa_denied || '—'}</span></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Tour Preferences</div>
+    <div class="row"><span class="row-label">Room Type</span><span class="row-value">${r.room_type || '—'}</span></div>
+    <div class="row"><span class="row-label">Group Size</span><span class="row-value">${r.group_size || '—'}</span></div>
+    <div class="row"><span class="row-label">Companion 1</span><span class="row-value">${r.companion_1 || '—'}</span></div>
+    <div class="row"><span class="row-label">Companion 2</span><span class="row-value">${r.companion_2 || '—'}</span></div>
+    <div class="row"><span class="row-label">Companion 3</span><span class="row-value">${r.companion_3 || '—'}</span></div>
+    <div class="row"><span class="row-label">Deposit Readiness</span><span class="row-value">${r.deposit_readiness || '—'}</span></div>
+    <div class="row"><span class="row-label">Payment Plan</span><span class="row-value">${r.payment_plan || '—'}</span></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Health & Dietary</div>
+    <div class="row"><span class="row-label">Medical Conditions</span><span class="row-value">${r.medical || '—'}</span></div>
+    <div class="row"><span class="row-label">Medical Details</span><span class="row-value">${r.medical_details || '—'}</span></div>
+    <div class="row"><span class="row-label">Dietary Requirements</span><span class="row-value">${r.dietary || '—'}</span></div>
+    <div class="row"><span class="row-label">Dietary Details</span><span class="row-value">${r.dietary_details || '—'}</span></div>
+    <div class="row"><span class="row-label">Special Requirements</span><span class="row-value">${r.special_requirements || '—'}</span></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Emergency Contact</div>
+    <div class="row"><span class="row-label">Name</span><span class="row-value">${r.emergency_name || '—'}</span></div>
+    <div class="row"><span class="row-label">Relationship</span><span class="row-value">${r.emergency_relationship || '—'}</span></div>
+    <div class="row"><span class="row-label">Phone</span><span class="row-value">${r.emergency_phone || '—'}</span></div>
+    <div class="row"><span class="row-label">Referral Source</span><span class="row-value">${(r.referral_source || '—') + (r.referral_source_other ? ' — ' + r.referral_source_other : '')}</span></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Payment Status</div>
+    <div class="row"><span class="row-label">Status</span><span class="row-value"><span class="${paid ? 'paid-badge' : 'nopay-badge'}">${paid ? '✅ PAID' : '⏳ NO PAYMENT YET'}</span></span></div>
+    ${paid ? `
+    <div class="row"><span class="row-label">Amount Paid</span><span class="row-value" style="color:#1A7A3F;font-size:13px;">${r.amount_paid || '—'}</span></div>
+    <div class="row"><span class="row-label">Amount Received</span><span class="row-value">${r.amount_received || '—'}</span></div>
+    <div class="row"><span class="row-label">Payment Fee</span><span class="row-value">${r.paystack_fee || '—'}</span></div>
+    <div class="row"><span class="row-label">Reference</span><span class="row-value" style="font-size:10px;">${r.payment_reference || '—'}</span></div>
+    <div class="row"><span class="row-label">Payment Date</span><span class="row-value">${r.payment_date || '—'}</span></div>
+    ` : ''}
+  </div>
+
+  <div class="section">
+    <div class="section-title">Client Agreements & Consent</div>
+    <div class="agree-item"><span class="agree-check">☑</span><span>I confirm that all information provided in this registration form is accurate and complete to the best of my knowledge.</span></div>
+    <div class="agree-item"><span class="agree-check">☑</span><span>I understand that the initial deposit is <strong>₦1,250,000</strong>, and that <strong>₦300,000</strong> of this is strictly non-refundable under any circumstances.</span></div>
+    <div class="agree-item"><span class="agree-check">☑</span><span>I acknowledge that visa approval is not guaranteed and that the agency will assist but cannot be held responsible for visa denial.</span></div>
+    <div class="agree-item"><span class="agree-check">☑</span><span>I have read and agreed to the full Terms and Conditions and Refund & Cancellation Policy of Ubah's Travel Space Agency.</span></div>
+    <div class="agree-item"><span class="agree-check">☑</span><span>I have read and agreed to the Privacy Policy of Ubah's Travel Space Agency and consent to my personal data being processed for the purpose of this booking.</span></div>
+  </div>
+
+  <!-- SIGNATURES -->
+  <div class="section" style="margin-top:auto;">
+    <div class="section-title">Signatures</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div class="sig-box">
+        <div class="sig-label">Signed for Agency</div>
+        <div class="sig-line"></div>
+        <div class="sig-name">Paschal Nnamani</div>
+        <div class="sig-role">Ubah's Travel Space Agency</div>
+        <div class="sig-role" style="margin-top:4px;">Date: ${today}</div>
+      </div>
+      <div class="sig-box">
+        <div class="sig-label">Signed by Client</div>
+        <div class="sig-line"></div>
+        <div class="sig-name">${name}</div>
+        <div class="sig-role">Registrant</div>
+        <div class="sig-role" style="margin-top:4px;">Date: ${r.submitted_at ? r.submitted_at.split(',')[0] : today}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Ubah's Travel Space Agency &nbsp;|&nbsp; +234 802 316 8428 &nbsp;|&nbsp; ubahstravelspaceagency@gmail.com<br>
+    Effortless Travel, Unforgettable Experiences
+  </div>
+</div>
+
+<!-- ══ PAGE 2: TERMS & CONDITIONS ══ -->
+<div class="page">
+  <div class="hdr">
+    <div class="hagency">Ubah's Travel Space Agency</div>
+    <div class="htitle">Terms & Conditions</div>
+    <div class="hsub">Japan Group Tour — October 2026</div>
+  </div>
+  <div class="gold"></div>
+
+  <div class="tc-clause">
+    <div class="tc-clause-title">1. Definitions</div>
+    <div class="tc-text">"Package" means any Japan Group Tour package. "Initial Deposit" means the booking deposit of <span class="highlight">NGN 1,250,000</span> required to secure a reservation. "Non-Refundable Fee" means the <span class="highlight">NGN 300,000</span> portion that is non-refundable under all circumstances, covering processing, visa coordination, and reservation costs. "Departure Date" means October 22nd, 2026.</div>
+  </div>
+
+  <div class="tc-clause">
+    <div class="tc-clause-title">2. Payment Terms</div>
+    <div class="tc-text">2.1 An initial deposit of <span class="highlight">NGN 1,250,000 per person</span> is required to secure a reservation. 2.2 Of this deposit, <span class="highlight">NGN 300,000 is strictly non-refundable</span> under all circumstances. The remaining balance may be refunded subject to the cancellation schedule in Clause 3. 2.3 Full payment must be completed no later than 60 calendar days prior to departure. 2.4 The Agency may adjust pricing due to foreign exchange fluctuations with 45 days notice.</div>
+  </div>
+
+  <div class="tc-clause">
+    <div class="tc-clause-title">3. Cancellation Policy</div>
+    <div class="tc-text">3.1 All cancellations must be submitted in writing. 3.2 Cancellation 90+ days before departure: refund of all amounts paid above the NGN 300,000 non-refundable fee. 3.3 Cancellation 60–89 days: 50% refund of amounts above the non-refundable fee. 3.4 Cancellation 30–59 days: 25% refund. 3.5 Cancellation less than 30 days: no refund. 3.6 The NGN 300,000 non-refundable fee is never refunded under any circumstances.</div>
+  </div>
+
+  <div class="tc-clause">
+    <div class="tc-clause-title">4. Visa Denial</div>
+    <div class="tc-text">4.1 Japan visa approval is at the absolute discretion of the Japanese Embassy. The Agency makes no guarantee. 4.2 On denial: visa fees are non-refundable; the <span class="highlight">NGN 300,000 non-refundable processing fee</span> is also non-refundable; the Agency will refund all other amounts paid above these fees; the Client may transfer their slot to a future tour date within 7 days of denial notification.</div>
+  </div>
+
+  <div class="tc-clause">
+    <div class="tc-clause-title">5. Package Inclusions</div>
+    <div class="tc-text">The package includes: 3-star hotel accommodation (6 nights), airport transfers, daily breakfast, 3–4 lunches on guided days, professional tour guide, entry tickets to stated attractions, bottled water during tours, Japan visa assistance, transportation during tours, 24/7 travel support. International flights are NOT included unless explicitly stated.</div>
+  </div>
+
+  <div class="tc-clause">
+    <div class="tc-clause-title">6. Client Responsibilities</div>
+    <div class="tc-text">6.1 The Client must hold a valid Nigerian international passport for the tour duration. 6.2 The Client must obtain a Japan tourist visa before departure. 6.3 The Client must have valid travel insurance. 6.4 The Client must comply with Japanese laws and regulations throughout the tour.</div>
+  </div>
+
+  <div class="tc-clause">
+    <div class="tc-clause-title">7. Non-Refundable Items</div>
+    <div class="tc-text">The following are non-refundable under all circumstances: the <span class="highlight">NGN 300,000 non-refundable processing fee</span>; visa processing fees; airline tickets purchased on Client's behalf; pre-confirmed attraction tickets; ancillary fees already incurred.</div>
+  </div>
+
+  <div class="tc-clause">
+    <div class="tc-clause-title">8. Privacy Policy Summary</div>
+    <div class="tc-text">Ubah's Travel Space Agency collects personal information solely for the purpose of processing your tour booking. We do not sell, rent, or trade your personal data to third parties. Limited information may be shared with visa authorities, accommodation providers, and payment processors only as necessary. You have the right to access, correct, or request deletion of your data. Full Privacy Policy available on request.</div>
+  </div>
+
+  <div class="tc-clause">
+    <div class="tc-clause-title">9. Governing Law</div>
+    <div class="tc-text">These terms are governed by the laws of the Federal Republic of Nigeria. Any disputes shall be resolved through negotiation and, if necessary, through the appropriate Nigerian courts.</div>
+  </div>
+
+  <div style="margin-top:16px; padding:10px 12px; background:#F5F0E8; font-size:9px; color:#6B6560; text-align:center; line-height:1.6;">
+    By submitting the registration form, the Client confirms they have read, understood, and agreed to these Terms &amp; Conditions and Privacy Policy in full.<br>
+    <strong>Ubah's Travel Space Agency</strong> &nbsp;|&nbsp; +234 802 316 8428 &nbsp;|&nbsp; ubahstravelspaceagency@gmail.com
+  </div>
+
+  <div class="footer" style="margin-top:16px;">
+    Document generated: ${today} &nbsp;|&nbsp; Ubah's Travel Space Agency &nbsp;|&nbsp; Japan Tour 2026
+  </div>
+</div>
+
+<script>window.onload = function() { window.print(); }</script>
+</body>
+</html>`;
+
+  var blob = new Blob([html], { type: 'text/html' });
+  var url  = URL.createObjectURL(blob);
+  var win  = window.open(url, '_blank');
+  if (!win) {
+    var a    = document.createElement('a');
+    a.href     = url;
+    a.download = name + ' — Japan Tour Registration.html';
+    a.click();
+  }
+  setTimeout(function() { URL.revokeObjectURL(url); }, 10000);
+}
+
 // ── FETCH LEADS ──
 var allLeads = [];
 
 async function fetchLeads() {
   document.getElementById('listWrap').innerHTML = '<div class="loading-msg">Loading leads...</div>';
   try {
-    const res  = await fetch('/.netlify/functions/get-leads');
-    const json = await res.json();
+    const res = await fetch('/.netlify/functions/get-leads', {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (!res.ok) {
+      throw new Error('Server returned ' + res.status + ' ' + res.statusText);
+    }
+
+    const text = await res.text();
+    let json;
+    try {
+      json = JSON.parse(text);
+    } catch(parseErr) {
+      throw new Error('Invalid response from server: ' + text.substring(0, 100));
+    }
+
     if (json.error) throw new Error(json.error);
-    allLeads = json.leads || [];
+
+    allLeads = Array.isArray(json.leads) ? json.leads : [];
+
+    if (allLeads.length === 0) {
+      document.getElementById('listWrap').innerHTML =
+        '<div class="empty-state">No leads yet. Share your landing page to get started!</div>';
+      return;
+    }
+
     renderLeads(allLeads);
+
   } catch(err) {
     document.getElementById('listWrap').innerHTML =
-      '<div class="loading-msg">❌ Could not load leads.<br><small>' + err.message + '</small></div>';
+      '<div class="loading-msg">❌ Could not load leads.<br><small style="color:rgba(232,213,163,0.5);">' + err.message + '</small><br><br>' +
+      '<button onclick="fetchLeads()" style="background:rgba(232,213,163,0.1);border:1px solid rgba(232,213,163,0.3);color:#E8D5A3;padding:8px 16px;font-family:Cinzel,serif;font-size:11px;cursor:pointer;letter-spacing:1px;">🔄 Try Again</button>' +
+      '</div>';
   }
 }
 
