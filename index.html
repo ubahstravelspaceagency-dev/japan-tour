@@ -1287,6 +1287,13 @@ window.addEventListener('popstate', function() {
 
 // ── RESTORE PREVIEW ON REFRESH ──
 (function restorePreview() {
+  // Skip restoring the form/preview if we've just come back from Paystack
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('reference') || urlParams.get('trxref')) {
+    sessionStorage.removeItem('japanPreview');
+    return;
+  }
+
   var saved = sessionStorage.getItem('japanPreview');
   if (saved) {
     try {
@@ -1319,6 +1326,14 @@ window.addEventListener('popstate', function() {
 (function checkPaystackReturn() {
   var params    = new URLSearchParams(window.location.search);
   var reference = params.get('reference') || params.get('trxref');
+
+  // If we've returned from Paystack, this takes priority over any saved preview/form state
+  if (reference) {
+    sessionStorage.removeItem('japanPreview');
+    var existingOverlay = document.getElementById('previewOverlay');
+    if (existingOverlay) existingOverlay.remove();
+  }
+
   var saved     = sessionStorage.getItem('japanTourReceipt');
 
   if (saved) {
