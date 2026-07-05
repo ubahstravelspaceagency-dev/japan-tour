@@ -361,9 +361,9 @@
     <label class="login-label">ENTER PASSWORD</label>
     <div style="position:relative;margin-bottom:20px;">
       <input type="password" class="login-input" id="passwordInput" placeholder="••••••••"
-             onkeydown="if(event.key==='Enter') doLogin()"
+             onkeydown="if(event.key==='Enter' || event.keyCode===13) doLogin()"
              style="margin-bottom:0;padding-right:50px;width:100%;">
-      <button type="button" onclick="togglePw()"
+      <button type="button" onclick="togglePw(this)"
         style="position:absolute;right:0;top:0;height:100%;width:46px;background:none;border:none;border-left:1px solid rgba(232,213,163,0.2);color:rgba(232,213,163,0.6);cursor:pointer;font-size:17px;">
         👁
       </button>
@@ -460,9 +460,8 @@ const API_URL = '/.netlify/functions/get-submissions';
 let allData = [];
 
 // ── SHOW/HIDE PASSWORD ──
-function togglePw() {
-  const input  = document.getElementById('passwordInput');
-  const btn    = event.currentTarget;
+function togglePw(btn) {
+  const input = document.getElementById('passwordInput');
   if (input.type === 'password') {
     input.type = 'text';
     btn.textContent = '🙈';
@@ -474,17 +473,32 @@ function togglePw() {
 
 // ── LOGIN ──
 function doLogin() {
-  const val = document.getElementById('passwordInput').value;
+  var input = document.getElementById('passwordInput');
+  var val = input ? input.value : '';
+  var errEl = document.getElementById('loginErr');
+  var loginScreen = document.getElementById('loginScreen');
+  var dashboard = document.getElementById('dashboard');
+
   if (val === ADMIN_PASSWORD) {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('dashboard').style.display   = 'block';
+    if (loginScreen) loginScreen.style.display = 'none';
+    if (dashboard)   dashboard.style.display   = 'block';
     sessionStorage.setItem('adminAuth', '1');
     loadData();
   } else {
-    document.getElementById('loginErr').style.display = 'block';
-    document.getElementById('passwordInput').value    = '';
+    if (errEl) errEl.style.display = 'block';
+    if (input) input.value = '';
   }
 }
+
+// Allow Enter key to submit login — using addEventListener for mobile reliability
+document.addEventListener('DOMContentLoaded', function() {
+  var pwInput = document.getElementById('passwordInput');
+  if (pwInput) {
+    pwInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.keyCode === 13) doLogin();
+    });
+  }
+});
 
 function doLogout() {
   sessionStorage.removeItem('adminAuth');
