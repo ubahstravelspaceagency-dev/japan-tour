@@ -566,6 +566,106 @@ body {
   from { transform: scale(0.5); opacity: 0; }
   to   { transform: scale(1); opacity: 1; }
 }
+/* ── RESPONSIVE — LAPTOP & TABLET ── */
+@media (min-width: 768px) {
+  .hero { min-height: 100vh; }
+
+  .hero-content { max-width: 640px; padding-bottom: 80px; }
+
+  .hero-title { font-size: clamp(80px, 10vw, 120px); letter-spacing: -4px; }
+
+  .hero-script { font-size: clamp(48px, 6vw, 72px); }
+
+  .hero-top { padding: 32px 48px; }
+
+  .agency-name { font-size: 16px; letter-spacing: 5px; }
+
+  .pricing-strip {
+    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 36px 48px;
+  }
+
+  .deposit-pill { grid-column: 3; align-self: center; }
+
+  .details-row {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px 48px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .about-section {
+    padding: 80px 48px;
+    max-width: 700px;
+  }
+
+  .section-title { font-size: clamp(36px, 4vw, 52px); }
+
+  .section-text { font-size: 20px; }
+
+  .full-img-wrap { height: 420px; }
+
+  .package-section {
+    padding: 60px 48px;
+    max-width: 100%;
+  }
+
+  .pkg-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 800px;
+    margin: 0 auto;
+    gap: 14px 32px;
+  }
+
+  .gallery-row { height: 360px; grid-template-columns: 1fr 1fr 1fr; }
+
+  .form-section {
+    padding: 80px 48px;
+    max-width: 680px;
+  }
+
+  .form-title { font-size: 42px; }
+
+  .footer { padding: 60px 48px 40px; }
+
+  .social-row { gap: 16px; }
+
+  .social-btn { width: 52px; height: 52px; }
+
+  .price-amount { font-size: 32px; }
+
+  .deposit-pill .amount { font-size: 20px; }
+}
+
+@media (min-width: 1024px) {
+  .hero-title { font-size: 120px; }
+  .hero-script { font-size: 80px; }
+
+  .pricing-strip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    padding: 32px 0;
+  }
+
+  .price-block {
+    padding: 0 48px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .deposit-pill {
+    padding: 16px 32px;
+    margin: 0 24px;
+    border-radius: 0;
+  }
+
+  .gallery-row { height: 400px; }
+
+  .full-img-wrap { height: 500px; }
+}
 </style>
 </head>
 <body>
@@ -601,12 +701,12 @@ body {
 <div class="pricing-strip">
   <div class="price-block">
     <div class="price-label">Sharing</div>
-    <div class="price-amount">₦3.4M <span class="price-usd">$2,290</span></div>
+    <div class="price-amount">₦3.9M <span class="price-usd">$2,840</span></div>
     <div class="price-type">Per Person</div>
   </div>
   <div class="price-block">
     <div class="price-label">Single</div>
-    <div class="price-amount">₦3.9M <span class="price-usd">$2,630</span></div>
+    <div class="price-amount">₦4.3M <span class="price-usd">$3,130</span></div>
     <div class="price-type">Occupancy</div>
   </div>
   <div class="deposit-pill">
@@ -842,105 +942,3 @@ window.addEventListener('popstate', function() {
 </script>
 </body>
 </html>
-<style>
-/* ── RESPONSIVE — LAPTOP & TABLET ── */
-@media (min-width: 768px) {
-  .hero { min-height: 100vh; }
-
-  .hero-content { max-width: 640px; padding-bottom: 80px; }
-
-  .hero-title { font-size: clamp(80px, 10vw, 120px); letter-spacing: -4px; }
-
-  .hero-script { font-size: clamp(48px, 6vw, 72px); }
-
-  .hero-top { padding: 32px 48px; }
-
-  .agency-name { font-size: 16px; letter-spacing: 5px; }
-
-  .pricing-strip {
-    grid-template-columns: 1fr 1fr 1fr;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 36px 48px;
-  }
-
-  .deposit-pill { grid-column: 3; align-self: center; }
-
-  .details-row {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 24px 48px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-
-  .about-section {
-    padding: 80px 48px;
-    max-width: 700px;
-  }
-
-  .section-title { font-size: clamp(36px, 4vw, 52px); }
-
-  .section-text { font-size: 20px; }
-
-  .full-img-wrap { height: 420px; }
-
-  .package-section {
-    padding: 60px 48px;
-    max-width: 100%;
-  }
-
-  .pkg-grid {
-    grid-template-columns: 1fr 1fr 1fr;
-    max-width: 800px;
-    margin: 0 auto;
-    gap: 14px 32px;
-  }
-
-  .gallery-row { height: 360px; grid-template-columns: 1fr 1fr 1fr; }
-
-  .form-section {
-    padding: 80px 48px;
-    max-width: 680px;
-  }
-
-  .form-title { font-size: 42px; }
-
-  .footer { padding: 60px 48px 40px; }
-
-  .social-row { gap: 16px; }
-
-  .social-btn { width: 52px; height: 52px; }
-
-  .price-amount { font-size: 32px; }
-
-  .deposit-pill .amount { font-size: 20px; }
-}
-
-@media (min-width: 1024px) {
-  .hero-title { font-size: 120px; }
-  .hero-script { font-size: 80px; }
-
-  .pricing-strip {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    padding: 32px 0;
-  }
-
-  .price-block {
-    padding: 0 48px;
-    border-right: 1px solid rgba(255,255,255,0.1);
-  }
-
-  .deposit-pill {
-    padding: 16px 32px;
-    margin: 0 24px;
-    border-radius: 0;
-  }
-
-  .gallery-row { height: 400px; }
-
-  .full-img-wrap { height: 500px; }
-}
-</style>
