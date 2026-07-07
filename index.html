@@ -430,9 +430,39 @@ RESULT: Every submission will:
     display: none;
   }
   .submitting { opacity: 0.7; pointer-events: none; }
+
+  /* ── ANTI-FLASH: hide page instantly if returning from Paystack ── */
+  html.verifying-payment body > *:not(#paymentSuccessScreen) { display: none !important; }
+  #paymentSuccessScreen {
+    display: none;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #1C2B1A; color: #E8D5A3;
+    flex-direction: column; align-items: center; justify-content: center;
+    overflow-y: auto; padding: 48px 24px 60px; z-index: 99999; text-align: center;
+  }
+  html.verifying-payment #paymentSuccessScreen { display: flex; }
 </style>
+<script>
+  // Runs before anything paints — if we're coming back from Paystack
+  // (URL has ?reference= or ?trxref=), hide the whole page immediately
+  // so there's no flash of the registration form before the
+  // "verifying your payment" screen appears.
+  (function() {
+    var p = new URLSearchParams(window.location.search);
+    if (p.get('reference') || p.get('trxref')) {
+      document.documentElement.classList.add('verifying-payment');
+    }
+  })();
+</script>
 </head>
 <body>
+
+<!-- PAYMENT VERIFICATION SCREEN (hidden unless ?reference=/?trxref= is present) -->
+<div id="paymentSuccessScreen">
+  <span style="font-size:48px;display:block;margin-bottom:20px;">⏳</span>
+  <div style="font-family:Cinzel,serif;font-size:18px;letter-spacing:2px;color:#E8D5A3;margin-bottom:12px;">VERIFYING YOUR PAYMENT...</div>
+  <p style="font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:rgba(232,213,163,0.7);">Please wait a moment — do not close or refresh this page.</p>
+</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -1380,10 +1410,16 @@ function buildReceiptScreen() {
   document.getElementById('successMsg').style.display = 'none';
   document.querySelector('.form-wrap').style.display  = 'none';
   document.querySelector('.hero').style.display       = 'none';
-  var s = document.createElement('div');
-  s.id = 'paymentSuccessScreen';
-  s.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#1C2B1A;color:#E8D5A3;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow-y:auto;padding:48px 24px 60px;z-index:99999;text-align:center;';
-  document.body.appendChild(s);
+  document.documentElement.classList.add('verifying-payment');
+  // Reuse the overlay that was already shown instantly by the head script,
+  // instead of creating a second one — this is what removes the flash/glitch.
+  var s = document.getElementById('paymentSuccessScreen');
+  if (!s) {
+    s = document.createElement('div');
+    s.id = 'paymentSuccessScreen';
+    document.body.appendChild(s);
+  }
+  s.style.display = 'flex';
 }
 
 function renderReceiptScreen(amountPaid, amountReceived, paystackFee, name, reference, date) {
