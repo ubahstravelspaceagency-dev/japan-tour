@@ -1385,12 +1385,26 @@ window.addEventListener('popstate', function() {
   });
     document.getElementById('paymentSuccessScreen').innerHTML =
       '<span style="font-size:48px;display:block;margin-bottom:20px;">⏳</span>' +
-      '<div style="font-family:Cinzel,serif;font-size:18px;letter-spacing:2px;color:#E8D5A3;margin-bottom:12px;">PROCESSING YOUR PAYMENT...</div>' +
-      '<p style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;color:rgba(232,213,163,0.7);">Please wait a moment.</p>';
+      '<div style="font-family:Cinzel,serif;font-size:18px;letter-spacing:2px;color:#E8D5A3;margin-bottom:12px;">VERIFYING YOUR PAYMENT...</div>' +
+      '<p id="verifyStatusMsg" style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;color:rgba(232,213,163,0.7);">Please wait a moment.</p>';
 
-    fetch('/.netlify/functions/verify-payment?reference=' + encodeURIComponent(reference))
+    // Let the person know it's still working if this is taking a while,
+    // instead of leaving them staring at a screen with no feedback.
+    var statusMsgEl = document.getElementById('verifyStatusMsg');
+    var slowNoticeTimer = setTimeout(function() {
+      if (statusMsgEl) statusMsgEl.textContent = 'Still verifying \u2014 this is taking a little longer than usual, please hang on.';
+    }, 12000);
+
+    // Hard client-side timeout: if the server hasn't answered within 25s,
+    // stop waiting and show the manual-contact screen instead of hanging forever.
+    var controller = new AbortController();
+    var hardTimeout = setTimeout(function() { controller.abort(); }, 25000);
+
+    fetch('/.netlify/functions/verify-payment?reference=' + encodeURIComponent(reference), { signal: controller.signal })
       .then(function(r) { return r.json(); })
       .then(function(data) {
+        clearTimeout(slowNoticeTimer);
+        clearTimeout(hardTimeout);
         if (data.status === 'success') {
           // Lock back navigation - cannot go back to Paystack
           sessionStorage.setItem('paymentComplete', '1');
@@ -1402,7 +1416,14 @@ window.addEventListener('popstate', function() {
           renderErrorScreen(reference, data.error || 'Payment could not be verified.');
         }
       })
-      .catch(function() { renderErrorScreen(reference, 'Network error. Please contact us with your reference number.'); });
+      .catch(function(err) {
+        clearTimeout(slowNoticeTimer);
+        clearTimeout(hardTimeout);
+        var msg = err.name === 'AbortError'
+          ? 'Verification is taking longer than expected.'
+          : 'Network error. Please contact us with your reference number.';
+        renderErrorScreen(reference, msg);
+      });
   }
 })();
 
