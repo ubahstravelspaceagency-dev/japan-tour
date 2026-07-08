@@ -1245,6 +1245,15 @@ RESULT: Every submission will:
 
 <script>
 
+// These need to be declared FIRST — code further down (including the
+// payment-return handling) references them, and referencing a const
+// before its declaration line throws an error that silently kills the
+// rest of the script. This was the actual bug stopping the payment
+// verification screen from ever appearing.
+const form = document.getElementById('bookingForm');
+const btn  = document.getElementById('submitBtn');
+const successMsg = document.getElementById('successMsg');
+
 // ── MEDICAL CONDITION FIELD ──
 function showMedicalField(choice) {
   const container = document.getElementById('medicalDetails');
@@ -1726,10 +1735,6 @@ function showGroupFields(count) {
       </div>`;
   }
 }
-
-const form = document.getElementById('bookingForm');
-const btn  = document.getElementById('submitBtn');
-const successMsg = document.getElementById('successMsg');
 
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
