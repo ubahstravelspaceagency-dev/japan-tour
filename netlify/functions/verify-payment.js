@@ -24,8 +24,11 @@ exports.handler = async function (event) {
   }
 
   try {
-    // Verify payment with Paystack (10s timeout — this is the only call
-    // the browser truly must wait on)
+    // Verify payment with Paystack (6s timeout — this is the only call
+    // the browser truly must wait on). Timeouts are kept tight because
+    // Netlify functions have a hard 10s execution limit on standard
+    // plans — if Paystack + Supabase together ran past that, Netlify
+    // itself kills the function, which looks like it's hanging forever.
     const psRes  = await fetchWithTimeout(
       'https://api.paystack.co/transaction/verify/' + encodeURIComponent(reference),
       {
@@ -34,7 +37,7 @@ exports.handler = async function (event) {
           'Content-Type': 'application/json',
         },
       },
-      10000
+      6000
     );
     const psData = await psRes.json();
 
@@ -93,7 +96,7 @@ exports.handler = async function (event) {
               payment_status:    'PAID',
             }),
           },
-          8000
+          3000
         );
       } catch(e) {
         console.error('Supabase update failed:', e.message);
